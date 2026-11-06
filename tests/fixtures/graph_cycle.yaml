@@ -1,0 +1,11 @@
+# 사이클 A -> B -> C -> A (거부되어야 함)
+version: "0.1"
+domain: "테스트 사이클"
+nodes:
+  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
+  - {id: B, label: "개념 B", sources: [{type: toy, ref: "테스트용"}]}
+  - {id: C, label: "개념 C", sources: [{type: toy, ref: "테스트용"}]}
+edges:
+  - {from: A, to: B, kind: hard, sources: [{type: toy, ref: "테스트용"}]}
+  - {from: B, to: C, kind: hard, sources: [{type: toy, ref: "테스트용"}]}
+  - {from: C, to: A, kind: soft, sources: [{type: toy, ref: "테스트용"}]}

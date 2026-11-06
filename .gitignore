@@ -1,0 +1,16 @@
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.venv/
+# node
+web/node_modules/
+web/dist/
+# os/editor
+.DS_Store
+.vscode/
+.idea/
+# 비공개 자료 (대화 로그·외부 글 원문) — 레포에 올리지 않음
+docs/review/상담로그_Qwen_2026-11-06.md
+docs/review/blog_curriculum_vs_iep_2026-11-06.txt

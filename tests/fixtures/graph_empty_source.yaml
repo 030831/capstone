@@ -1,0 +1,7 @@
+# 노드 B 의 sources 가 빈 리스트 (거부되어야 함)
+version: "0.1"
+domain: "테스트 빈 source"
+nodes:
+  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
+  - {id: B, label: "개념 B", sources: []}
+edges: []

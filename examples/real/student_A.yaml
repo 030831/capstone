@@ -1,0 +1,26 @@
+# 예시 학생 A (합성 데이터). IEP 현행수준 서술 예: "10까지 세고 한 자리 수 덧셈·뺄셈은 구체물로 해결함.
+# 10 만들기는 아직 불안정. 받아올림 덧셈은 시도하지 않음."
+student_id: "S_A"
+updated: "2026-11-06"
+states:
+  N01_one_to_one_matching: mastered
+  N02_perceptual_compare: mastered
+  N03_ordering_by_attribute: mastered
+  N04_subitize_small: mastered
+  N05_count_sequence_to_10: mastered
+  N06_count_objects_to_5: mastered
+  N07_count_objects_to_10: mastered
+  N08_produce_set_to_10: mastered
+  N09_numerals_to_9: mastered
+  N10_zero: mastered
+  N11_compare_numbers_to_10: mastered
+  N13_count_on_from_n: emerging
+  N14_compose_decompose_to_5: mastered
+  N15_compose_decompose_to_10: mastered
+  N16_ten_complements: emerging
+  N18_add_sub_meaning: mastered
+  N19_add_within_5: mastered
+  N20_sub_within_5: mastered
+  N21_add_within_9_equation: mastered
+  N22_sub_within_9_equation: mastered
+  N28_ten_as_unit: mastered

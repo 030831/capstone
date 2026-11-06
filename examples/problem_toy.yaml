@@ -1,0 +1,9 @@
+problem_id: "P001"
+text: "사과 7개와 5개를 합하면 몇 개?"
+requires:
+  - N08_add_within_20_carry
+surface:
+  number_range: "20이내"
+  context: "과일"
+  representation: "그림+숫자"
+  support: "없음"

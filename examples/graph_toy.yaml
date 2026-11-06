@@ -1,0 +1,51 @@
+# 스펙 2장 예시를 실제로 돌려 볼 수 있는 toy 그래프.
+# 주의: source 는 형식을 맞추기 위한 예시 표기이며 실제 교육과정/연구 근거가 아니다.
+version: "0.1"
+domain: "초등 수학 · 수와 연산 (toy)"
+nodes:
+  - id: N01_count_to_10
+    label: "10까지 수 세기"
+    description: "1~10 범위 구체물을 하나씩 세어 마지막 수를 전체 개수로 말한다"
+    level_hint: "기본 1-2"
+    sources: &toy_src
+      - {type: toy, ref: "예시 데이터 (실제 근거 아님)"}
+  - id: N02_count_to_20
+    label: "20까지 수 세기"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N03_add_within_10
+    label: "10 이내 덧셈"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N04_subtract_within_10
+    label: "10 이내 뺄셈"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N05_make_ten
+    label: "10 만들기"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N06_place_value_tens_ones
+    label: "십과 일의 자릿값"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N07_add_within_20_no_carry
+    label: "받아올림이 없는 20 이내 덧셈"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+  - id: N08_add_within_20_carry
+    label: "받아올림이 있는 20 이내 덧셈"
+    level_hint: "기본 1-2"
+    sources: *toy_src
+edges:
+  - {from: N01_count_to_10, to: N02_count_to_20, kind: hard, sources: *toy_src}
+  - {from: N01_count_to_10, to: N03_add_within_10, kind: hard, sources: *toy_src}
+  - {from: N03_add_within_10, to: N04_subtract_within_10, kind: hard, sources: *toy_src}
+  - {from: N03_add_within_10, to: N05_make_ten, kind: hard, sources: *toy_src}
+  - {from: N04_subtract_within_10, to: N05_make_ten, kind: soft, sources: *toy_src}
+  - {from: N05_make_ten, to: N06_place_value_tens_ones, kind: hard, sources: *toy_src}
+  - {from: N02_count_to_20, to: N06_place_value_tens_ones, kind: hard, sources: *toy_src}
+  - {from: N03_add_within_10, to: N07_add_within_20_no_carry, kind: hard, sources: *toy_src}
+  - {from: N06_place_value_tens_ones, to: N07_add_within_20_no_carry, kind: hard, sources: *toy_src}
+  - {from: N05_make_ten, to: N08_add_within_20_carry, kind: hard, sources: *toy_src}
+  - {from: N06_place_value_tens_ones, to: N08_add_within_20_carry, kind: hard, sources: *toy_src}

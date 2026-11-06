@@ -1,0 +1,10 @@
+# 선형 체인 A -> B -> C (모두 hard)
+version: "0.1"
+domain: "테스트 체인"
+nodes:
+  - {id: A, label: "개념 가", sources: [{type: toy, ref: "테스트용"}]}
+  - {id: B, label: "개념 나", sources: [{type: toy, ref: "테스트용"}]}
+  - {id: C, label: "개념 다", sources: [{type: toy, ref: "테스트용"}]}
+edges:
+  - {from: A, to: B, kind: hard, sources: [{type: toy, ref: "테스트용"}]}
+  - {from: B, to: C, kind: hard, sources: [{type: toy, ref: "테스트용"}]}

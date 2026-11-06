@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "collision-checker"
+version = "0.1.0"
+description = "인지적 정렬 검사기(Collision Checker) v0 - 문제의 준비도(readiness) 검사"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "networkx",
+    "pyyaml",
+    "pydantic>=2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["checker"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
