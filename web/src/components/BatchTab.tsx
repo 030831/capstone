@@ -32,22 +32,22 @@ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: A
         <div>
           <span className="muted">검사 대상 문제{usingSample ? ' — 메인에 입력한 문제가 없어 예시(받아올림 덧셈)를 씁니다' : ''}</span>
           <p className="result-problem">{problem.text || '(문제 글 없음)'}</p>
-          <p><span className="muted">필요한 개념:</span> {problem.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
+          <p><span className="muted">필요한 준비:</span> {problem.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
         </div>
       </div>
 
       <p className="summary" role="status">
         {collisions === 0
-          ? `학생 ${rows.length}명 모두 선수 개념 충돌이 없습니다.`
-          : `학생 ${rows.length}명 중 ${collisions}명에게 선수 개념 충돌이 있습니다.`}
+          ? '반 전체에게 내도 준비가 안 된 학생이 없어요.'
+          : `학생 ${rows.length}명 중 ${collisions}명은 아직 준비가 덜 되어 바로 내기 어려워요.`}
       </p>
       <table className="tbl tbl-batch">
         <thead>
           <tr>
             <th scope="col">학생</th>
             <th scope="col">판정</th>
-            <th scope="col">아직 숙달하지 못한 필수 선수 개념</th>
-            <th scope="col">지금 바로 다룰 수 있는 선수 개념</th>
+            <th scope="col">아직 없는 준비</th>
+            <th scope="col">지금 바로 다룰 수 있는 개념</th>
           </tr>
         </thead>
         <tbody>

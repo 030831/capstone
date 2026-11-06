@@ -1,6 +1,7 @@
 /* 인지적 정렬 검사기 — 교사용 업무 화면.
    톤: 종이 위의 잉크. 따뜻한 회백색 바탕, 짙은 남색 잉크, 판정 3색만 채도 사용.
-   v1: 탭 없이 단일 메인 페이지 + 헤더 보조 버튼으로 모달. ComfyUI 형태 그래프 제거. */
+   v1: 탭 없이 단일 메인 페이지 + 헤더 보조 버튼으로 모달. ComfyUI 형태 그래프 제거.
+   v2: 힌트 칩(룰 기반 초안)·자세히 보기 접기·그룹 접기·IEP 붙여넣기 초안. 근거 코드는 자세히 보기 안으로. */
 :root {
   --paper: #f4f3ef;
   --panel: #ffffff;
@@ -69,7 +70,6 @@ h1, h2, h3, p { margin: 0; }
 
 /* ── 배지·칩·세그먼트 ────────────────────────────── */
 .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; border: 1.5px solid; font-weight: 700; font-size: 13px; white-space: nowrap; }
-.badge-code { font-weight: 500; font-size: 11px; opacity: .8; margin-left: 2px; }
 .badge-lg { font-size: 17px; padding: 6px 16px; }
 .badge-COLLISION { background: var(--col-bg); color: var(--col-fg); border-color: var(--col-bd); }
 .badge-ALIGNED { background: var(--ali-bg); color: var(--ali-fg); border-color: var(--ali-bd); }
@@ -100,14 +100,26 @@ h1, h2, h3, p { margin: 0; }
 .page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .lead { color: var(--ink-2); max-width: 72ch; }
 
-/* 학생 현행수준 */
-.student-layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: start; }
-.group-nav { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 2px; }
-.group-nav a { color: var(--ink-2); text-decoration: none; padding: 6px 10px; border-radius: 6px; border-left: 3px solid transparent; font-size: 13px; }
-.group-nav a:hover { background: #fff; color: var(--ink); }
-.group-nav .nav-note { color: var(--ink-3); font-size: 12px; padding: 10px; border-top: 1px solid var(--line); margin-top: 8px; line-height: 1.5; }
-.group-sec { margin-top: 18px; scroll-margin-top: 16px; }
-.group-title { font-size: 13px; padding: 6px 12px; border: 1px solid; border-radius: 8px 8px 0 0; font-weight: 700; }
+/* 학생 현행수준: 그룹 접기(details) */
+.group-fold { margin-top: 14px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+.group-fold > summary { cursor: pointer; font-size: 13px; padding: 8px 12px; font-weight: 700; list-style: none; }
+.group-fold > summary::-webkit-details-marker { display: none; }
+.group-fold > summary::after { content: '＋'; float: right; color: var(--ink-3); font-weight: 500; }
+.group-fold[open] > summary::after { content: '－'; }
+.group-fold[open] > summary { border-bottom: 1px solid var(--line-soft); }
+.group-fold .tbl { table-layout: fixed; border: 0; }
+.group-fold .tbl th:nth-child(2), .group-fold .tbl td:nth-child(2) { width: 250px; }
+.group-fold .tbl th:nth-child(3), .group-fold .tbl td:nth-child(3) { width: 130px; }
+
+/* IEP 문장 붙여넣기 초안 */
+.iep-paste { margin: 12px 0 16px; }
+.iep-paste h3 { font-size: 14.5px; margin-bottom: 4px; }
+.iep-paste .muted { font-size: 12.5px; }
+.iep-paste textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; margin-top: 8px; resize: vertical; min-height: 60px; }
+.iep-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.iep-actions .btn-primary { padding: 6px 16px; }
+.ok-note { color: var(--ali-fg); font-weight: 600; font-size: 13px; }
+
 .tbl { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-top: 0; }
 .tbl th, .tbl td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
 .tbl tbody tr:last-child td, .tbl tbody tr:last-child th { border-bottom: 0; }
@@ -121,9 +133,6 @@ h1, h2, h3, p { margin: 0; }
 .tbl-batch td, .tbl-batch th { padding: 11px 12px; }
 .row-click { cursor: pointer; }
 .row-click:hover { background: #f7f9fc; }
-.group-sec .tbl { table-layout: fixed; }
-.group-sec .tbl th:nth-child(2), .group-sec .tbl td:nth-child(2) { width: 250px; }
-.group-sec .tbl th:nth-child(3), .group-sec .tbl td:nth-child(3) { width: 130px; }
 
 /* ── 메인: 문제 검사 위저드 ─────────────────── */
 .check-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; max-width: 1240px; align-items: start; }
@@ -136,12 +145,32 @@ h1, h2, h3, p { margin: 0; }
 .field textarea { resize: vertical; min-height: 64px; }
 .selected-chips { min-height: 30px; margin-bottom: 6px; }
 .selected-chips .empty { color: var(--ink-3); font-size: 13px; }
+
+/* 힌트(룰 기반 초안 제안) */
+.hint-area { margin: 4px 0 2px; }
+.hint-title { font-size: 12.5px; margin-bottom: 6px; }
+.hint-note { font-size: 12.5px; margin: 4px 0; }
+.hint-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.hint-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px dashed #9db8f3; background: #f4f8ff; color: #1d4ba8; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-size: 13px; font-weight: 600; }
+.hint-chip:hover { background: #e8effd; border-style: solid; }
+.hint-why { font-weight: 500; font-size: 11.5px; color: #4a6bb0; }
+
+/* 접기: 직접 고르기 / 자세히 보기 */
+.manual-picker, .detail-fold { margin: 10px 0; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.manual-picker > summary, .detail-fold > summary { cursor: pointer; padding: 8px 12px; font-weight: 600; color: var(--ink-2); font-size: 13px; list-style: none; }
+.manual-picker > summary::-webkit-details-marker, .detail-fold > summary::-webkit-details-marker { display: none; }
+.manual-picker > summary::after, .detail-fold > summary::after { content: '펼치기 ▾'; float: right; color: var(--ink-3); font-weight: 500; font-size: 12px; }
+.manual-picker[open] > summary::after, .detail-fold[open] > summary::after { content: '접기 ▴'; }
+.manual-picker[open] > summary, .detail-fold[open] > summary { border-bottom: 1px solid var(--line-soft); }
+.manual-picker .search { margin: 10px 12px 0; width: calc(100% - 24px); }
+.manual-picker .picker { margin: 6px 12px 12px; max-height: 260px; }
+.note-line { font-size: 12px; margin-top: 8px; }
+
 .picker { max-height: 220px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; margin-top: 6px; }
 .picker-title { font-size: 12px; font-weight: 700; padding: 3px 10px; border-bottom: 1px solid; position: sticky; top: 0; }
 .check-item { display: flex; gap: 8px; align-items: center; padding: 4px 10px; cursor: pointer; }
 .check-item:hover { background: #f7f9fc; }
 .check-item input { accent-color: var(--navy); }
-.check-item .code { margin-left: auto; }
 details.surface { margin: 14px 0; }
 details.surface summary { cursor: pointer; font-weight: 600; color: var(--ink-2); }
 .surface-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 8px; }
@@ -165,9 +194,9 @@ details.surface summary { cursor: pointer; font-weight: 600; color: var(--ink-2)
 .chips { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 6px; }
 .result-actions { display: flex; gap: 8px; margin-top: 12px; }
 
-/* ── 인라인 선수 계보 (그래프 뷰 대체) ─────────── */
-.prereq-line { margin: 14px 0 6px; border-top: 1px solid var(--line-soft); padding-top: 12px; }
-.line-toggle { padding: 4px 8px; font-weight: 600; font-size: 13px; }
+/* ── 인라인 선수 계보 (자세히 보기 안) ─────────── */
+.prereq-line { margin: 12px 0 4px; }
+.detail-code { font-size: 12.5px; margin-top: 10px; }
 .chain-list { list-style: none; margin: 10px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: #fff; overflow: hidden; max-height: 320px; overflow-y: auto; }
 .chain-intro { padding: 8px 12px; font-size: 12.5px; background: #faf9f6; border-bottom: 1px solid var(--line-soft); position: sticky; top: 0; }
 .chain-item { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--line-soft); font-size: 13px; }
@@ -190,15 +219,13 @@ details.surface summary { cursor: pointer; font-weight: 600; color: var(--ink-2)
 .chain-req { background: #e8effd !important; font-weight: 700; border-left: 4px solid var(--req); padding-left: 8px; }
 .chain-req .chain-marker { color: var(--req); }
 
-/* 갭 카드: 검사 결과 내 갭 항목을 칩보다 자세히 */
+/* 갭 카드: 검사 결과의 핵심. 라벨 + 상태만 (근거 코드·직전 선수는 자세히 보기로) */
 .gap-cards { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
 .gap-card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
-.gap-card-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 4px; }
+.gap-card-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .gap-card-label { font-weight: 700; font-size: 13.5px; }
-.gap-card-pred { font-size: 11.5px; line-height: 1.45; margin-bottom: 4px; }
 .gap-st-emerging { background: #fff8eb; border-color: #e3c36a; }
 .gap-st-not_started { background: #fff5f1; border-color: var(--col-bd); }
-.gap-card .code { display: inline-block; margin: 0; }
 
 /* ── 반 일괄 ──────────────────────────────── */
 .summary { font-size: 15px; font-weight: 600; margin: 14px 0 10px; }

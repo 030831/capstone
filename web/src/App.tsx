@@ -28,8 +28,8 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <div className="brand">
-          <h1>인지적 정렬 검사기</h1>
-          <small>문제가 이 학생에게 지금 알맞은지 검사합니다</small>
+          <h1>이 문제, 이 학생에게 괜찮을까?</h1>
+          <small>인지적 정렬 검사기 · 교사용 프로토타입 v2</small>
         </div>
 
         <div className="student-bar">

@@ -1,0 +1,1617 @@
+From 1d2f79fb269337d9d6d38e067bdf809c34ea4c2a Mon Sep 17 00:00:00 2001
+From: AI Collaborator <ai-collaborator@local>
+Date: Fri, 6 Nov 2026 12:41:47 +0000
+Subject: [PATCH] =?UTF-8?q?=EC=9B=B9=20UI=20v1:=20ComfyUI=20=ED=98=95?=
+ =?UTF-8?q?=ED=83=9C=20=EA=B7=B8=EB=9E=98=ED=94=84=20=EB=B7=B0=20=EC=A0=9C?=
+ =?UTF-8?q?=EA=B1=B0,=20=EA=B5=90=EC=82=AC=EC=9A=A9=20=ED=8F=BC=C2=B7?=
+ =?UTF-8?q?=EB=AA=A8=EB=8B=AC=EB=A1=9C=20=EC=9E=AC=EC=84=A4=EA=B3=84?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+상단 탭 4개 → 단일 메인(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달
+(학생 현행수준·반 일괄 검사). @xyflow/react·@dagrejs/dagre 의존성 제거,
+GraphTab.tsx·NodePanel.tsx 삭제. 검사 결과 내 인라인 학습 계보(텍스트 트리)를
+추가해 "그래프에서 보기" 버튼을 대체. state.ts의 tab·highlight·selectedNode·
+focusRequest·showFringe 제거, modal 상태 도입.
+
+배경: 사용자가 이전 AI에게 "ComfyUI를 예시로" 언급한 것이 "ComfyUI 형태 노드
+그래프로 만들라"로 해석되어 메인 화면이 노드 에디터가 됨. 교사가 수업 사이 1~2분에
+보는 도구가 노드 에디터가 되는 건 본질을 잃는 일. v1은 교사의 핵심 흐름(문제 입력 →
+검사 → 판정)을 1차원 폼으로 정리.
+
+문서 동기화: SPEC_web_prototype.md·web/README.md·README.md·CLAUDE.md 모두 새 구조 반영.
+
+검증: npm test 24/24 통과, npm run build 성공, screenshots.cjs 0 콘솔 에러·0 금지어.
+---
+ CLAUDE.md                         |   13 +-
+ README.md                         |    4 +-
+ docs/SPEC_web_prototype.md        |  157 +-
+ web/README.md                     |   36 +-
+ web/package-lock.json             | 2246 +++++++++++++++++++++++++++++
+ web/package.json                  |    2 -
+ web/screenshots/tab1.png          |  Bin 264593 -> 87056 bytes
+ web/screenshots/tab2.png          |  Bin 167829 -> 156920 bytes
+ web/screenshots/tab3.png          |  Bin 192797 -> 132413 bytes
+ web/screenshots/tab4.png          |  Bin 144354 -> 119329 bytes
+ web/scripts/screenshots.cjs       |   79 +-
+ web/src/App.tsx                   |   97 +-
+ web/src/components/BatchTab.tsx   |   12 +-
+ web/src/components/CheckTab.tsx   |  100 +-
+ web/src/components/GraphTab.tsx   |  295 ----
+ web/src/components/NodePanel.tsx  |  102 --
+ web/src/components/StudentTab.tsx |    8 +-
+ web/src/state.ts                  |   53 +-
+ web/src/styles.css                |  155 +-
+ 19 files changed, 2639 insertions(+), 720 deletions(-)
+ create mode 100644 web/package-lock.json
+ delete mode 100644 web/src/components/GraphTab.tsx
+ delete mode 100644 web/src/components/NodePanel.tsx
+
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 8b1e057..0d4a503 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -42,7 +42,7 @@
+ - 그래프: YAML 파일로 깃 관리 (`graph/graph_v0.yaml`). DB는 4-1에 PostgreSQL (nodes/edges/problems/problem_nodes/students/student_node_state).
+ - 엔진: Python 3.11+, networkx, pyyaml, pydantic v2. 의존성 추가 금지(스펙).
+ - LLM 사용처(향후): 문제→요구노드 태깅, IEP 현행수준→노드상태 추출, 충돌 시 스캐폴딩 문장. 모두 JSON schema 강제 + 교사 확인. 학생 실명·학교명은 LLM에 절대 전송 금지.
+-- 프론트(4-1): React + react-flow/cytoscape.
++- 프론트(4-1): React (v1부터 react-flow·cytoscape 같은 그래프 시각화 라이브러리는 쓰지 않음 — ComfyUI 형태 오해 교훈). 필요하면 검사 결과 내 인라인 텍스트 트리로 선수관계 표시.
+ 
+ ## 작업 이력
+ - 2026-11-06: 그래프 v0(39노드/72엣지) + 충돌 검사기 CLI(테스트 23 통과) + 교육과정 원문 2종 확보. 상세는 README.md.
+@@ -50,3 +50,14 @@
+ - 2026-11-06 오후: UI/UX 개선(Fable 직접). 그래프 검색·선택 개념 주변만 선명·선수/후속 엣지 색 구분·fitView, 학생 탭 '선수까지 숙달'(하향폐쇄 유지)·불일치 경고·그룹 바로가기, 문제 탭 선택 칩·판정 의미 문장·결과 내 학생 전환, 상단 학생 선택 pill. 금지어 검사에 '다음 단계'(로드맵 의미)도 걸려 '앞으로는'으로 바꿈 — UI 문구에 진도 느낌 단어 피할 것.
+ - 2026-11-06 오후: GitHub 업로드용 README.md 전면 작성(배경·논의 과정·원칙·구조·알고리즘·그래프 근거·검증·한계·다음 작업·작업 규칙·용어). 사용자 의도: 다른 모델이 레포만 보고 이어서 작업·검수할 수 있게. .gitignore에 web/dist 제외.
+ - 다음 후보: 그래프 v0 팀 검토 → v0.2 / IEP 현행수준 문장 → 노드 상태 추출 프롬프트 / 문제 → 요구 노드 태깅 프롬프트.
++
++## 웹 UI 재설계 v1 (2026-11-06, 사용자 결정)
++- **ComfyUI 오해 원천 제거**: 사용자가 이전 AI(GPT-6 Astra)에게 "ComfyUI를 예시로" 언급했을 뿐인데, 이를 "ComfyUI 형태 노드 그래프로 만들라"로 해석해 메인 화면이 React Flow + dagre 그래프가 됨. 교사가 편하게 쓰는 도구가 아니라 노드 에디터가 돼버림.
++- **사용자 선택**: "전면 개편" + "그래프 뷰 완전 제거" + "문서 동기화".
++- **새 구조**: 상단 탭 4개 제거 → 단일 메인 페이지(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달(학생 현행수준·반 일괄 검사). `@xyflow/react`·`@dagrejs/dagre` 의존성 제거. `GraphTab.tsx`·`NodePanel.tsx` 삭제.
++- **선수관계 표시 교체**: "그래프에서 보기" 버튼(탭 1 이동) → 검사 결과 내 인라인 선수 계보 텍스트 트리(`PrereqChain` in `CheckTab.tsx`). 요구 개념 R의 hard 조상을 노드 번호순으로 나열, 각 항목에 state·갭·요개 태그 표시. ComfyUI보다 교사가 한눈에 파악하기 쉬움.
++- **상태 단순화**: `state.ts`에서 `tab`·`highlight`·`selectedNode`·`focusRequest`·`showFringe` 제거. `modal: 'none' | 'students' | 'batch'`만 남김.
++- **스크린샷 스크립트**: `web/scripts/screenshots.cjs`도 react-flow 선택자 없이 재작성. 4장 = (1) 메인 빈 상태, (2) 메인 검사 결과+계보 펼침, (3) 학생 현행수준 모달, (4) 반 일괄 검사 모달.
++- **SPEC 동기화**: `docs/SPEC_web_prototype.md`·`web/README.md`·`README.md`·이 파일 모두 새 구조 반영.
++- **교훈(향후 작업자용)**: 다른 도구를 "예시로" 언급할 때는 어떤 측면을 참고하는지(여기서는 "사용자가 직관적으로 흐름을 본다"는 UX 철학)까지 명시해야, "그 도구의 형태를 그대로 모방"으로 오해되지 않는다. 시각화가 메인이 되면 교사용 도구는 망한다 — 교사는 "내가 낸 문제가 이 학생에게 되나 안 되나"를 1분 안에 보고 싶어 하지, 노드를 드래그하며 DAG를 탐색하고 싶어 하지 않는다.
++
+diff --git a/README.md b/README.md
+index 2962391..592d7ea 100644
+--- a/README.md
++++ b/README.md
+@@ -101,7 +101,7 @@ IEP 현행수준 ──(교사 입력; 향후 LLM 초안 + 교사 확인)──
+ | `checker/` | Python 판정 엔진 + CLI. `models.py`(pydantic 스키마), `loader.py`(YAML→그래프, 검증), `engine.py`(판정), `explain.py`(한국어 설명 템플릿), `cli.py` | 테스트 23개 통과 |
+ | `tests/`, `scripts/gen_synthetic.py` | 단위 테스트 + KST 방식(하향 폐쇄) 합성 학생 생성기 | |
+ | `examples/real/` | 실제 그래프로 돌린 데모: 학생 A × 문제 3개 | |
+-| `web/` | **React 웹 프로토타입 v0** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미, 테스트 24개). 4개 화면. 상세는 `web/README.md` | 완료 |
++| `web/` | **React 웹 프로토타입 v1** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미, 테스트 통과). **단일 메인 화면(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달(학생 현행수준·반 일괄 검사)**. ComfyUI 형태 노드 그래프 뷰는 제거됨 — 선수관계는 검사 결과 내 인라인 텍스트 트리로 표시. 상세는 `web/README.md` | 완료 |
+ | `docs/SPEC_collision_checker.md` | 엔진 스펙 (데이터 모델·알고리즘·테스트 조건) | |
+ | `docs/SPEC_web_prototype.md` | 웹 스펙 (화면·원칙·금지어) | |
+ | `docs/README_checker.md` | Python 엔진 설치·실행 | |
+@@ -236,7 +236,7 @@ npm run dev
+ - 엣지를 추가할 때는 `sources`에 **원문 인용과 쪽수**를 넣는다. 기억으로 쓰지 말고 `sources/`의 발췌문에서 복사한다. 거기 없는 근거면 먼저 `sources/`에 원문을 추가한다.
+ - Python 엔진과 TS 엔진은 **같은 의미**를 유지한다. 한쪽을 고치면 다른 쪽도 고치고 테스트 케이스를 양쪽에 추가한다. 설명 문장 템플릿도 동일하게.
+ - UI 문구를 추가할 때 `web/scripts/screenshots.cjs`의 금지어 검사를 돌린다. "다음 단계" 같은 로드맵 표현도 걸리므로 "앞으로는" 등으로 쓴다.
+-- 의존성: Python은 networkx / pyyaml / pydantic만. 웹은 react / @xyflow/react / @dagrejs/dagre / js-yaml / vite / typescript / vitest만. 늘릴 때는 이유를 PR에 쓴다.
++- 의존성: Python은 networkx / pyyaml / pydantic만. 웹은 react / react-dom / js-yaml / vite / typescript / vitest만. **`@xyflow/react`·`@dagrejs/dagre`는 v1에서 제거됨** (ComfyUI 형태 그래프 뷰를 없애고 교사용 폼·모달 UI로 바꿈). 늘릴 때는 이유를 PR에 쓴다.
+ - 학생 실명·학교명은 어떤 파일·로그·프롬프트에도 넣지 않는다.
+ - 이 README의 §2·§3은 **왜**를 기록한 것이다. 기능을 바꾸기 전에 그 변화가 §3의 어느 원칙과 어떻게 관계되는지 한 줄이라도 적는다.
+ 
+diff --git a/docs/SPEC_web_prototype.md b/docs/SPEC_web_prototype.md
+index d6e8be7..ab61e60 100644
+--- a/docs/SPEC_web_prototype.md
++++ b/docs/SPEC_web_prototype.md
+@@ -1,8 +1,18 @@
+-# 웹 프로토타입 v0 스펙 — "인지적 정렬 검사기" 교사용 화면
++# 웹 프로토타입 v1 스펙 — "인지적 정렬 검사기" 교사용 화면
+ 
+-작성 2026-11-06. 목적: 팀 내부 검토·중간 발표 데모. 백엔드 없음, 브라우저에서만 동작.
++작성 2026-11-06 (v0로부터 동일일 재설계). 목적: 팀 내부 검토·중간 발표 데모. 백엔드 없음, 브라우저에서만 동작.
+ 
+-## 0. 꼭 지켜야 할 제품 원칙 (CLAUDE.md에서 발췌 — 위반하면 반려)
++## 0. v0 → v1 변경 사유 (ComfyUI 오해)
++
++v0는 상단 탭 4개(개념 그래프 / 학생 현행수준 / 문제 검사 / 학급 일괄 검사) 구조였고, **들어오자마자 React Flow + dagre 노드 그래프가 첫 화면**이었다. 사용자가 이전 AI에게 "ComfyUI를 예시로" 언급한 것이 "ComfyUI 형태 노드 그래프를 메인으로 만들라"로 해석된 결과다. 교사가 수업 사이 1~2분에 보는 도구가 노드 에디터가 돼버려 본질을 잃었다.
++
++v1은:
++- **상단 탭 제거.** 단일 메인 페이지(문제 검사 위저드)만 남긴다.
++- **그래프 뷰 완전 제거.** `@xyflow/react`·`@dagrejs/dagre` 의존성 삭제, `GraphTab.tsx`·`NodePanel.tsx` 삭제.
++- **선수관계는 검사 결과 내 인라인 텍스트 트리로.** "그래프에서 보기" 버튼(탭 1 이동) 대신, 결과 카드 안에서 요구 개념 R의 hard 조상을 노드 번호순으로 나열해 보여준다.
++- **학생 현행수준·학급 일괄 검사는 헤더 버튼으로 여는 모달.** 메인 흐름을 방해하지 않으면서 필요할 때만 꺼내 본다.
++
++## 1. 꼭 지켜야 할 제품 원칙 (CLAUDE.md에서 발췌 — 위반하면 반려)
+ 
+ 1. 시스템은 "좋은 문제"를 정의하지 않는다. **준비도 판정(COLLISION / ALIGNED / TOO_EASY)**만 한다.
+ 2. **IEP를 진도표로 만들지 않는다.**
+@@ -12,88 +22,119 @@
+ 3. AI는 이 프로토타입에 없다. LLM 호출 자리(문제 → 요구 노드 태깅)는 **"교사가 직접 선택"**으로 대체하고, UI에 "향후 AI 제안 + 교사 확인" 자리만 표시.
+ 4. 학생은 익명 ID(학생 A, B…)만. 실명·학교명 입력란 없음.
+ 
+-## 1. 기술 스택
++## 2. 기술 스택
+ 
+-- Vite + React 18 + TypeScript. 상태 관리는 React 내장(useState/useReducer/Context)만.
+-- 그래프 시각화: `@xyflow/react`(React Flow v12) + `dagre` 또는 `@dagrejs/dagre`로 계층 레이아웃(왼쪽→오른쪽 또는 위→아래, DAG 위상 순).
+-- YAML 파싱: `js-yaml`. `graph/graph_v0.yaml`을 **빌드 시 JSON으로 변환**(`scripts/graph-to-json.mjs` → `src/data/graph_v0.json`)하고 앱은 JSON만 import. 원본 YAML은 단일 진실 원천(single source of truth)이므로 복사·수정하지 않는다.
++- Vite + React 18 + TypeScript. 상태 관리는 React 내장(useReducer)만.
++- **그래프 시각화 라이브러리 없음.** v0의 `@xyflow/react`·`@dagrejs/dagre`는 v1에서 제거됨. 선수관계는 텍스트 트리로 표시.
++- YAML 파싱: `js-yaml`. `graph/graph_v0.yaml`을 **빌드 시 JSON으로 변환**(`scripts/graph-to-json.mjs` → `src/data/graph_v0.json`)하고 앱은 JSON만 import. 원본 YAML은 단일 진실 원천.
+ - 테스트: `vitest`. 엔진 포팅 테스트 필수.
+-- 스타일: 단일 CSS 파일 또는 CSS Modules. Tailwind·UI 킷 금지(의존성 최소화). 
++- 스타일: 단일 CSS 파일. Tailwind·UI 킷 금지(의존성 최소화).
+ - 그 외 의존성 추가 금지. 번들은 `npm run build` 한 번으로 `dist/`에 생성되어야 하고, `dist/index.html`을 그대로 열어도 동작해야 한다(`base: './'`).
+ 
+-## 2. 엔진 포팅 `src/engine/`
++## 3. 엔진 포팅 `src/engine/`
+ 
+-Python `checker/engine.py`와 **동일 의미**로 TypeScript 포팅. 함수:
++Python `checker/engine.py`와 **동일 의미**로 TypeScript 포팅. v0와 동일. 함수:
+ 
+ ```ts
+ type State = 'mastered' | 'emerging' | 'not_started';
+ type Verdict = 'COLLISION' | 'ALIGNED' | 'TOO_EASY';
+ interface CheckResult { verdict: Verdict; requires: string[]; gapHard: string[]; gapSoft: string[]; suggestedNext: string[]; explanation: string; }
+ 
+-hardAncestors(graph, nodeIds): Set<string>      // R 자신 제외, R의 각 노드의 hard 조상 합집합
++hardAncestors(graph, nodeIds): Set<string>
+ softDirectPrereqs(graph, nodeIds): Set<string>
+-outerFringe(graph, states): string[]            // mastered 아님 && hard 선수 모두 mastered. ID 정렬 (순서 의미 없음)
++outerFringe(graph, states): string[]
+ check(graph, states, requires): CheckResult
+-explain(graph, result): string                  // Python explain.py 템플릿과 같은 한국어 문장
++explain(graph, result): string
+ ```
+ 
+ 규칙(Python 구현과 동일): emerging은 gap에 포함(mastered 아님). suggestedNext = gapHard ∩ outerFringe, 정렬은 (R까지 hard 최단거리, ID). gapHard/gapSoft는 ID 오름차순.
+ 
+-테스트 `src/engine/engine.test.ts`: Python `tests/test_engine.py`의 1~8번 케이스를 그대로 옮기고, 9번은 **graph_v0.json 전체**로 하향 폐쇄 합성 학생 100명을 만들어 불변식(문제 노드가 M ∪ fringe이면 COLLISION 0건, 아니면 항상 COLLISION) 검사. 추가로 `examples/real/student_A.yaml` × 문제 3개의 기대 결과(COLLISION gap=[N16,N17] suggested=[N16] / ALIGNED / TOO_EASY)를 고정 테스트로 둔다.
+-
+-## 3. 화면 (탭 4개, 상단 탭 바)
+-
+-공통 레이아웃: 상단에 앱 이름 "인지적 정렬 검사기 (프로토타입 v0)" + 탭. 좌측 또는 상단에 **현재 학생 선택** 드롭다운(모든 탭에서 공유). 반응형은 데스크톱 우선(최소 1024px), 태블릿에서 깨지지만 않으면 됨.
+-
+-### 탭 1. 개념 그래프
+-- React Flow로 39노드 DAG. hard 엣지 실선, soft 엣지 점선. 노드 색: mastered=진한 색 채움, emerging=테두리만/연한 채움, not_started=회색. 범례 표시.
+-- 노드 클릭 → 우측 패널: label, description, level_hint, sources(교육과정 코드·쪽수·궤적 레벨명 목록), 선수 노드(hard/soft), 후속 노드. 현재 학생의 상태를 패널에서 3단계 토글로 바로 바꿀 수 있음.
+-- 상단 토글 "지금 도전 가능한 개념 강조": 켜면 outer fringe 노드에 테두리 하이라이트. **순서·번호 없음.**
+-- 그룹(A 수의 기초 / B 수 세기 / C 합성·분해 / D 덧셈·뺄셈 / E 자릿값 / F 곱셈)은 노드 ID 접두 번호 범위로 구분해 배경 밴드 또는 색상 힌트. (N01~04 / N05~13 / N14~17 / N18~27 / N28~36 / N37~39)
+-
+-### 탭 2. 학생 현행수준
+-- 현재 학생의 39노드 상태를 그룹별 표로 보여주고 3단계 라디오/세그먼트로 편집.
+-- 프리셋 학생 3명 내장(합성 데이터, 파일 `src/data/students.ts`):
+-  - 학생 A: `examples/real/student_A.yaml` 그대로.
+-  - 학생 B: 수의 기초~10까지 세기 mastered, 가르기·모으기 5 이하 emerging, 나머지 not_started (기본교육과정 초1~2 수준).
+-  - 학생 C: N01~N25, N28~N33 mastered, N26·N27 emerging, 나머지 not_started 또는 적절히 (받아올림 직전).
+-- "학생 추가" 버튼: 새 익명 ID(학생 D…) 생성, 모두 not_started. 삭제 가능.
+-- 상태는 **localStorage에 저장**(try/catch, 없어도 동작). "프리셋으로 초기화" 버튼.
+-- 화면 하단에 작은 안내문: "현행수준은 IEP 문서에서 교사가 입력합니다. 향후: IEP 현행수준 문장에서 AI가 초안을 제안하고 교사가 확인."
+-- **진도율·완료율 표시 금지.** mastered 개수 세어서 "12/39" 같은 것도 금지.
+-
+-### 탭 3. 문제 검사
+-- 입력: 문제 텍스트(textarea), 요구 개념(multi-select: 그룹별로 묶인 체크박스 또는 검색 가능한 리스트. 1개 이상), 표면 속성 4개(수 범위/문맥/표현/지원; 선택 입력, 저장만).
+-- 샘플 문제 3개 버튼(`examples/real/problem_*.yaml` 내용) — 클릭하면 입력 채움.
+-- "검사" 버튼 → 결과 카드:
+-  - 큰 판정 배지: COLLISION(경고색) / ALIGNED(긍정색) / TOO_EASY(중립색). 한국어 라벨: "선수 개념 미도달" / "지금 도전하기 적절" / "이미 숙달한 개념".
++테스트 `src/engine/engine.test.ts`: v0와 동일 (Python 1~8 + 9번 합성 학생 불변식 + 학생 A × 문제 3개 고정 결과).
++
++## 4. 화면 (단일 메인 + 2 모달)
++
++### 공통 레이아웃
++
++상단 헤더: 앱 이름("인지적 정렬 검사기" + 한 줄 부제) · 보는 학생 선택(pill 6개 이하, 그 이상은 셀렉트) · 헤더 보조 버튼 2개("학생 현행수준", "반 일괄 검사"). 메인 영역은 항상 문제 검사 위저드. 모달은 헤더 버튼으로 열고 Esc 또는 "닫기 ✕"으로 닫음.
++
++### 메인: 문제 검사 위저드 (좌우 2단 카드)
++
++**왼쪽 카드 — 문제 입력:**
++- 예시로 채우기 버튼 3개(샘플 1: 5 이내 덧셈 / 샘플 2: 받아올림 덧셈 / 샘플 3: 10 가르기).
++- 문제 textarea.
++- "이 문제를 풀려면 필요한 개념" fieldset: 선택한 개념 칩(× 제거), 개념 검색 input, 그룹별 체크박스 피커(A~F, 39개). 안내문 "지금은 교사가 직접 고릅니다. 앞으로는 문제 글을 읽고 초안을 제안하되, 확정은 교사가 합니다."
++- 표면 속성 details(수 범위/문맥/표현/지원; 저장만, 판정에 안 씀).
++- "{학생 이름} 기준으로 검사" 주 버튼. 입력 바뀌면 "다시 검사하세요" 안내.
++
++**오른쪽 카드 — 검사 결과:**
++- 결과 헤더: "검사 결과" 제목 + 결과 내에서 학생 전환 셀렉트.
++- 빈 상태: "문제와 필요한 개념을 넣고 검사를 누르면…" 안내문.
++- 결과 카드(verdict별 테두리·배경색):
++  - 큰 판정 배지 + 한국어 라벨 + 영문 코드.
++  - 의미 문장 1줄(verdict별).
++  - 문제 글(회색 박스).
++  - 필요한 개념 칩들.
+   - explanation 문장.
+-  - 갭 목록(hard: 강조, soft: 보조 표시), 각 항목에 label + 근거 성취기준 코드 1개.
+-  - COLLISION일 때만: "먼저 다룰 수 있는 개념" = suggestedNext (label). 여러 개면 가로 칩으로, 순위 표시 없음.
+-  - "그래프에서 보기" 버튼 → 탭 1로 이동하면서 요구 노드·갭 노드 하이라이트.
+-- 안내문: "요구 개념 태깅은 현재 교사가 직접 선택합니다. 향후 AI가 초안을 제안하고 교사가 확인하는 방식."
++  - **"학습 계보 보기/숨기기" 토글** — 펼치면 인라인 텍스트 트리(아래 §5).
++  - 아직 숙달 못 한 필수 선수 개념(gapHard) — 칩 대신 **갭 카드** 목록(라벨·상태·직전 선수 요약·근거 코드).
++  - 권장 선수 미도달(gapSoft) — 칩.
++  - COLLISION일 때만: "지금 바로 다룰 수 있는 선수 개념" = suggestedNext 칩(순서 없는 후보 안내문 포함).
++  - "반 전체에 적용해 보기" 버튼 → 반 일괄 모달 열기.
++
++### 모달 1: 학생 현행수준
++
++헤더 버튼 "학생 현행수준"으로 열기. 모달 헤드에 "{학생 이름}의 현행수준" 제목 + 학생 추가/삭제/예시 초기화 버튼. 본문은 v0와 같은 그룹별 표(A~F, 39개). 상태 3택 세그먼트(숙달/형성 중/미시작). "선수까지 숙달" 빠른 입력 버튼. 불일치 경고(숙달 표시했는데 선수가 미숙달). localStorage 저장(try/catch). 진도율·개수 집계 없음.
++
++### 모달 2: 반 일괄 검사
++
++헤더 버튼 "반 일괄 검사"로 열기. 메인에 입력한 문제(없으면 샘플 2번)를 모든 학생에게 적용한 표: 행=학생, 열=판정 배지 / gapHard 라벨 / suggestedNext 라벨. 행 클릭 → 그 학생으로 전환 + 메인에서 자세한 결과(모달 자동 닫힘). 표 위 요약 한 줄("학생 N명 중 M명에게 선수 개념 충돌이 있습니다" — 학생 간 비교·순위 아님).
++
++### 상태 관리 (`src/state.ts`)
++
++```ts
++type ModalKey = 'none' | 'students' | 'batch';
++interface AppState {
++  students: Student[];
++  currentId: string;
++  draft: Draft;
++  submitted: { text: string; requires: string[] } | null;
++  modal: ModalKey;
++}
++```
++
++v0에서 제거됨: `tab`, `highlight`, `selectedNode`, `focusRequest`, `showFringe`. 액션도 `setTab`·`focusNode`·`showInGraph`·`clearHighlight`·`toggleFringe`·`selectNode` 제거, `openModal`·`closeModal` 추가.
++
++## 5. 인라인 학습 계보 (ComfyUI 그래프 뷰를 대체하는 텍스트 트리)
++
++검사 결과 카드 안의 "학습 계보 보기" 토글로 펼침. 요구 개념 R(들)의 hard 조상 합집합 + R 자신을 **노드 번호순으로 정렬**해 세로 리스트로 보여준다.
++
++각 항목:
++- 마커(◆=요구 / ✓=숙달 / △=형성 중 / ✗=미시작)
++- 개념 라벨
++- 상태 텍스트(숙달/형성 중/미시작)
++- 태그(요청=파랑 / 갭=주황) — verdict가 COLLISION일 때만 갭 태그 표시
++- 근거 성취기준 코드 1개
++
++줄 배경: mastered=흰색, emerging=연노랑, not_started+갭=연주황. 요구 개념 줄은 파란 배경+왼쪽 파란 띠.
+ 
+-### 탭 4. 학급 일괄 검사
+-- 탭 3의 현재 문제(없으면 샘플 1번)를 모든 학생에게 적용한 표: 행=학생, 열=판정 배지 / 갭(hard) 라벨 / 먼저 다룰 수 있는 개념.
+-- 표 위에 요약 문장 한 줄: "이 문제는 학생 3명 중 1명에게 선수 개념 충돌이 있습니다." (숫자는 세어도 되지만 **학생별 점수·순위는 금지**.)
+-- 행 클릭 → 그 학생으로 전환하고 탭 3 결과 보기.
++**왜 이게 그래프보다 나은가:** 교사는 "이 문제가 요구하는 개념까지 가는 길에 뭐가 있고, 그중 뭐가 빠졌는지"를 1차원으로 보고 싶어 한다. DAG를 2차원 캔버스에 펼치면 39개 노드와 72개 엣지가 시각 잡음이 되고, 교사가 찾는 "내 학생의 상태"는 노드 색으로만 인코딩돼 시각적 탐색 비용이 크다. 번호순 세로 리스트는 (a) 익숙한 서술 형식, (b) 상태를 색+마커+텍스트 3중으로 인코딩, (c) 인쇄 가능, (d) 스크린 리더 호환, (e) 의존성 0.
+ 
+-## 4. 디자인 톤
++## 6. 디자인 톤
+ 
+ - 교사가 수업 사이에 1~2분 보는 도구. 차분하고 밀도 있는 업무용 UI. 장식 없음.
+ - 색: 중립 회색 바탕 + 판정 3색(경고=주황/적색 계열, 적절=청록/초록, 숙달=회청색). 색만으로 의미 전달 금지 — 항상 텍스트 라벨 동반.
+ - 한국어 UI. 폰트는 시스템 폰트 스택(`-apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif`). 웹폰트 로드 금지(오프라인 데모).
+ - 다크모드 불필요.
+ 
+-## 5. 산출물 위치와 검수 기준
++## 7. 산출물 위치와 검수 기준
+ 
+-- 위치: `/home/claude/work/project2/web/` (package.json, vite.config.ts, src/, scripts/, README.md)
++- 위치: `web/` (package.json, vite.config.ts, src/, scripts/, README.md)
+ - `npm install && npm run graph:json && npm test && npm run build` 가 모두 성공해야 한다.
+-- `npm run graph:json`은 `../graph/graph_v0.yaml` → `src/data/graph_v0.json`. 생성된 JSON은 커밋 대상(앱이 YAML 없이도 빌드되도록).
+-- README.md: 실행 방법, 화면 설명, 엔진 포팅 주의점, "하지 않은 것".
+-- 검수자는 Playwright로 4개 탭 스크린샷을 찍어 확인한다. 콘솔 에러 0건이어야 한다.
+-- 접근성 최소: 모든 버튼에 텍스트, 색 대비 4.5:1, 키보드로 탭 전환 가능.
++- `npm run graph:json`은 `../graph/graph_v0.yaml` → `src/data/graph_v0.json`. 생성된 JSON은 커밋 대상.
++- README.md: 실행 방법, 화면 설명, 엔진 포팅 주의점, "하지 않은 것", ComfyUI 오해 사유.
++- 검수자는 Playwright로 4장 스크린샷을 찍어 확인한다(`scripts/screenshots.cjs`). 콘솔 에러 0건, 금지어 0건이어야 한다.
++- 접근성 최소: 모든 버튼에 텍스트, 색 대비 4.5:1, 키보드로 모달 닫기(Esc), 포커스 트랩은 최소(차기 작업).
+ 
+-## 6. 하지 않을 것
++## 8. 하지 않을 것
+ 
+-LLM 호출, 로그인, 서버, DB, 변이 검사, 진척 지표, 학생 실명, 라우터 라이브러리(탭은 상태로), 애니메이션 라이브러리.
++LLM 호출, 로그인, 서버, DB, 변이 검사, 진척 지표, 학생 실명, 라우터 라이브러리(모달은 상태로), 애니메이션 라이브러리, **그래프 시각화 라이브러리(react-flow·cytoscape·d3 등)**.
+diff --git a/web/README.md b/web/README.md
+index 5b3a231..fc82bbb 100644
+--- a/web/README.md
++++ b/web/README.md
+@@ -1,8 +1,18 @@
+-# 인지적 정렬 검사기 (프로토타입 v0) — 웹
++# 인지적 정렬 검사기 (프로토타입 v1) — 웹
+ 
+ 팀 내부 검토·중간 발표 데모용. 백엔드·로그인·LLM 없이 브라우저에서만 동작한다.
+ 개념 그래프(`../graph/graph_v0.yaml`, 39노드/72엣지) 위에서 "이 문제가 이 학생에게 준비된 문제인가"를 판정한다(COLLISION / ALIGNED / TOO_EASY).
+ 
++## v0 → v1 변경 (ComfyUI 오해 수정)
++
++v0는 상단 탭 4개 구조였고 첫 화면이 React Flow + dagre 노드 그래프(ComfyUI 형태)였다. 교사가 수업 사이 1~2분 보는 도구가 노드 에디터가 돼버린 문제. v1은:
++
++- **탭 제거, 단일 메인 페이지**(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달(학생 현행수준·반 일괄 검사).
++- **`@xyflow/react`·`@dagrejs/dagre` 의존성 제거**, `GraphTab.tsx`·`NodePanel.tsx` 삭제.
++- **"그래프에서 보기" 버튼 제거**, 검사 결과 내 인라인 텍스트 트리(학습 계보)로 선수관계 표시.
++
++배경은 `docs/SPEC_web_prototype.md` §0와 `CLAUDE.md` "웹 UI 재설계 v1" 절 참조.
++
+ ## 실행
+ 
+ ```bash
+@@ -20,30 +30,30 @@ npm run dev          # 개발 서버
+ 
+ ## 화면
+ 
+-1. **개념 그래프** — React Flow + dagre(왼쪽→오른쪽). 실선=필수(hard), 점선=권장(soft). 노드는 상태를 색과 텍스트(숙달/형성 중/미시작)로 표시, 왼쪽 띠 색은 6개 그룹. "지금 도전 가능한 개념 강조"는 순서 없는 후보 집합만 테두리로 표시한다. 노드 클릭 시 우측 패널(설명·교육과정 위치·근거·선수/후속·현재 학생 상태 편집).
+-2. **학생 현행수준** — 그룹별 표에서 3택 편집. 프리셋 A/B/C, 학생 추가/삭제, 프리셋 초기화, localStorage 저장(try/catch). 진도율·개수 집계 없음.
+-3. **문제 검사** — 문제 텍스트, 요구 개념(검색 가능한 그룹별 체크박스), 표면 속성 4개(저장만), 샘플 3개. 결과: 판정 배지, 설명 문장, 갭(필수/권장, 근거 성취기준 코드 1개), 충돌 시에만 "먼저 다룰 수 있는 개념"(순위 없는 칩), "그래프에서 보기".
+-4. **학급 일괄 검사** — 같은 문제를 모든 학생에게 적용. 행 순서는 학생 목록 순서(판정 정렬 없음). 행 클릭 시 해당 학생으로 전환해 탭 3 결과 표시.
++1. **메인(초기)** — 문제 입력 카드(왼쪽) + 빈 검사 결과 카드(오른쪽). 샘플 버튼 3개, 문제 textarea, 그룹별 개념 피커.
++2. **메인(검사 후)** — 검사 버튼을 누르면 결과 카드에 판정 배지·의미 문장·설명·갭 카드·"지금 바로 다룰 수 있는 선수 개념" 칩·"학습 계보 보기" 토글이 나온다. 계보를 펼치면 요구 개념의 hard 조상을 번호순 세로 리스트로 보여주고, 각 항목에 상태(숙달/형성 중/미시작)·갭·요구 태그·근거 코드를 단다.
++3. **학생 현행수준 모달** — 헤더 "학생 현행수준" 버튼으로 열기. 현재 학생의 39개 개념 상태를 그룹별 표로 3단계 세그먼트로 편집. 학생 추가/삭제/예시 초기화. localStorage 저장(try/catch). 진도율·개수 집계 없음.
++4. **반 일괄 검사 모달** — 헤더 "반 일괄 검사" 버튼으로 열기. 같은 문제를 반 전체에 적용한 표. 행 순서는 학생 목록 순서(판정 정렬 없음). 행 클릭 시 해당 학생으로 전환해 메인에서 자세한 결과(모달 자동 닫힘).
+ 
+-탭 이동·하이라이트 전달은 `src/state.ts` 의 useReducer 하나로 처리한다.
++탭→모달 전환·결과 하이라이트는 필요 없어졌고(useReducer 하나로 `modal: 'none' | 'students' | 'batch'` 상태만 관리), 결과 내용은 `CheckTab` 안에서 `submitted`와 `student.states`로 바로 계산한다.
+ 
+ ## 엔진 포팅 시 주의점 (`src/engine/`)
+ 
+-- Python `checker/engine.py`, `explain.py` 와 같은 의미. 설명 문장 템플릿과 조사(josa) 로직도 동일하며 테스트로 고정했다.
++- Python `checker/engine.py`, `explain.py` 와 같은 의미. 설명 문장 템플릿과 조사(josa) 로직도 동일하며 테스트로 고정했다. **v0에서 변경 없음.**
+ - `explain(graph, result)` 시그니처를 맞추기 위해 `CheckResult` 에 `unmasteredRequires` 필드를 추가했다(Python 에서는 `check()` 안에서 계산해 explain 에 넘기던 값).
+ - `outerFringe` 는 스펙대로 ID 정렬(Python 은 정의 순서; 이 그래프에서는 동일). 순서에 의미 없음.
+ - `suggestedNext` 정렬: (R 까지 hard 최단거리, ID). R 자신이 다른 R 의 조상인 경우 거리 0.
+ - emerging 은 gap 에 포함(mastered 가 아님).
+-- 테스트 9번은 Python 테스트 docstring 과 같이 "문제 노드가 M ∪ fringe 이면 COLLISION 0건, 아니면 항상 COLLISION" 로 검증(스펙 원문의 '0건'은 도달 불가 노드에서 성립하지 않음). 합성 학생은 TS 로 재구현(난수열은 Python 과 다름).
++- 테스트 9번은 Python 테스트 docstring 과 같이 "문제 노드가 M ∪ fringe 이면 COLLISION 0건, 아니면 항상 COLLISION" 로 검증. 합성 학생은 TS 로 재구현(난수열은 Python 과 다름).
+ - 단위 테스트의 그래프 fixture 는 `../tests/fixtures/*.yaml`, 학생 A/문제는 `../examples/real/*.yaml` 을 직접 읽어 `src/data` 와 일치하는지 검사한다.
+ 
+ ## 하지 않은 것
+ 
+-LLM 호출, 로그인, 서버, DB, 변이 검사, 진척 지표(진도율·점수·랭킹·레벨), 학생 실명 입력, 라우터, 애니메이션 라이브러리, 다크모드, 모바일 대응. 요구 개념은 교사가 직접 선택하며 AI 제안은 안내문 자리만 있다.
++LLM 호출, 로그인, 서버, DB, 변이 검사, 진척 지표(진도율·점수·랭킹·레벨), 학생 실명 입력, 라우터, 애니메이션 라이브러리, 다크모드, 모바일 대응, **그래프 시각화 라이브러리(react-flow·cytoscape·d3 등)**. 요구 개념은 교사가 직접 선택하며 AI 제안은 안내문 자리만 있다.
+ 
+ ## 스크린샷 (1280×800)
+ 
+-- [탭 1 개념 그래프](screenshots/tab1.png)
+-- [탭 2 학생 현행수준](screenshots/tab2.png)
+-- [탭 3 문제 검사](screenshots/tab3.png)
+-- [탭 4 학급 일괄 검사](screenshots/tab4.png)
++- [1 메인(초기 빈 상태)](screenshots/tab1.png)
++- [2 메인(검사 결과 + 학습 계보 펼침)](screenshots/tab2.png)
++- [3 학생 현행수준 모달](screenshots/tab3.png)
++- [4 반 일괄 검사 모달](screenshots/tab4.png)
+diff --git a/web/package.json b/web/package.json
+index ba85570..ebd9350 100644
+--- a/web/package.json
++++ b/web/package.json
+@@ -11,8 +11,6 @@
+     "preview": "vite preview"
+   },
+   "dependencies": {
+-    "@dagrejs/dagre": "^1.1.4",
+-    "@xyflow/react": "^12.3.5",
+     "react": "^18.3.1",
+     "react-dom": "^18.3.1"
+   },
+diff --git a/web/scripts/screenshots.cjs b/web/scripts/screenshots.cjs
+index 33408bf..eb6111f 100644
+--- a/web/scripts/screenshots.cjs
++++ b/web/scripts/screenshots.cjs
+@@ -1,4 +1,5 @@
+-// 빌드 결과(dist/index.html)를 file:// 로 열어 4개 탭 스크린샷을 찍고 콘솔 에러를 검사한다.
++// 빌드 결과(dist/index.html)를 file:// 로 열어 스크린샷 4장을 찍고 콘솔 에러와 금지어를 검사한다.
++// v1: 탭 대신 메인 + 모달 구조. react-flow 의존 없음.
+ // playwright 는 전역 설치를 사용한다(devDependency 로 추가하지 않음).
+ const { chromium } = require('playwright');
+ const path = require('path');
+@@ -13,61 +14,55 @@ const path = require('path');
+ 
+   const url = 'file://' + path.resolve(__dirname, '../dist/index.html');
+   await page.goto(url);
+-  await page.waitForSelector('.react-flow__node');
+-  const nodeCount = await page.locator('.react-flow__node').count();
+-  const edgeCount = await page.locator('.react-flow__edge').count();
+-  console.log(`React Flow 노드 ${nodeCount}, 엣지 ${edgeCount}`);
++  await page.waitForSelector('.app-header');
+ 
+   const shot = (n) => page.screenshot({ path: path.resolve(__dirname, `../screenshots/tab${n}.png`) });
+ 
+-  // 탭 1: 검색으로 노드 선택(화면 이동 포함)
+-  await page.getByLabel('개념 찾기').fill('받아올림');
+-  await page.getByRole('option', { name: /받아올림 있는 \(몇\)/ }).click();
+-  await page.waitForTimeout(600);
++  // 1: 메인(초기 빈 상태)
+   await shot(1);
+ 
+-  // 탭 2
+-  await page.getByRole('tab', { name: '학생 현행수준' }).click();
+-  await page.waitForSelector('.tbl');
+-  await shot(2);
+-
+-  // 탭 3: 샘플 2 로 채우고 검사
+-  await page.getByRole('tab', { name: '문제 검사' }).click();
++  // 2: 메인(샘플 2 받아올림 덧셈 → 검사 → COLLISION 결과)
+   await page.getByRole('button', { name: '받아올림 덧셈' }).click();
+   await page.getByRole('button', { name: /기준으로 검사/ }).click();
+   await page.waitForSelector('.result-card');
++  // 학습 계보 펼치기
++  await page.getByRole('button', { name: /학습 계보 보기/ }).click();
++  await page.waitForSelector('.chain-list');
++  await shot(2);
++
++  // 3: 학생 현행수준 모달
++  await page.getByRole('button', { name: '학생 현행수준', exact: true }).click();
++  await page.waitForSelector('.modal-shell .tbl');
+   await shot(3);
+ 
+-  // 탭 4
+-  await page.getByRole('tab', { name: '학급 일괄 검사' }).click();
+-  await page.waitForSelector('.tbl-batch');
++  // 4: 반 일괄 검사 모달
++  await page.locator('.modal-close').click();
++  await page.getByRole('button', { name: '반 일괄 검사', exact: true }).click();
++  await page.waitForSelector('.modal-shell .tbl-batch');
+   await shot(4);
+ 
+-  // 추가 검증: 탭 3 -> 그래프에서 보기 -> 강조 노드 존재
+-  await page.getByRole('tab', { name: '문제 검사' }).click();
+-  await page.getByRole('button', { name: '그래프에서 보기', exact: true }).click();
+-  await page.waitForSelector('.cnode-gapHard');
+-  console.log('그래프 강조 노드: 요구 ' + await page.locator('.cnode-req').count() + ', 선수 미도달 ' + await page.locator('.cnode-gapHard').count());
+-
+-  // UI 전체 텍스트에서 금지어 검사(탭별)
++  // UI 전체 텍스트에서 금지어 검사 (메인 + 모달 두 개)
+   const banned = ['진도율', '완료율', '%', '점수', '랭킹', '레벨', '다음 단계', '1순위', '추천 순서', /\d+\s*\/\s*39/];
+   const texts = {};
+-  for (const [name, tab] of [['그래프', '개념 그래프'], ['학생', '학생 현행수준'], ['검사', '문제 검사'], ['일괄', '학급 일괄 검사']]) {
+-    await page.getByRole('tab', { name: tab }).click();
+-    await page.waitForTimeout(150);
+-    texts[name] = await page.locator('body').innerText();
+-  }
+-  // 노드 선택 패널(근거 원문 포함)도 별도 수집 — 검색으로 하나씩 선택(화면 이동과 무관)
+-  await page.getByRole('tab', { name: '개념 그래프' }).click();
+-  const ids = await page.evaluate(() => Array.from(document.querySelectorAll('.react-flow__node')).map((n) => n.getAttribute('data-id')));
+-  let panelText = '';
+-  for (const id of ids) {
+-    await page.getByLabel('개념 찾기').fill(id);
+-    await page.getByRole('option').first().click();
+-    await page.waitForTimeout(30);
+-    panelText += '\n' + await page.locator('.panel').innerText();
+-  }
+-  texts['패널(39노드)'] = panelText;
++
++  // 메인(모달 닫힌 상태)
++  await page.locator('.modal-close').click();
++  await page.waitForTimeout(120);
++  texts['메인'] = await page.locator('body').innerText();
++
++  // 학생 현행수준 모달
++  await page.getByRole('button', { name: '학생 현행수준', exact: true }).click();
++  await page.waitForSelector('.modal-shell');
++  await page.waitForTimeout(120);
++  texts['학생 현행수준'] = await page.locator('.modal-shell').innerText();
++  await page.locator('.modal-close').click();
++
++  // 반 일괄 검사 모달
++  await page.getByRole('button', { name: '반 일괄 검사', exact: true }).click();
++  await page.waitForSelector('.modal-shell');
++  await page.waitForTimeout(120);
++  texts['반 일괄'] = await page.locator('.modal-shell').innerText();
++
+   for (const [name, t] of Object.entries(texts)) {
+     for (const b of banned) {
+       const hit = typeof b === 'string' ? t.includes(b) : b.test(t);
+diff --git a/web/src/App.tsx b/web/src/App.tsx
+index 1b86165..3cbed8a 100644
+--- a/web/src/App.tsx
++++ b/web/src/App.tsx
+@@ -1,35 +1,26 @@
+-import { useEffect, useReducer, useRef } from 'react';
++import { useEffect, useReducer } from 'react';
+ import { BatchTab } from './components/BatchTab';
+ import { CheckTab } from './components/CheckTab';
+-import { GraphTab } from './components/GraphTab';
+ import { StudentTab } from './components/StudentTab';
+-import { initState, reducer, saveStored, type TabKey } from './state';
+-
+-const TABS: { key: TabKey; label: string }[] = [
+-  { key: 'graph', label: '개념 그래프' },
+-  { key: 'student', label: '학생 현행수준' },
+-  { key: 'check', label: '문제 검사' },
+-  { key: 'batch', label: '학급 일괄 검사' },
+-];
++import { initState, reducer, saveStored, type ModalKey } from './state';
+ 
+ export default function App() {
+   const [state, dispatch] = useReducer(reducer, undefined, initState);
+-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+ 
+   // 학생 데이터 저장(localStorage 불가 환경에서도 앱은 정상 동작)
+   useEffect(() => {
+     saveStored(state.students, state.currentId);
+   }, [state.students, state.currentId]);
+ 
+-  const onTabKey = (e: React.KeyboardEvent, i: number) => {
+-    let j = i;
+-    if (e.key === 'ArrowRight') j = (i + 1) % TABS.length;
+-    else if (e.key === 'ArrowLeft') j = (i + TABS.length - 1) % TABS.length;
+-    else return;
+-    e.preventDefault();
+-    dispatch({ type: 'setTab', tab: TABS[j].key });
+-    tabRefs.current[TABS[j].key]?.focus();
+-  };
++  // 모달 열려 있을 때 Esc 로 닫기
++  useEffect(() => {
++    if (state.modal === 'none') return;
++    const onKey = (e: KeyboardEvent) => {
++      if (e.key === 'Escape') dispatch({ type: 'closeModal' });
++    };
++    window.addEventListener('keydown', onKey);
++    return () => window.removeEventListener('keydown', onKey);
++  }, [state.modal]);
+ 
+   const fewStudents = state.students.length <= 6;
+ 
+@@ -38,29 +29,11 @@ export default function App() {
+       <header className="app-header">
+         <div className="brand">
+           <h1>인지적 정렬 검사기</h1>
+-          <small>프로토타입 v0</small>
++          <small>문제가 이 학생에게 지금 알맞은지 검사합니다</small>
+         </div>
+-        <nav className="tabs" role="tablist" aria-label="화면">
+-          {TABS.map((t, i) => (
+-            <button
+-              key={t.key}
+-              ref={(el) => { tabRefs.current[t.key] = el; }}
+-              type="button"
+-              role="tab"
+-              id={`tab-${t.key}`}
+-              aria-selected={state.tab === t.key}
+-              aria-controls={`panel-${t.key}`}
+-              tabIndex={state.tab === t.key ? 0 : -1}
+-              className={`tab${state.tab === t.key ? ' active' : ''}`}
+-              onClick={() => dispatch({ type: 'setTab', tab: t.key })}
+-              onKeyDown={(e) => onTabKey(e, i)}
+-            >
+-              {t.label}
+-            </button>
+-          ))}
+-        </nav>
++
+         <div className="student-bar">
+-          <span>보는 학생</span>
++          <span className="muted">보는 학생</span>
+           {fewStudents ? (
+             <div className="student-pills" role="radiogroup" aria-label="학생 선택">
+               {state.students.map((s) => (
+@@ -84,13 +57,45 @@ export default function App() {
+             </select>
+           )}
+         </div>
++
++        <nav className="header-actions" aria-label="보조 화면">
++          <button type="button" className={`btn btn-head${state.modal === 'students' ? ' on' : ''}`} onClick={() => dispatch({ type: 'openModal', modal: 'students' })}>
++            학생 현행수준
++          </button>
++          <button type="button" className={`btn btn-head${state.modal === 'batch' ? ' on' : ''}`} onClick={() => dispatch({ type: 'openModal', modal: 'batch' })}>
++            반 일괄 검사
++          </button>
++        </nav>
+       </header>
+-      <main className="app-main" role="tabpanel" id={`panel-${state.tab}`} aria-labelledby={`tab-${state.tab}`}>
+-        {state.tab === 'graph' && <GraphTab state={state} dispatch={dispatch} />}
+-        {state.tab === 'student' && <StudentTab state={state} dispatch={dispatch} />}
+-        {state.tab === 'check' && <CheckTab state={state} dispatch={dispatch} />}
+-        {state.tab === 'batch' && <BatchTab state={state} dispatch={dispatch} />}
++
++      <main className="app-main" aria-label="문제 검사">
++        <CheckTab state={state} dispatch={dispatch} />
+       </main>
++
++      {state.modal !== 'none' && (
++        <ModalShell
++          modal={state.modal}
++          onClose={() => dispatch({ type: 'closeModal' })}
++        >
++          {state.modal === 'students' && <StudentTab state={state} dispatch={dispatch} />}
++          {state.modal === 'batch' && <BatchTab state={state} dispatch={dispatch} />}
++        </ModalShell>
++      )}
++    </div>
++  );
++}
++
++function ModalShell({ modal, onClose, children }: { modal: ModalKey; onClose: () => void; children: React.ReactNode }) {
++  const title = modal === 'students' ? '학생 현행수준 관리' : '반 일괄 검사';
++  return (
++    <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
++      <div className="modal-shell" onClick={(e) => e.stopPropagation()}>
++        <div className="modal-head">
++          <h2>{title}</h2>
++          <button type="button" className="btn btn-quiet modal-close" aria-label="닫기" onClick={onClose}>닫기 ✕</button>
++        </div>
++        <div className="modal-body">{children}</div>
++      </div>
+     </div>
+   );
+ }
+diff --git a/web/src/components/BatchTab.tsx b/web/src/components/BatchTab.tsx
+index 19ba465..bceeff9 100644
+--- a/web/src/components/BatchTab.tsx
++++ b/web/src/components/BatchTab.tsx
+@@ -5,7 +5,7 @@ import { graph, nodeSpec } from '../graph';
+ import type { Action, AppState } from '../state';
+ import { VerdictBadge } from './Badges';
+ 
+-/** 탭 4: 같은 문제를 학급 전체에 적용. 행 순서는 학생 목록 순서이며 판정으로 정렬하지 않는다. */
++/** 반 일괄 검사 모달: 같은 문제를 학급 전체에 적용. 행 순서는 학생 목록 순서이며 판정으로 정렬하지 않는다. */
+ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
+   const { draft } = state;
+   const usingSample = draft.requires.length === 0;
+@@ -21,16 +21,16 @@ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: A
+   const open = (id: string) => dispatch({ type: 'openStudentResult', id, text: problem.text, requires: problem.requires });
+ 
+   return (
+-    <div className="page">
++    <div className="page page-modal">
+       <div className="page-head">
+-        <h2>학급 일괄 검사</h2>
+-        <button type="button" className="btn" onClick={() => dispatch({ type: 'setTab', tab: 'check' })}>문제 바꾸기</button>
++        <h2>학생별 판정 결과</h2>
++        <button type="button" className="btn" onClick={() => dispatch({ type: 'closeModal' })}>문제로 돌아가기</button>
+       </div>
+       <p className="lead">같은 문제를 반 전체에 낼 때 누구에게 먼저 다른 준비가 필요한지 봅니다. 학생 간 비교나 순위가 아닙니다.</p>
+ 
+       <div className="card batch-problem" style={{ marginTop: 14 }}>
+         <div>
+-          <span className="muted">검사 대상 문제{usingSample ? ' — 문제 검사 탭에 입력한 문제가 없어 예시(받아올림 덧셈)를 씁니다' : ''}</span>
++          <span className="muted">검사 대상 문제{usingSample ? ' — 메인에 입력한 문제가 없어 예시(받아올림 덧셈)를 씁니다' : ''}</span>
+           <p className="result-problem">{problem.text || '(문제 글 없음)'}</p>
+           <p><span className="muted">필요한 개념:</span> {problem.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
+         </div>
+@@ -69,7 +69,7 @@ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: A
+           ))}
+         </tbody>
+       </table>
+-      <p className="note">행을 누르면 그 학생의 자세한 결과로 이동합니다.</p>
++      <p className="note">행을 누르면 그 학생 기준으로 메인 화면에서 자세한 결과를 봅니다.</p>
+     </div>
+   );
+ }
+diff --git a/web/src/components/CheckTab.tsx b/web/src/components/CheckTab.tsx
+index b34540b..e72b09f 100644
+--- a/web/src/components/CheckTab.tsx
++++ b/web/src/components/CheckTab.tsx
+@@ -1,9 +1,10 @@
+ import { useMemo, useState } from 'react';
+-import { GROUPS, groupOf } from '../data/groups';
++import { GROUPS, groupOf, nodeNumber } from '../data/groups';
+ import { SAMPLE_PROBLEMS } from '../data/problems';
+-import { check } from '../engine';
++import { check, hardAncestors } from '../engine';
+ import { basisCode, graph, nodeSpec } from '../graph';
+ import type { Action, AppState } from '../state';
++import { STATE_LABEL } from '../ui';
+ import { VerdictBadge } from './Badges';
+ 
+ const MEANING: Record<string, string> = {
+@@ -12,11 +13,34 @@ const MEANING: Record<string, string> = {
+   TOO_EASY: '요구 개념을 이미 숙달한 상태라 새 학습보다는 연습·복습에 가깝습니다.',
+ };
+ 
+-/** 탭 3: 문제 입력 + 요구 개념 선택 + 판정 결과. */
++/** 한 개념의 직접 hard 선수 상태를 짧은 문자열로 요약. */
++function predSummary(id: string, states: Record<string, string>): string {
++  const preds = [...graph.hardPred.get(id)!];
++  if (preds.length === 0) return '출발 개념';
++  const parts = preds.map((p) => {
++    const s = states[p] ?? 'not_started';
++    const mark = s === 'mastered' ? '✓' : s === 'emerging' ? '△' : '✗';
++    return `${nodeSpec(p).label} ${mark}`;
++  });
++  return parts.join(' · ');
++}
++
++/** 요구 개념 R 의 hard 조상 + R 자신을 노드 번호순으로 정렬해 돌려준다. */
++function ancestorLine(requires: readonly string[]): string[] {
++  const set = new Set<string>();
++  for (const r of requires) {
++    set.add(r);
++    for (const a of hardAncestors(graph, [r])) set.add(a);
++  }
++  return [...set].sort((a, b) => nodeNumber(a) - nodeNumber(b));
++}
++
++/** 메인 화면: 문제 입력 + 요구 개념 선택 + 판정 결과 + 인라인 선수 계보. */
+ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
+   const { draft, submitted } = state;
+   const student = state.students.find((s) => s.id === state.currentId)!;
+   const [query, setQuery] = useState('');
++  const [showLine, setShowLine] = useState(false);
+ 
+   const result = useMemo(
+     () => (submitted ? check(graph, student.states, submitted.requires) : null),
+@@ -32,6 +56,10 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
+     dispatch({ type: 'setDraft', draft: { surface: { ...draft.surface, [k]: v } } });
+   const stale = submitted !== null && (submitted.text !== draft.text || submitted.requires.join() !== draft.requires.join());
+ 
++  const line = useMemo(() => (result ? ancestorLine(result.requires) : []), [result]);
++  const reqSet = useMemo(() => new Set(result?.requires ?? []), [result]);
++  const gapSet = useMemo(() => new Set(result?.gapHard ?? []), [result]);
++
+   return (
+     <div className="page check-grid">
+       <section className="card" aria-label="문제 입력">
+@@ -131,14 +159,57 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
+             <p className="result-req"><span className="muted">필요한 개념:</span> {result.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
+             <p className="result-expl">{result.explanation}</p>
+ 
++            {/* 인라인 선수 계보 — ComfyUI 형태 그래프를 대체하는 텍스트 트리 */}
++            <div className="prereq-line">
++              <button type="button" className="btn btn-quiet line-toggle" aria-expanded={showLine} onClick={() => setShowLine((v) => !v)}>
++                {showLine ? '▼ 학습 계보 숨기기' : '▶ 학습 계보 보기'}
++              </button>
++              {showLine && (
++                <ol className="chain-list" aria-label="이 문제의 학습 계보">
++                  <li className="chain-intro muted">
++                    아래는 이 문제가 요구하는 개념과 그 아래 놓인 필수 선수 개념을 순서대로 나열한 것입니다.
++                    <strong>표시된 색</strong> 칸은 학생이 아직 숙달하지 못한 개념(갭)입니다.
++                  </li>
++                  {line.map((id) => {
++                    const st = student.states[id] ?? 'not_started';
++                    const isReq = reqSet.has(id);
++                    const isGap = gapSet.has(id);
++                    const cls = `chain-item chain-st-${st}${isReq ? ' chain-req' : ''}${isGap ? ' chain-gap' : ''}`;
++                    return (
++                      <li key={id} className={cls}>
++                        <span className="chain-marker" aria-hidden="true">
++                          {isReq ? '◆' : st === 'mastered' ? '✓' : st === 'emerging' ? '△' : '✗'}
++                        </span>
++                        <span className="chain-label">{nodeSpec(id).label}</span>
++                        <span className="chain-state">{STATE_LABEL[st]}</span>
++                        {isReq && <span className="chain-tag tag-req">요구</span>}
++                        {isGap && !isReq && <span className="chain-tag tag-gap">갭</span>}
++                        <span className="code">{basisCode(id)}</span>
++                      </li>
++                    );
++                  })}
++                </ol>
++              )}
++            </div>
++
+             {result.gapHard.length > 0 && (
+               <div className="gap-block">
+                 <h3>아직 숙달하지 못한 필수 선수 개념</h3>
+-                <div className="chips">
+-                  {result.gapHard.map((id) => (
+-                    <span key={id} className="chip chip-hard">{nodeSpec(id).label}<span className="code">{basisCode(id)}</span></span>
+-                  ))}
+-                </div>
++                <ul className="gap-cards">
++                  {result.gapHard.map((id) => {
++                    const st = student.states[id] ?? 'not_started';
++                    return (
++                      <li key={id} className={`gap-card gap-st-${st}`}>
++                        <div className="gap-card-head">
++                          <span className="gap-card-label">{nodeSpec(id).label}</span>
++                          <span className="chain-state">{STATE_LABEL[st]}</span>
++                        </div>
++                        <div className="gap-card-pred muted">직전 선수: {predSummary(id, student.states)}</div>
++                        <div className="code">{basisCode(id)}</div>
++                      </li>
++                    );
++                  })}
++                </ul>
+               </div>
+             )}
+             {result.gapSoft.length > 0 && (
+@@ -157,22 +228,13 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
+                 <p className="muted">갭 가운데 학생이 이미 준비가 된 것입니다. 순서가 아니라 후보이며, 무엇을 고를지는 교사가 정합니다.</p>
+                 <div className="chips">
+                   {result.suggestedNext.map((id) => (
+-                    <button key={id} type="button" className="chip chip-next chip-btn" onClick={() => dispatch({ type: 'focusNode', node: id })} title="그래프에서 보기">
+-                      {nodeSpec(id).label}
+-                    </button>
++                    <span key={id} className="chip chip-next">{nodeSpec(id).label}</span>
+                   ))}
+                 </div>
+               </div>
+             )}
+             <div className="result-actions">
+-              <button
+-                type="button"
+-                className="btn"
+-                onClick={() => dispatch({ type: 'showInGraph', highlight: { requires: result.requires, gapHard: result.gapHard, gapSoft: result.gapSoft } })}
+-              >
+-                그래프에서 보기
+-              </button>
+-              <button type="button" className="btn btn-quiet" onClick={() => dispatch({ type: 'setTab', tab: 'batch' })}>
++              <button type="button" className="btn" onClick={() => dispatch({ type: 'openModal', modal: 'batch' })}>
+                 반 전체에 적용해 보기
+               </button>
+             </div>
+diff --git a/web/src/components/GraphTab.tsx b/web/src/components/GraphTab.tsx
+deleted file mode 100644
+index c3a5c06..0000000
+--- a/web/src/components/GraphTab.tsx
++++ /dev/null
+@@ -1,295 +0,0 @@
+-import { useEffect, useMemo, useRef, useState } from 'react';
+-import {
+-  Background,
+-  Controls,
+-  Handle,
+-  MarkerType,
+-  MiniMap,
+-  Position,
+-  ReactFlow,
+-  ReactFlowProvider,
+-  useReactFlow,
+-  type Edge,
+-  type Node,
+-  type NodeProps,
+-} from '@xyflow/react';
+-import '@xyflow/react/dist/style.css';
+-import { graphlib, layout } from '@dagrejs/dagre';
+-import { GROUPS, groupOf } from '../data/groups';
+-import { outerFringe, type State } from '../engine';
+-import { graph, nodeSpec } from '../graph';
+-import type { Action, AppState } from '../state';
+-import { STATE_LABEL } from '../ui';
+-import { NodePanel } from './NodePanel';
+-
+-const NODE_W = 200;
+-const NODE_H = 58;
+-
+-type Role = 'req' | 'gapHard' | 'gapSoft' | null;
+-
+-interface ConceptData extends Record<string, unknown> {
+-  label: string;
+-  stripe: string;
+-  state: State;
+-  fringe: boolean;
+-  role: Role;
+-  selected: boolean;
+-  dim: boolean;
+-}
+-
+-const ROLE_TEXT: Record<Exclude<Role, null>, string> = {
+-  req: '요구 개념',
+-  gapHard: '선수 미도달',
+-  gapSoft: '권장 선수 미도달',
+-};
+-
+-/** 개념 노드. 상태는 색뿐 아니라 텍스트("숙달/형성 중/미시작")로도 표시한다. */
+-function ConceptNode({ data }: NodeProps<Node<ConceptData>>) {
+-  const cls = [
+-    'cnode',
+-    `cnode-${data.state}`,
+-    data.fringe ? 'cnode-fringe' : '',
+-    data.role ? `cnode-${data.role}` : '',
+-    data.selected ? 'cnode-selected' : '',
+-    data.dim ? 'cnode-dim' : '',
+-  ].join(' ');
+-  return (
+-    <div className={cls} style={{ ['--stripe' as string]: data.stripe }}>
+-      <Handle type="target" position={Position.Left} isConnectable={false} />
+-      <div className="cnode-label">{data.label}</div>
+-      <div className="cnode-tags">
+-        <span className="cnode-state">{STATE_LABEL[data.state]}</span>
+-        {data.fringe && <span className="cnode-tag tag-fringe">지금 도전 가능</span>}
+-        {data.role && <span className={`cnode-tag tag-${data.role}`}>{ROLE_TEXT[data.role]}</span>}
+-      </div>
+-      <Handle type="source" position={Position.Right} isConnectable={false} />
+-    </div>
+-  );
+-}
+-
+-const nodeTypes = { concept: ConceptNode };
+-
+-/** dagre 로 왼쪽→오른쪽 계층 레이아웃(위치는 그래프에만 의존하므로 한 번만 계산). */
+-const positions: Map<string, { x: number; y: number }> = (() => {
+-  const g = new graphlib.Graph();
+-  g.setGraph({ rankdir: 'LR', nodesep: 26, ranksep: 96, marginx: 24, marginy: 24 });
+-  g.setDefaultEdgeLabel(() => ({}));
+-  for (const id of graph.nodeIds) g.setNode(id, { width: NODE_W, height: NODE_H });
+-  for (const e of graph.spec.edges) g.setEdge(e.from, e.to);
+-  layout(g);
+-  return new Map(graph.nodeIds.map((id) => [id, { x: g.node(id).x - NODE_W / 2, y: g.node(id).y - NODE_H / 2 }]));
+-})();
+-
+-/** 선택 노드가 바뀌거나 포커스 요청이 오면 그 노드로 화면을 옮긴다. */
+-function CenterOnSelection({ selected, request }: { selected: string | null; request: number }) {
+-  const rf = useReactFlow();
+-  const last = useRef(-1);
+-  useEffect(() => {
+-    if (!selected || request === last.current) return;
+-    last.current = request;
+-    if (!positions.has(selected)) return;
+-    // 선택 노드 + 직접 선수·후속이 모두 보이도록 맞춘다.
+-    const ids = new Set<string>([selected]);
+-    for (const e of graph.spec.edges) {
+-      if (e.kind !== 'hard') continue;
+-      if (e.from === selected) ids.add(e.to);
+-      if (e.to === selected) ids.add(e.from);
+-    }
+-    void rf.fitView({ nodes: [...ids].map((id) => ({ id })), padding: 0.2, duration: 400, maxZoom: 1.0, minZoom: 0.7 });
+-  }, [selected, request, rf]);
+-  return null;
+-}
+-
+-/** 이름으로 개념 찾기. 고르면 선택 + 화면 이동. */
+-function NodeSearch({ dispatch }: { dispatch: (a: Action) => void }) {
+-  const [q, setQ] = useState('');
+-  const [open, setOpen] = useState(false);
+-  const t = q.trim();
+-  const hits = t ? graph.nodeIds.filter((id) => nodeSpec(id).label.includes(t) || id.toLowerCase().includes(t.toLowerCase())).slice(0, 12) : [];
+-  const pick = (id: string) => {
+-    dispatch({ type: 'focusNode', node: id });
+-    setQ('');
+-    setOpen(false);
+-  };
+-  return (
+-    <div className="search-wrap">
+-      <input
+-        type="search"
+-        className="search"
+-        placeholder="개념 찾기 (예: 보수, 받아올림)"
+-        aria-label="개념 찾기"
+-        value={q}
+-        onChange={(e) => { setQ(e.target.value); setOpen(true); }}
+-        onFocus={() => setOpen(true)}
+-        onBlur={() => setTimeout(() => setOpen(false), 150)}
+-        onKeyDown={(e) => { if (e.key === 'Enter' && hits[0]) pick(hits[0]); if (e.key === 'Escape') setOpen(false); }}
+-      />
+-      {open && t && (
+-        <div className="search-results" role="listbox" aria-label="검색 결과">
+-          {hits.length === 0 && <div className="muted" style={{ padding: '6px 10px' }}>일치하는 개념이 없습니다</div>}
+-          {hits.map((id) => (
+-            <button key={id} type="button" role="option" aria-selected={false} onMouseDown={(e) => e.preventDefault()} onClick={() => pick(id)}>
+-              {nodeSpec(id).label}
+-              <span className="sr-grp">{groupOf(id).name}</span>
+-            </button>
+-          ))}
+-        </div>
+-      )}
+-    </div>
+-  );
+-}
+-
+-export function GraphTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
+-  const student = state.students.find((s) => s.id === state.currentId)!;
+-  const fringe = useMemo(() => new Set(state.showFringe ? outerFringe(graph, student.states) : []), [state.showFringe, student.states]);
+-  const hl = state.highlight;
+-  const [focusNeighbors, setFocusNeighbors] = useState(true);
+-  const sel = state.selectedNode;
+-
+-  // 선택 노드의 이웃(선수·후속 전부) — 그 밖은 흐리게.
+-  const neighborhood = useMemo(() => {
+-    if (!sel) return null;
+-    const set = new Set<string>([sel]);
+-    for (const e of graph.spec.edges) {
+-      if (e.from === sel) set.add(e.to);
+-      if (e.to === sel) set.add(e.from);
+-    }
+-    return set;
+-  }, [sel]);
+-
+-  const nodes: Node<ConceptData>[] = useMemo(() => {
+-    const roleOf = (id: string): Role => {
+-      if (!hl) return null;
+-      if (hl.requires.includes(id)) return 'req';
+-      if (hl.gapHard.includes(id)) return 'gapHard';
+-      if (hl.gapSoft.includes(id)) return 'gapSoft';
+-      return null;
+-    };
+-    return graph.nodeIds.map((id) => {
+-      const role = roleOf(id);
+-      const dim = focusNeighbors && neighborhood !== null && !neighborhood.has(id) && role === null;
+-      return {
+-        id,
+-        type: 'concept',
+-        position: positions.get(id)!,
+-        width: NODE_W,
+-        height: NODE_H,
+-        draggable: false,
+-        data: {
+-          label: nodeSpec(id).label,
+-          stripe: groupOf(id).border,
+-          state: student.states[id] ?? 'not_started',
+-          fringe: fringe.has(id),
+-          role,
+-          selected: sel === id,
+-          dim,
+-        },
+-      };
+-    });
+-  }, [student.states, fringe, hl, sel, focusNeighbors, neighborhood]);
+-
+-  const edges: Edge[] = useMemo(
+-    () =>
+-      graph.spec.edges.map((e, i) => {
+-        const incoming = sel !== null && e.to === sel;   // 선택 노드의 선수
+-        const outgoing = sel !== null && e.from === sel; // 선택 노드의 후속
+-        const touch = incoming || outgoing;
+-        const color = incoming ? '#2f6fed' : outgoing ? '#167a63' : e.kind === 'hard' ? '#55606d' : '#9aa3ae';
+-        const dim = focusNeighbors && sel !== null && !touch;
+-        return {
+-          id: `e${i}`,
+-          source: e.from,
+-          target: e.to,
+-          type: 'default',
+-          markerEnd: { type: MarkerType.ArrowClosed, color, width: 14, height: 14 },
+-          style: {
+-            stroke: color,
+-            strokeWidth: touch ? 2.6 : e.kind === 'hard' ? 1.5 : 1.2,
+-            strokeDasharray: e.kind === 'soft' ? '5 4' : undefined,
+-            opacity: dim ? 0.15 : 1,
+-          },
+-          zIndex: touch ? 10 : 0,
+-        };
+-      }),
+-    [sel, focusNeighbors],
+-  );
+-
+-  return (
+-    <div className="graph-tab">
+-      <div className="graph-main">
+-        <div className="toolbar">
+-          <NodeSearch dispatch={dispatch} />
+-          <label className="toggle">
+-            <input type="checkbox" checked={state.showFringe} onChange={() => dispatch({ type: 'toggleFringe' })} />
+-            <span>지금 도전 가능한 개념 표시</span>
+-          </label>
+-          <label className="toggle">
+-            <input type="checkbox" checked={focusNeighbors} onChange={() => setFocusNeighbors((v) => !v)} />
+-            <span>선택한 개념 주변만 선명하게</span>
+-          </label>
+-          {hl && (
+-            <span className="hl-notice" role="status">
+-              검사 결과 표시 중
+-              <button type="button" className="btn btn-small" onClick={() => dispatch({ type: 'clearHighlight' })}>
+-                지우기
+-              </button>
+-            </span>
+-          )}
+-        </div>
+-        <div className="legend" aria-label="범례">
+-          <span className="legend-item"><i className="lg lg-mastered" />숙달</span>
+-          <span className="legend-item"><i className="lg lg-emerging" />형성 중</span>
+-          <span className="legend-item"><i className="lg lg-not_started" />미시작</span>
+-          {state.showFringe && <span className="legend-item"><i className="lg lg-fringe" />지금 도전 가능 (순서 없는 후보)</span>}
+-          <span className="legend-sep" />
+-          <span className="legend-item"><i className="lg-line" />필수 선수</span>
+-          <span className="legend-item"><i className="lg-line lg-soft" />권장 선수</span>
+-          {sel && (
+-            <>
+-              <span className="legend-item"><i className="lg-line" style={{ borderColor: '#2f6fed' }} />선택한 개념의 선수</span>
+-              <span className="legend-item"><i className="lg-line" style={{ borderColor: '#167a63' }} />선택한 개념의 후속</span>
+-            </>
+-          )}
+-          <span className="legend-sep" />
+-          {GROUPS.map((g) => (
+-            <span key={g.key} className="legend-item">
+-              <i className="lg lg-dot" style={{ background: g.border }} />
+-              {g.name}
+-            </span>
+-          ))}
+-        </div>
+-        <div className="flow-wrap">
+-          <ReactFlowProvider>
+-            <ReactFlow
+-              nodes={nodes}
+-              edges={edges}
+-              nodeTypes={nodeTypes}
+-              fitView
+-              fitViewOptions={{ padding: 0.06 }}
+-              minZoom={0.15}
+-              maxZoom={1.6}
+-              nodesDraggable={false}
+-              nodesConnectable={false}
+-              onNodeClick={(_, n) => dispatch({ type: 'selectNode', node: n.id })}
+-              onPaneClick={() => dispatch({ type: 'selectNode', node: null })}
+-              proOptions={{ hideAttribution: true }}
+-            >
+-              <Background gap={24} color="#e6e3dc" />
+-              <Controls showInteractive={false} />
+-              <MiniMap
+-                pannable
+-                zoomable
+-                nodeColor={(n) => {
+-                  const s = (n.data as ConceptData).state;
+-                  return s === 'mastered' ? '#243447' : s === 'emerging' ? '#9db0c4' : '#d9dde2';
+-                }}
+-              />
+-              <CenterOnSelection selected={sel} request={state.focusRequest} />
+-            </ReactFlow>
+-          </ReactFlowProvider>
+-        </div>
+-      </div>
+-      <NodePanel state={state} dispatch={dispatch} />
+-    </div>
+-  );
+-}
+diff --git a/web/src/components/NodePanel.tsx b/web/src/components/NodePanel.tsx
+deleted file mode 100644
+index 31c1ff7..0000000
+--- a/web/src/components/NodePanel.tsx
++++ /dev/null
+@@ -1,102 +0,0 @@
+-import { groupOf } from '../data/groups';
+-import { hardAncestors } from '../engine';
+-import { graph, nodeSpec } from '../graph';
+-import type { Action, AppState } from '../state';
+-import { STATE_LABEL } from '../ui';
+-import { StateSegmented } from './Segmented';
+-
+-const SOURCE_TYPE: Record<string, string> = {
+-  curriculum_basic: '특수교육 기본교육과정',
+-  curriculum_common: '공통교육과정',
+-  trajectory: '학습궤적',
+-};
+-
+-function NodeLink({
+-  id, kind, state, dispatch,
+-}: { id: string; kind: 'hard' | 'soft'; state: 'mastered' | 'emerging' | 'not_started'; dispatch: (a: Action) => void }) {
+-  return (
+-    <li>
+-      <button type="button" className="link-btn" onClick={() => dispatch({ type: 'focusNode', node: id })}>
+-        {nodeSpec(id).label}
+-      </button>
+-      <span className={`kind kind-${kind}`}>{kind === 'hard' ? '필수' : '권장'}</span>
+-      <span className={`st st-${state}`}>{STATE_LABEL[state]}</span>
+-    </li>
+-  );
+-}
+-
+-/** 탭 1 우측 패널: 선택한 노드의 설명·근거·선후 관계와 현재 학생 상태 편집. */
+-export function NodePanel({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
+-  const id = state.selectedNode;
+-  if (!id) {
+-    return (
+-      <aside className="panel panel-empty" aria-label="개념 상세">
+-        <h2>개념 상세</h2>
+-        <p>그래프에서 개념을 누르거나 위에서 이름으로 찾으면, 설명·근거 교육과정·선수와 후속 개념이 여기에 나옵니다.</p>
+-        <p>현재 학생의 상태도 이 자리에서 바로 바꿀 수 있습니다.</p>
+-      </aside>
+-    );
+-  }
+-  const n = nodeSpec(id);
+-  const grp = groupOf(id);
+-  const student = state.students.find((s) => s.id === state.currentId)!;
+-  const st = (x: string) => student.states[x] ?? 'not_started';
+-  const hardPre = [...graph.hardPred.get(id)!];
+-  const softPre = [...graph.softPred.get(id)!];
+-  const hardPost = [...graph.hardSucc.get(id)!];
+-  const softPost = [...graph.softSucc.get(id)!];
+-  const pre = [...hardPre.map((x) => ({ x, k: 'hard' as const })), ...softPre.map((x) => ({ x, k: 'soft' as const }))];
+-  const post = [...hardPost.map((x) => ({ x, k: 'hard' as const })), ...softPost.map((x) => ({ x, k: 'soft' as const }))];
+-  const missingPre = [...hardAncestors(graph, [id])].filter((x) => st(x) !== 'mastered');
+-  const current = st(id);
+-
+-  return (
+-    <aside className="panel" aria-label="개념 상세">
+-      <span className="panel-group" style={{ background: grp.bg, borderColor: grp.border }}>{grp.name}</span>
+-      <h2>{n.label}</h2>
+-      <div className="panel-id">{n.id}</div>
+-      {n.description && <p>{n.description}</p>}
+-
+-      <h3>{student.name}의 현재 상태</h3>
+-      <StateSegmented
+-        name={`panel-${id}`}
+-        value={current}
+-        ariaLabel={`${n.label} 상태`}
+-        onChange={(s) => dispatch({ type: 'setNodeState', node: id, state: s })}
+-      />
+-      {current === 'mastered' && missingPre.length > 0 && (
+-        <p className="warn">숙달로 표시했지만 필수 선수 개념 {missingPre.length}개가 아직 숙달이 아닙니다. 아래 선수 목록을 확인하세요.</p>
+-      )}
+-      {missingPre.length > 0 && (
+-        <div className="panel-actions">
+-          <button type="button" className="btn btn-small" onClick={() => dispatch({ type: 'masterWithPrereqs', node: id })}>
+-            이 개념과 필수 선수 모두 숙달로 표시
+-          </button>
+-        </div>
+-      )}
+-
+-      <h3>선수 개념</h3>
+-      {pre.length === 0 ? <p className="muted">없음 — 출발 개념입니다.</p> : <ul className="rel">{pre.map((r) => <NodeLink key={r.x + r.k} id={r.x} kind={r.k} state={st(r.x)} dispatch={dispatch} />)}</ul>}
+-      <h3>후속 개념</h3>
+-      {post.length === 0 ? <p className="muted">없음 — 이 범위의 끝 개념입니다.</p> : <ul className="rel">{post.map((r) => <NodeLink key={r.x + r.k} id={r.x} kind={r.k} state={st(r.x)} dispatch={dispatch} />)}</ul>}
+-
+-      {n.level_hint && (
+-        <>
+-          <h3>교육과정 위치 (참고용, 판정에 쓰지 않음)</h3>
+-          <p>{n.level_hint}</p>
+-        </>
+-      )}
+-
+-      <h3>근거</h3>
+-      <ul className="sources">
+-        {n.sources.map((s, i) => (
+-          <li key={i}>
+-            <span className="src-type">{SOURCE_TYPE[s.type] ?? s.type}</span>
+-            {s.page && <span className="src-page">{s.page}</span>}
+-            <div>{s.ref}</div>
+-          </li>
+-        ))}
+-      </ul>
+-    </aside>
+-  );
+-}
+diff --git a/web/src/components/StudentTab.tsx b/web/src/components/StudentTab.tsx
+index 8b63b68..6b529ee 100644
+--- a/web/src/components/StudentTab.tsx
++++ b/web/src/components/StudentTab.tsx
+@@ -3,13 +3,13 @@ import { graph, nodeSpec } from '../graph';
+ import type { Action, AppState } from '../state';
+ import { StateSegmented } from './Segmented';
+ 
+-/** 탭 2: 현재 학생의 39개 개념 상태를 그룹별 표로 편집. 진도율·개수 집계는 표시하지 않는다. */
++/** 학생 현행수준 모달: 현재 학생의 39개 개념 상태를 그룹별 표로 편집. 진도율·개수 집계는 표시하지 않는다. */
+ export function StudentTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
+   const student = state.students.find((s) => s.id === state.currentId)!;
+   const st = (x: string) => student.states[x] ?? 'not_started';
+ 
+   return (
+-    <div className="page">
++    <div className="page page-modal">
+       <div className="page-head">
+         <h2>{student.name}의 현행수준</h2>
+         <div className="page-actions">
+@@ -66,9 +66,7 @@ export function StudentTab({ state, dispatch }: { state: AppState; dispatch: (a:
+                       return (
+                         <tr key={id}>
+                           <th scope="row" className="cell-label">
+-                            <button type="button" className="link-btn" onClick={() => dispatch({ type: 'focusNode', node: id })} title="그래프에서 보기">
+-                              {nodeSpec(id).label}
+-                            </button>
++                            <span className="cell-name">{nodeSpec(id).label}</span>
+                             <span className="cell-id">{nodeSpec(id).description}</span>
+                             {inconsistent && (
+                               <span className="row-warn">
+diff --git a/web/src/state.ts b/web/src/state.ts
+index 57ff286..49a4208 100644
+--- a/web/src/state.ts
++++ b/web/src/state.ts
+@@ -1,10 +1,12 @@
+-// 최상위 앱 상태(useReducer). 탭 간 이동과 하이라이트 전달도 여기서 처리한다.
++// 최상위 앱 상태(useReducer).
++// v1: 탭 없이 단일 메인 페이지(문제 검사 위저드) + 헤더 버튼 2개(학생 관리·반 일괄)로 모달.
++// 그래프 관련 상태(highlight/selectedNode/focusRequest/showFringe)는 제거됨 — ComfyUI 형태 오해 원천.
+ import { EMPTY_SURFACE, SAMPLE_PROBLEMS, type Surface } from './data/problems';
+ import { makePresets, type Student } from './data/students';
+ import { hardAncestors, type State } from './engine';
+ import { graph } from './graph';
+ 
+-export type TabKey = 'graph' | 'student' | 'check' | 'batch';
++export type ModalKey = 'none' | 'students' | 'batch';
+ 
+ export interface Draft {
+   text: string;
+@@ -12,43 +14,28 @@ export interface Draft {
+   surface: Surface;
+ }
+ 
+-/** "그래프에서 보기"로 탭 1 에 넘기는 강조 정보. */
+-export interface Highlight {
+-  requires: string[];
+-  gapHard: string[];
+-  gapSoft: string[];
+-}
+-
+ export interface AppState {
+-  tab: TabKey;
+   students: Student[];
+   currentId: string;
+   draft: Draft;
+   /** "검사"를 누른 시점의 문제. null 이면 아직 검사 전. */
+   submitted: { text: string; requires: string[] } | null;
+-  highlight: Highlight | null;
+-  showFringe: boolean;
+-  selectedNode: string | null;
+-  /** 그래프를 선택 노드로 이동시키라는 요청 카운터(증가할 때마다 센터링). */
+-  focusRequest: number;
++  /** 헤더 버튼으로 여는 보조 화면(모달). 메인은 항상 문제 검사 위저드. */
++  modal: ModalKey;
+ }
+ 
+ export type Action =
+-  | { type: 'setTab'; tab: TabKey }
+   | { type: 'selectStudent'; id: string }
+   | { type: 'setNodeState'; node: string; state: State }
+   | { type: 'masterWithPrereqs'; node: string }
+-  | { type: 'focusNode'; node: string }
+   | { type: 'addStudent' }
+   | { type: 'deleteStudent'; id: string }
+   | { type: 'resetPresets' }
+   | { type: 'setDraft'; draft: Partial<Draft> }
+   | { type: 'loadSample'; sampleId: string }
+   | { type: 'submit' }
+-  | { type: 'showInGraph'; highlight: Highlight }
+-  | { type: 'clearHighlight' }
+-  | { type: 'toggleFringe' }
+-  | { type: 'selectNode'; node: string | null }
++  | { type: 'openModal'; modal: ModalKey }
++  | { type: 'closeModal' }
+   | { type: 'openStudentResult'; id: string; text: string; requires: string[] };
+ 
+ export const STORAGE_KEY = 'alignment-checker-v0:students';
+@@ -93,15 +80,11 @@ export function initState(): AppState {
+   const stored = loadStored();
+   const students = stored?.students ?? initialStudents();
+   return {
+-    tab: 'graph',
+     students,
+     currentId: stored?.currentId ?? students[0].id,
+     draft: { text: '', requires: [], surface: { ...EMPTY_SURFACE } },
+     submitted: null,
+-    highlight: null,
+-    showFringe: true,
+-    selectedNode: null,
+-    focusRequest: 0,
++    modal: 'none',
+   };
+ }
+ 
+@@ -119,8 +102,6 @@ function nextStudentName(students: Student[]): { id: string; name: string } {
+ 
+ function reduceCore(s: AppState, a: Action): AppState {
+   switch (a.type) {
+-    case 'setTab':
+-      return { ...s, tab: a.tab };
+     case 'selectStudent':
+       return { ...s, currentId: a.id };
+     case 'setNodeState':
+@@ -147,8 +128,6 @@ function reduceCore(s: AppState, a: Action): AppState {
+         }),
+       };
+     }
+-    case 'focusNode':
+-      return { ...s, tab: 'graph', selectedNode: a.node, focusRequest: s.focusRequest + 1 };
+     case 'addStudent': {
+       const n = nextStudentName(s.students);
+       return { ...s, students: [...s.students, { ...n, states: {} }], currentId: n.id };
+@@ -172,19 +151,15 @@ function reduceCore(s: AppState, a: Action): AppState {
+     case 'submit':
+       if (s.draft.requires.length === 0) return s;
+       return { ...s, submitted: { text: s.draft.text, requires: [...s.draft.requires] } };
+-    case 'showInGraph':
+-      return { ...s, tab: 'graph', highlight: a.highlight, selectedNode: a.highlight.requires[0] ?? s.selectedNode, focusRequest: s.focusRequest + 1 };
+-    case 'clearHighlight':
+-      return { ...s, highlight: null };
+-    case 'toggleFringe':
+-      return { ...s, showFringe: !s.showFringe };
+-    case 'selectNode':
+-      return { ...s, selectedNode: a.node };
++    case 'openModal':
++      return { ...s, modal: a.modal };
++    case 'closeModal':
++      return { ...s, modal: 'none' };
+     case 'openStudentResult':
+       return {
+         ...s,
+         currentId: a.id,
+-        tab: 'check',
++        modal: 'none',
+         draft: { ...s.draft, text: a.text, requires: [...a.requires] },
+         submitted: { text: a.text, requires: [...a.requires] },
+       };
+diff --git a/web/src/styles.css b/web/src/styles.css
+index d8ace6b..ea0c04f 100644
+--- a/web/src/styles.css
++++ b/web/src/styles.css
+@@ -1,5 +1,6 @@
+ /* 인지적 정렬 검사기 — 교사용 업무 화면.
+-   톤: 종이 위의 잉크. 따뜻한 회백색 바탕, 짙은 남색 잉크, 판정 3색만 채도 사용. */
++   톤: 종이 위의 잉크. 따뜻한 회백색 바탕, 짙은 남색 잉크, 판정 3색만 채도 사용.
++   v1: 탭 없이 단일 메인 페이지 + 헤더 보조 버튼으로 모달. ComfyUI 형태 그래프 제거. */
+ :root {
+   --paper: #f4f3ef;
+   --panel: #ffffff;
+@@ -8,7 +9,7 @@
+   --ink: #1c2430;
+   --ink-2: #4a5563;
+   --ink-3: #7a8491;
+-  --navy: #243447;          /* 숙달 노드, 주 버튼 */
++  --navy: #243447;          /* 숙달, 주 버튼 */
+   --navy-2: #35506d;
+   --focus: #2f6fed;
+   /* 판정 3색 (배경/글자/테두리) */
+@@ -34,21 +35,23 @@ h1, h2, h3, p { margin: 0; }
+ 
+ /* ── 앱 틀 ───────────────────────────────────────── */
+ .app { display: flex; flex-direction: column; height: 100%; }
+-.app-header { display: flex; align-items: stretch; gap: 24px; padding: 0 20px; background: var(--panel); border-bottom: 1px solid var(--line); height: 56px; flex: none; }
+-.brand { display: flex; align-items: baseline; gap: 8px; align-self: center; white-space: nowrap; }
+-.brand h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+-.brand small { font-weight: 500; color: var(--ink-3); font-size: 12px; }
+-.tabs { display: flex; gap: 4px; flex: 1; }
+-.tab { border: 0; background: none; padding: 0 14px; cursor: pointer; border-bottom: 3px solid transparent; color: var(--ink-2); font-weight: 600; font-size: 14px; }
+-.tab:hover { color: var(--ink); }
+-.tab.active { color: var(--ink); border-bottom-color: var(--navy); }
+-.student-bar { display: flex; align-items: center; gap: 10px; align-self: center; }
++.app-header { display: flex; align-items: center; gap: 20px; padding: 0 20px; background: var(--panel); border-bottom: 1px solid var(--line); height: 56px; flex: none; }
++.brand { display: flex; flex-direction: column; gap: 0; align-self: center; white-space: nowrap; }
++.brand h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
++.brand small { font-weight: 500; color: var(--ink-3); font-size: 11.5px; }
++
++.student-bar { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+ .student-bar > span { color: var(--ink-3); font-size: 13px; }
+ .student-pills { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--paper); }
+ .pill { border: 0; background: none; border-radius: 999px; padding: 4px 12px; cursor: pointer; color: var(--ink-2); font-weight: 600; font-size: 13px; }
+ .pill:hover { color: var(--ink); }
+ .pill.on { background: var(--navy); color: #fff; }
+ .student-bar select { padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
++
++.header-actions { display: flex; gap: 6px; }
++.btn-head { padding: 6px 14px; font-size: 13px; font-weight: 600; }
++.btn-head.on { background: var(--navy); color: #fff; border-color: var(--navy); }
++
+ .app-main { flex: 1; min-height: 0; overflow: auto; }
+ 
+ /* ── 버튼 ───────────────────────────────────────── */
+@@ -78,8 +81,6 @@ h1, h2, h3, p { margin: 0; }
+ .chip-req { background: #e8effd; border-color: #9db8f3; color: #1d4ba8; font-weight: 600; }
+ .chip .x { border: 0; background: none; padding: 0 0 0 2px; cursor: pointer; color: inherit; opacity: .7; font-size: 14px; line-height: 1; }
+ .chip .x:hover { opacity: 1; }
+-.chip-btn { cursor: pointer; }
+-.chip-btn:hover { border-color: var(--navy-2); }
+ .code { font-size: 11.5px; color: var(--ink-3); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-left: 4px; background: #fff; white-space: nowrap; }
+ 
+ .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+@@ -91,83 +92,15 @@ h1, h2, h3, p { margin: 0; }
+ .seg-item.on.seg-emerging { background: #e4ecf6; color: #1f3a5c; font-weight: 700; }
+ .seg-item.on.seg-not_started { background: #e9ebee; color: #39434e; font-weight: 700; }
+ 
+-/* ── 탭 1: 그래프 ─────────────────────────────── */
+-.graph-tab { display: flex; height: 100%; }
+-.graph-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+-.toolbar { display: flex; align-items: center; gap: 14px; padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
+-.toolbar .search { width: 260px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; }
+-.toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+-.toggle input { width: 15px; height: 15px; margin: 0; accent-color: var(--navy); }
+-.toolbar-note { color: var(--ink-3); font-size: 12.5px; }
+-.hl-notice { margin-left: auto; display: flex; gap: 8px; align-items: center; background: #fff6df; border: 1px solid #e3c36a; border-radius: 8px; padding: 3px 4px 3px 10px; color: #5b4409; font-weight: 600; }
+-.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; padding: 6px 14px; background: #faf9f6; border-bottom: 1px solid var(--line-soft); font-size: 12px; color: var(--ink-2); }
+-.legend-item { display: inline-flex; align-items: center; gap: 5px; }
+-.legend-sep { width: 1px; height: 14px; background: var(--line); }
+-.lg { display: inline-block; width: 16px; height: 12px; border-radius: 3px; border: 1.5px solid var(--ink-3); }
+-.lg-mastered { background: var(--navy); border-color: var(--navy); }
+-.lg-emerging { background: #fff; border: 2px solid var(--navy); }
+-.lg-not_started { background: #e9ebee; border: 1px solid #b3bac3; }
+-.lg-fringe { background: #fff; border: 3px solid var(--fringe); }
+-.lg-line { display: inline-block; width: 24px; height: 0; border-top: 2px solid #55606d; }
+-.lg-soft { border-top-style: dashed; }
+-.lg-dot { width: 10px; height: 10px; border-radius: 2px; border: 0; }
+-.flow-wrap { flex: 1; min-height: 0; background: #fff; position: relative; }
+-.search-results { position: absolute; z-index: 20; top: 100%; left: 0; width: 320px; max-height: 260px; overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(28,36,48,.12); margin-top: 4px; padding: 4px; }
+-.search-results button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+-.search-results button:hover, .search-results button:focus-visible { background: var(--paper); }
+-.search-results .sr-grp { font-size: 11px; color: var(--ink-3); margin-left: 6px; }
+-.search-wrap { position: relative; }
+-
+-.cnode { width: 200px; height: 58px; border-radius: 8px; padding: 6px 10px 5px 14px; display: flex; flex-direction: column; justify-content: center; gap: 3px; font-size: 13px; line-height: 1.25; cursor: pointer; position: relative; box-shadow: inset 5px 0 0 var(--stripe); transition: opacity .15s; }
+-.cnode-label { font-weight: 600; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+-.cnode-tags { display: flex; gap: 5px; align-items: center; font-size: 10.5px; white-space: nowrap; overflow: hidden; }
+-.cnode-state { font-weight: 600; opacity: .85; }
+-.cnode-mastered { background: var(--navy); color: #fff; border: 2px solid var(--navy); }
+-.cnode-emerging { background: #fff; color: var(--ink); border: 2px solid var(--navy); }
+-.cnode-not_started { background: #eceef1; color: #4a5563; border: 1px solid #b3bac3; }
+-.cnode-dim { opacity: .22; }
+-.cnode-tag { padding: 0 5px; border-radius: 3px; font-weight: 700; }
+-.tag-fringe { background: var(--fringe); color: #fff; }
+-.tag-req { background: var(--req); color: #fff; }
+-.tag-gapHard { background: var(--gap); color: #fff; }
+-.tag-gapSoft { background: #fff; color: var(--col-fg); border: 1px solid var(--gap); }
+-.cnode-fringe { outline: 3px solid var(--fringe); outline-offset: 2px; }
+-.cnode-req { outline: 4px solid var(--req); outline-offset: 2px; }
+-.cnode-gapHard { outline: 4px solid var(--gap); outline-offset: 2px; }
+-.cnode-gapSoft { outline: 3px dashed var(--gap); outline-offset: 2px; }
+-.cnode-selected { box-shadow: inset 5px 0 0 var(--stripe), 0 0 0 3px #f2b84b, 0 6px 18px rgba(28,36,48,.18); }
+-.react-flow__handle { opacity: 0; pointer-events: none; }
+-.react-flow__minimap { width: 170px; height: 104px; border: 1px solid var(--line); border-radius: 8px; }
+-.react-flow__controls { box-shadow: none; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+-.react-flow__controls-button { border-bottom: 1px solid var(--line-soft); }
+-
+-.panel { width: 360px; flex: none; overflow: auto; background: var(--panel); border-left: 1px solid var(--line); padding: 16px 18px 28px; }
+-.panel h2 { font-size: 17px; line-height: 1.3; }
+-.panel h3 { font-size: 12px; color: var(--ink-3); margin: 18px 0 6px; font-weight: 600; }
+-.panel p { margin: 4px 0; }
+-.panel-id { font-size: 11px; color: var(--ink-3); margin: 2px 0 8px; word-break: break-all; }
+-.panel-group { display: inline-block; font-size: 11.5px; padding: 1px 8px; border-radius: 4px; border: 1px solid; margin-bottom: 8px; }
+-.panel-empty p { color: var(--ink-3); }
+-.panel-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+-.rel, .sources { list-style: none; margin: 0; padding: 0; }
+-.rel li { display: flex; gap: 8px; align-items: center; padding: 3px 0; }
+-.rel .st { margin-left: auto; font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+-.rel .st-not_started { color: var(--col-fg); }
+-.kind { font-size: 11px; padding: 0 6px; border-radius: 3px; border: 1px solid var(--line); color: var(--ink-2); }
+-.kind-hard { background: var(--eas-bg); font-weight: 700; }
+-.sources li { padding: 7px 0; border-bottom: 1px solid var(--line-soft); font-size: 12.5px; }
+-.src-type { font-weight: 700; margin-right: 6px; }
+-.src-page { color: var(--ink-3); font-size: 11.5px; }
+-.warn { color: var(--col-fg); font-size: 12px; }
+-
+ /* ── 공통 페이지 ──────────────────────────────── */
+ .page { max-width: 1160px; margin: 0 auto; padding: 22px 24px 48px; }
++.page-modal { max-width: none; padding: 18px 22px 36px; }
+ .page-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+ .page h2 { font-size: 19px; letter-spacing: -0.01em; }
+-.page-actions { display: flex; gap: 8px; }
++.page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+ .lead { color: var(--ink-2); max-width: 72ch; }
+ 
+-/* 탭 2 */
++/* 학생 현행수준 */
+ .student-layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: start; }
+ .group-nav { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 2px; }
+ .group-nav a { color: var(--ink-2); text-decoration: none; padding: 6px 10px; border-radius: 6px; border-left: 3px solid transparent; font-size: 13px; }
+@@ -180,6 +113,7 @@ h1, h2, h3, p { margin: 0; }
+ .tbl tbody tr:last-child td, .tbl tbody tr:last-child th { border-bottom: 0; }
+ .tbl thead th { background: #faf9f6; font-size: 12px; color: var(--ink-3); font-weight: 600; }
+ .cell-label { font-weight: 500; }
++.cell-name { font-weight: 600; }
+ .cell-id { display: block; font-size: 10.5px; color: var(--ink-3); font-weight: 400; }
+ .cell-actions { white-space: nowrap; text-align: right; }
+ .row-warn { font-size: 11.5px; color: var(--col-fg); display: block; margin-top: 2px; }
+@@ -187,8 +121,11 @@ h1, h2, h3, p { margin: 0; }
+ .tbl-batch td, .tbl-batch th { padding: 11px 12px; }
+ .row-click { cursor: pointer; }
+ .row-click:hover { background: #f7f9fc; }
++.group-sec .tbl { table-layout: fixed; }
++.group-sec .tbl th:nth-child(2), .group-sec .tbl td:nth-child(2) { width: 250px; }
++.group-sec .tbl th:nth-child(3), .group-sec .tbl td:nth-child(3) { width: 130px; }
+ 
+-/* 탭 3 */
++/* ── 메인: 문제 검사 위저드 ─────────────────── */
+ .check-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; max-width: 1240px; align-items: start; }
+ .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+ .card h2 { font-size: 16px; margin-bottom: 4px; }
+@@ -228,13 +165,51 @@ details.surface summary { cursor: pointer; font-weight: 600; color: var(--ink-2)
+ .chips { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 6px; }
+ .result-actions { display: flex; gap: 8px; margin-top: 12px; }
+ 
+-/* 탭 4 */
++/* ── 인라인 선수 계보 (그래프 뷰 대체) ─────────── */
++.prereq-line { margin: 14px 0 6px; border-top: 1px solid var(--line-soft); padding-top: 12px; }
++.line-toggle { padding: 4px 8px; font-weight: 600; font-size: 13px; }
++.chain-list { list-style: none; margin: 10px 0 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: #fff; overflow: hidden; max-height: 320px; overflow-y: auto; }
++.chain-intro { padding: 8px 12px; font-size: 12.5px; background: #faf9f6; border-bottom: 1px solid var(--line-soft); position: sticky; top: 0; }
++.chain-item { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--line-soft); font-size: 13px; }
++.chain-item:last-child { border-bottom: 0; }
++.chain-marker { width: 18px; text-align: center; font-weight: 700; flex: none; }
++.chain-label { flex: 1; min-width: 0; }
++.chain-state { font-size: 11.5px; color: var(--ink-3); white-space: nowrap; }
++.chain-tag { font-size: 10.5px; padding: 0 6px; border-radius: 3px; font-weight: 700; }
++.tag-req { background: var(--req); color: #fff; }
++.tag-gap { background: var(--gap); color: #fff; }
++
++.chain-st-mastered .chain-marker { color: var(--ali-bd); }
++.chain-st-emerging .chain-marker { color: #b07c1f; }
++.chain-st-not_started .chain-marker { color: var(--col-bd); }
++
++.chain-st-mastered { background: #fff; }
++.chain-st-emerging { background: #fff8eb; }
++.chain-st-not_started.chain-gap { background: #fbeee6; }
++
++.chain-req { background: #e8effd !important; font-weight: 700; border-left: 4px solid var(--req); padding-left: 8px; }
++.chain-req .chain-marker { color: var(--req); }
++
++/* 갭 카드: 검사 결과 내 갭 항목을 칩보다 자세히 */
++.gap-cards { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
++.gap-card { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
++.gap-card-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 4px; }
++.gap-card-label { font-weight: 700; font-size: 13.5px; }
++.gap-card-pred { font-size: 11.5px; line-height: 1.45; margin-bottom: 4px; }
++.gap-st-emerging { background: #fff8eb; border-color: #e3c36a; }
++.gap-st-not_started { background: #fff5f1; border-color: var(--col-bd); }
++.gap-card .code { display: inline-block; margin: 0; }
++
++/* ── 반 일괄 ──────────────────────────────── */
+ .summary { font-size: 15px; font-weight: 600; margin: 14px 0 10px; }
+ .batch-problem { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+ .batch-problem .result-problem { margin: 6px 0; }
+ .tbl-batch th[scope="row"] { white-space: nowrap; width: 110px; }
+ 
+-/* 그룹 표의 열 너비를 통일(표마다 자동 폭이 달라지지 않도록) */
+-.group-sec .tbl { table-layout: fixed; }
+-.group-sec .tbl th:nth-child(2), .group-sec .tbl td:nth-child(2) { width: 250px; }
+-.group-sec .tbl th:nth-child(3), .group-sec .tbl td:nth-child(3) { width: 130px; }
++/* ── 모달 ─────────────────────────────────── */
++.modal-overlay { position: fixed; inset: 0; background: rgba(28,36,48,.45); display: flex; align-items: stretch; justify-content: stretch; padding: 32px; z-index: 50; }
++.modal-shell { background: var(--paper); border-radius: 12px; box-shadow: 0 24px 64px rgba(28,36,48,.28); flex: 1; display: flex; flex-direction: column; overflow: hidden; }
++.modal-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--panel); border-bottom: 1px solid var(--line); flex: none; }
++.modal-head h2 { font-size: 17px; }
++.modal-close { font-weight: 600; }
++.modal-body { flex: 1; overflow: auto; }
+-- 
+2.47.3
+
