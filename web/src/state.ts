@@ -1,5 +1,6 @@
 // 최상위 앱 상태(useReducer).
 // v1: 탭 없이 단일 메인 페이지(문제 검사 위저드) + 헤더 버튼 2개(학생 관리·반 일괄)로 모달.
+// v2: IEP 문장 붙여넣기 초안(applyIepDraft) 액션 추가 — 룰 기반 초안이며 확정은 교사(원칙 1).
 // 그래프 관련 상태(highlight/selectedNode/focusRequest/showFringe)는 제거됨 — ComfyUI 형태 오해 원천.
 import { EMPTY_SURFACE, SAMPLE_PROBLEMS, type Surface } from './data/problems';
 import { makePresets, type Student } from './data/students';
@@ -27,6 +28,7 @@ export interface AppState {
 export type Action =
   | { type: 'selectStudent'; id: string }
   | { type: 'setNodeState'; node: string; state: State }
+  | { type: 'applyIepDraft'; states: Record<string, State> }
   | { type: 'masterWithPrereqs'; node: string }
   | { type: 'addStudent' }
   | { type: 'deleteStudent'; id: string }
@@ -115,6 +117,22 @@ function reduceCore(s: AppState, a: Action): AppState {
           return { ...st, states };
         }),
       };
+    case 'applyIepDraft': {
+      // 룰 기반 초안을 현재 학생에 덮어쓴다. not_started 는 명시를 지운다(setNodeState 와 같은 규칙).
+      // 문장에 나온 개념만 고치고 나머지는 그대로 둔다 — 초안이 전체를 리셋하지 않는다.
+      return {
+        ...s,
+        students: s.students.map((st) => {
+          if (st.id !== s.currentId) return st;
+          const states = { ...st.states };
+          for (const [node, state] of Object.entries(a.states)) {
+            if (state === 'not_started') delete states[node];
+            else states[node] = state;
+          }
+          return { ...st, states };
+        }),
+      };
+    }
     case 'masterWithPrereqs': {
       // 이 개념과 모든 필수(hard) 선수 개념을 숙달로 표시한다 (하향 폐쇄 유지).
       const ids = new Set<string>([a.node, ...hardAncestors(graph, [a.node])]);
