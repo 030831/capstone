@@ -5,7 +5,7 @@ import { graph, nodeSpec } from '../graph';
 import type { Action, AppState } from '../state';
 import { VerdictBadge } from './Badges';
 
-/** 탭 4: 같은 문제를 학급 전체에 적용. 행 순서는 학생 목록 순서이며 판정으로 정렬하지 않는다. */
+/** 반 일괄 검사 모달: 같은 문제를 학급 전체에 적용. 행 순서는 학생 목록 순서이며 판정으로 정렬하지 않는다. */
 export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
   const { draft } = state;
   const usingSample = draft.requires.length === 0;
@@ -21,16 +21,16 @@ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: A
   const open = (id: string) => dispatch({ type: 'openStudentResult', id, text: problem.text, requires: problem.requires });
 
   return (
-    <div className="page">
+    <div className="page page-modal">
       <div className="page-head">
-        <h2>학급 일괄 검사</h2>
-        <button type="button" className="btn" onClick={() => dispatch({ type: 'setTab', tab: 'check' })}>문제 바꾸기</button>
+        <h2>학생별 판정 결과</h2>
+        <button type="button" className="btn" onClick={() => dispatch({ type: 'closeModal' })}>문제로 돌아가기</button>
       </div>
       <p className="lead">같은 문제를 반 전체에 낼 때 누구에게 먼저 다른 준비가 필요한지 봅니다. 학생 간 비교나 순위가 아닙니다.</p>
 
       <div className="card batch-problem" style={{ marginTop: 14 }}>
         <div>
-          <span className="muted">검사 대상 문제{usingSample ? ' — 문제 검사 탭에 입력한 문제가 없어 예시(받아올림 덧셈)를 씁니다' : ''}</span>
+          <span className="muted">검사 대상 문제{usingSample ? ' — 메인에 입력한 문제가 없어 예시(받아올림 덧셈)를 씁니다' : ''}</span>
           <p className="result-problem">{problem.text || '(문제 글 없음)'}</p>
           <p><span className="muted">필요한 개념:</span> {problem.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
         </div>
@@ -69,7 +69,7 @@ export function BatchTab({ state, dispatch }: { state: AppState; dispatch: (a: A
           ))}
         </tbody>
       </table>
-      <p className="note">행을 누르면 그 학생의 자세한 결과로 이동합니다.</p>
+      <p className="note">행을 누르면 그 학생 기준으로 메인 화면에서 자세한 결과를 봅니다.</p>
     </div>
   );
 }

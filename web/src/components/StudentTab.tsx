@@ -3,13 +3,13 @@ import { graph, nodeSpec } from '../graph';
 import type { Action, AppState } from '../state';
 import { StateSegmented } from './Segmented';
 
-/** 탭 2: 현재 학생의 39개 개념 상태를 그룹별 표로 편집. 진도율·개수 집계는 표시하지 않는다. */
+/** 학생 현행수준 모달: 현재 학생의 39개 개념 상태를 그룹별 표로 편집. 진도율·개수 집계는 표시하지 않는다. */
 export function StudentTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
   const student = state.students.find((s) => s.id === state.currentId)!;
   const st = (x: string) => student.states[x] ?? 'not_started';
 
   return (
-    <div className="page">
+    <div className="page page-modal">
       <div className="page-head">
         <h2>{student.name}의 현행수준</h2>
         <div className="page-actions">
@@ -66,9 +66,7 @@ export function StudentTab({ state, dispatch }: { state: AppState; dispatch: (a:
                       return (
                         <tr key={id}>
                           <th scope="row" className="cell-label">
-                            <button type="button" className="link-btn" onClick={() => dispatch({ type: 'focusNode', node: id })} title="그래프에서 보기">
-                              {nodeSpec(id).label}
-                            </button>
+                            <span className="cell-name">{nodeSpec(id).label}</span>
                             <span className="cell-id">{nodeSpec(id).description}</span>
                             {inconsistent && (
                               <span className="row-warn">

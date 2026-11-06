@@ -1,4 +1,5 @@
-// 빌드 결과(dist/index.html)를 file:// 로 열어 4개 탭 스크린샷을 찍고 콘솔 에러를 검사한다.
+// 빌드 결과(dist/index.html)를 file:// 로 열어 스크린샷 4장을 찍고 콘솔 에러와 금지어를 검사한다.
+// v1: 탭 대신 메인 + 모달 구조. react-flow 의존 없음.
 // playwright 는 전역 설치를 사용한다(devDependency 로 추가하지 않음).
 const { chromium } = require('playwright');
 const path = require('path');
@@ -13,61 +14,55 @@ const path = require('path');
 
   const url = 'file://' + path.resolve(__dirname, '../dist/index.html');
   await page.goto(url);
-  await page.waitForSelector('.react-flow__node');
-  const nodeCount = await page.locator('.react-flow__node').count();
-  const edgeCount = await page.locator('.react-flow__edge').count();
-  console.log(`React Flow 노드 ${nodeCount}, 엣지 ${edgeCount}`);
+  await page.waitForSelector('.app-header');
 
   const shot = (n) => page.screenshot({ path: path.resolve(__dirname, `../screenshots/tab${n}.png`) });
 
-  // 탭 1: 검색으로 노드 선택(화면 이동 포함)
-  await page.getByLabel('개념 찾기').fill('받아올림');
-  await page.getByRole('option', { name: /받아올림 있는 \(몇\)/ }).click();
-  await page.waitForTimeout(600);
+  // 1: 메인(초기 빈 상태)
   await shot(1);
 
-  // 탭 2
-  await page.getByRole('tab', { name: '학생 현행수준' }).click();
-  await page.waitForSelector('.tbl');
-  await shot(2);
-
-  // 탭 3: 샘플 2 로 채우고 검사
-  await page.getByRole('tab', { name: '문제 검사' }).click();
+  // 2: 메인(샘플 2 받아올림 덧셈 → 검사 → COLLISION 결과)
   await page.getByRole('button', { name: '받아올림 덧셈' }).click();
   await page.getByRole('button', { name: /기준으로 검사/ }).click();
   await page.waitForSelector('.result-card');
+  // 학습 계보 펼치기
+  await page.getByRole('button', { name: /학습 계보 보기/ }).click();
+  await page.waitForSelector('.chain-list');
+  await shot(2);
+
+  // 3: 학생 현행수준 모달
+  await page.getByRole('button', { name: '학생 현행수준', exact: true }).click();
+  await page.waitForSelector('.modal-shell .tbl');
   await shot(3);
 
-  // 탭 4
-  await page.getByRole('tab', { name: '학급 일괄 검사' }).click();
-  await page.waitForSelector('.tbl-batch');
+  // 4: 반 일괄 검사 모달
+  await page.locator('.modal-close').click();
+  await page.getByRole('button', { name: '반 일괄 검사', exact: true }).click();
+  await page.waitForSelector('.modal-shell .tbl-batch');
   await shot(4);
 
-  // 추가 검증: 탭 3 -> 그래프에서 보기 -> 강조 노드 존재
-  await page.getByRole('tab', { name: '문제 검사' }).click();
-  await page.getByRole('button', { name: '그래프에서 보기', exact: true }).click();
-  await page.waitForSelector('.cnode-gapHard');
-  console.log('그래프 강조 노드: 요구 ' + await page.locator('.cnode-req').count() + ', 선수 미도달 ' + await page.locator('.cnode-gapHard').count());
-
-  // UI 전체 텍스트에서 금지어 검사(탭별)
+  // UI 전체 텍스트에서 금지어 검사 (메인 + 모달 두 개)
   const banned = ['진도율', '완료율', '%', '점수', '랭킹', '레벨', '다음 단계', '1순위', '추천 순서', /\d+\s*\/\s*39/];
   const texts = {};
-  for (const [name, tab] of [['그래프', '개념 그래프'], ['학생', '학생 현행수준'], ['검사', '문제 검사'], ['일괄', '학급 일괄 검사']]) {
-    await page.getByRole('tab', { name: tab }).click();
-    await page.waitForTimeout(150);
-    texts[name] = await page.locator('body').innerText();
-  }
-  // 노드 선택 패널(근거 원문 포함)도 별도 수집 — 검색으로 하나씩 선택(화면 이동과 무관)
-  await page.getByRole('tab', { name: '개념 그래프' }).click();
-  const ids = await page.evaluate(() => Array.from(document.querySelectorAll('.react-flow__node')).map((n) => n.getAttribute('data-id')));
-  let panelText = '';
-  for (const id of ids) {
-    await page.getByLabel('개념 찾기').fill(id);
-    await page.getByRole('option').first().click();
-    await page.waitForTimeout(30);
-    panelText += '\n' + await page.locator('.panel').innerText();
-  }
-  texts['패널(39노드)'] = panelText;
+
+  // 메인(모달 닫힌 상태)
+  await page.locator('.modal-close').click();
+  await page.waitForTimeout(120);
+  texts['메인'] = await page.locator('body').innerText();
+
+  // 학생 현행수준 모달
+  await page.getByRole('button', { name: '학생 현행수준', exact: true }).click();
+  await page.waitForSelector('.modal-shell');
+  await page.waitForTimeout(120);
+  texts['학생 현행수준'] = await page.locator('.modal-shell').innerText();
+  await page.locator('.modal-close').click();
+
+  // 반 일괄 검사 모달
+  await page.getByRole('button', { name: '반 일괄 검사', exact: true }).click();
+  await page.waitForSelector('.modal-shell');
+  await page.waitForTimeout(120);
+  texts['반 일괄'] = await page.locator('.modal-shell').innerText();
+
   for (const [name, t] of Object.entries(texts)) {
     for (const b of banned) {
       const hit = typeof b === 'string' ? t.includes(b) : b.test(t);

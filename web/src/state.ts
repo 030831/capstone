@@ -1,10 +1,12 @@
-// 최상위 앱 상태(useReducer). 탭 간 이동과 하이라이트 전달도 여기서 처리한다.
+// 최상위 앱 상태(useReducer).
+// v1: 탭 없이 단일 메인 페이지(문제 검사 위저드) + 헤더 버튼 2개(학생 관리·반 일괄)로 모달.
+// 그래프 관련 상태(highlight/selectedNode/focusRequest/showFringe)는 제거됨 — ComfyUI 형태 오해 원천.
 import { EMPTY_SURFACE, SAMPLE_PROBLEMS, type Surface } from './data/problems';
 import { makePresets, type Student } from './data/students';
 import { hardAncestors, type State } from './engine';
 import { graph } from './graph';
 
-export type TabKey = 'graph' | 'student' | 'check' | 'batch';
+export type ModalKey = 'none' | 'students' | 'batch';
 
 export interface Draft {
   text: string;
@@ -12,43 +14,28 @@ export interface Draft {
   surface: Surface;
 }
 
-/** "그래프에서 보기"로 탭 1 에 넘기는 강조 정보. */
-export interface Highlight {
-  requires: string[];
-  gapHard: string[];
-  gapSoft: string[];
-}
-
 export interface AppState {
-  tab: TabKey;
   students: Student[];
   currentId: string;
   draft: Draft;
   /** "검사"를 누른 시점의 문제. null 이면 아직 검사 전. */
   submitted: { text: string; requires: string[] } | null;
-  highlight: Highlight | null;
-  showFringe: boolean;
-  selectedNode: string | null;
-  /** 그래프를 선택 노드로 이동시키라는 요청 카운터(증가할 때마다 센터링). */
-  focusRequest: number;
+  /** 헤더 버튼으로 여는 보조 화면(모달). 메인은 항상 문제 검사 위저드. */
+  modal: ModalKey;
 }
 
 export type Action =
-  | { type: 'setTab'; tab: TabKey }
   | { type: 'selectStudent'; id: string }
   | { type: 'setNodeState'; node: string; state: State }
   | { type: 'masterWithPrereqs'; node: string }
-  | { type: 'focusNode'; node: string }
   | { type: 'addStudent' }
   | { type: 'deleteStudent'; id: string }
   | { type: 'resetPresets' }
   | { type: 'setDraft'; draft: Partial<Draft> }
   | { type: 'loadSample'; sampleId: string }
   | { type: 'submit' }
-  | { type: 'showInGraph'; highlight: Highlight }
-  | { type: 'clearHighlight' }
-  | { type: 'toggleFringe' }
-  | { type: 'selectNode'; node: string | null }
+  | { type: 'openModal'; modal: ModalKey }
+  | { type: 'closeModal' }
   | { type: 'openStudentResult'; id: string; text: string; requires: string[] };
 
 export const STORAGE_KEY = 'alignment-checker-v0:students';
@@ -93,15 +80,11 @@ export function initState(): AppState {
   const stored = loadStored();
   const students = stored?.students ?? initialStudents();
   return {
-    tab: 'graph',
     students,
     currentId: stored?.currentId ?? students[0].id,
     draft: { text: '', requires: [], surface: { ...EMPTY_SURFACE } },
     submitted: null,
-    highlight: null,
-    showFringe: true,
-    selectedNode: null,
-    focusRequest: 0,
+    modal: 'none',
   };
 }
 
@@ -119,8 +102,6 @@ function nextStudentName(students: Student[]): { id: string; name: string } {
 
 function reduceCore(s: AppState, a: Action): AppState {
   switch (a.type) {
-    case 'setTab':
-      return { ...s, tab: a.tab };
     case 'selectStudent':
       return { ...s, currentId: a.id };
     case 'setNodeState':
@@ -147,8 +128,6 @@ function reduceCore(s: AppState, a: Action): AppState {
         }),
       };
     }
-    case 'focusNode':
-      return { ...s, tab: 'graph', selectedNode: a.node, focusRequest: s.focusRequest + 1 };
     case 'addStudent': {
       const n = nextStudentName(s.students);
       return { ...s, students: [...s.students, { ...n, states: {} }], currentId: n.id };
@@ -172,19 +151,15 @@ function reduceCore(s: AppState, a: Action): AppState {
     case 'submit':
       if (s.draft.requires.length === 0) return s;
       return { ...s, submitted: { text: s.draft.text, requires: [...s.draft.requires] } };
-    case 'showInGraph':
-      return { ...s, tab: 'graph', highlight: a.highlight, selectedNode: a.highlight.requires[0] ?? s.selectedNode, focusRequest: s.focusRequest + 1 };
-    case 'clearHighlight':
-      return { ...s, highlight: null };
-    case 'toggleFringe':
-      return { ...s, showFringe: !s.showFringe };
-    case 'selectNode':
-      return { ...s, selectedNode: a.node };
+    case 'openModal':
+      return { ...s, modal: a.modal };
+    case 'closeModal':
+      return { ...s, modal: 'none' };
     case 'openStudentResult':
       return {
         ...s,
         currentId: a.id,
-        tab: 'check',
+        modal: 'none',
         draft: { ...s.draft, text: a.text, requires: [...a.requires] },
         submitted: { text: a.text, requires: [...a.requires] },
       };
