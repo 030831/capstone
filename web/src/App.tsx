@@ -1,35 +1,26 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer } from 'react';
 import { BatchTab } from './components/BatchTab';
 import { CheckTab } from './components/CheckTab';
-import { GraphTab } from './components/GraphTab';
 import { StudentTab } from './components/StudentTab';
-import { initState, reducer, saveStored, type TabKey } from './state';
-
-const TABS: { key: TabKey; label: string }[] = [
-  { key: 'graph', label: '개념 그래프' },
-  { key: 'student', label: '학생 현행수준' },
-  { key: 'check', label: '문제 검사' },
-  { key: 'batch', label: '학급 일괄 검사' },
-];
+import { initState, reducer, saveStored, type ModalKey } from './state';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // 학생 데이터 저장(localStorage 불가 환경에서도 앱은 정상 동작)
   useEffect(() => {
     saveStored(state.students, state.currentId);
   }, [state.students, state.currentId]);
 
-  const onTabKey = (e: React.KeyboardEvent, i: number) => {
-    let j = i;
-    if (e.key === 'ArrowRight') j = (i + 1) % TABS.length;
-    else if (e.key === 'ArrowLeft') j = (i + TABS.length - 1) % TABS.length;
-    else return;
-    e.preventDefault();
-    dispatch({ type: 'setTab', tab: TABS[j].key });
-    tabRefs.current[TABS[j].key]?.focus();
-  };
+  // 모달 열려 있을 때 Esc 로 닫기
+  useEffect(() => {
+    if (state.modal === 'none') return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dispatch({ type: 'closeModal' });
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [state.modal]);
 
   const fewStudents = state.students.length <= 6;
 
@@ -38,29 +29,11 @@ export default function App() {
       <header className="app-header">
         <div className="brand">
           <h1>인지적 정렬 검사기</h1>
-          <small>프로토타입 v0</small>
+          <small>문제가 이 학생에게 지금 알맞은지 검사합니다</small>
         </div>
-        <nav className="tabs" role="tablist" aria-label="화면">
-          {TABS.map((t, i) => (
-            <button
-              key={t.key}
-              ref={(el) => { tabRefs.current[t.key] = el; }}
-              type="button"
-              role="tab"
-              id={`tab-${t.key}`}
-              aria-selected={state.tab === t.key}
-              aria-controls={`panel-${t.key}`}
-              tabIndex={state.tab === t.key ? 0 : -1}
-              className={`tab${state.tab === t.key ? ' active' : ''}`}
-              onClick={() => dispatch({ type: 'setTab', tab: t.key })}
-              onKeyDown={(e) => onTabKey(e, i)}
-            >
-              {t.label}
-            </button>
-          ))}
-        </nav>
+
         <div className="student-bar">
-          <span>보는 학생</span>
+          <span className="muted">보는 학생</span>
           {fewStudents ? (
             <div className="student-pills" role="radiogroup" aria-label="학생 선택">
               {state.students.map((s) => (
@@ -84,13 +57,45 @@ export default function App() {
             </select>
           )}
         </div>
+
+        <nav className="header-actions" aria-label="보조 화면">
+          <button type="button" className={`btn btn-head${state.modal === 'students' ? ' on' : ''}`} onClick={() => dispatch({ type: 'openModal', modal: 'students' })}>
+            학생 현행수준
+          </button>
+          <button type="button" className={`btn btn-head${state.modal === 'batch' ? ' on' : ''}`} onClick={() => dispatch({ type: 'openModal', modal: 'batch' })}>
+            반 일괄 검사
+          </button>
+        </nav>
       </header>
-      <main className="app-main" role="tabpanel" id={`panel-${state.tab}`} aria-labelledby={`tab-${state.tab}`}>
-        {state.tab === 'graph' && <GraphTab state={state} dispatch={dispatch} />}
-        {state.tab === 'student' && <StudentTab state={state} dispatch={dispatch} />}
-        {state.tab === 'check' && <CheckTab state={state} dispatch={dispatch} />}
-        {state.tab === 'batch' && <BatchTab state={state} dispatch={dispatch} />}
+
+      <main className="app-main" aria-label="문제 검사">
+        <CheckTab state={state} dispatch={dispatch} />
       </main>
+
+      {state.modal !== 'none' && (
+        <ModalShell
+          modal={state.modal}
+          onClose={() => dispatch({ type: 'closeModal' })}
+        >
+          {state.modal === 'students' && <StudentTab state={state} dispatch={dispatch} />}
+          {state.modal === 'batch' && <BatchTab state={state} dispatch={dispatch} />}
+        </ModalShell>
+      )}
+    </div>
+  );
+}
+
+function ModalShell({ modal, onClose, children }: { modal: ModalKey; onClose: () => void; children: React.ReactNode }) {
+  const title = modal === 'students' ? '학생 현행수준 관리' : '반 일괄 검사';
+  return (
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
+      <div className="modal-shell" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <h2>{title}</h2>
+          <button type="button" className="btn btn-quiet modal-close" aria-label="닫기" onClick={onClose}>닫기 ✕</button>
+        </div>
+        <div className="modal-body">{children}</div>
+      </div>
     </div>
   );
 }

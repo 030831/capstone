@@ -101,7 +101,7 @@ IEP 현행수준 ──(교사 입력; 향후 LLM 초안 + 교사 확인)──�
 | `checker/` | Python 판정 엔진 + CLI. `models.py`(pydantic 스키마), `loader.py`(YAML→그래프, 검증), `engine.py`(판정), `explain.py`(한국어 설명 템플릿), `cli.py` | 테스트 23개 통과 |
 | `tests/`, `scripts/gen_synthetic.py` | 단위 테스트 + KST 방식(하향 폐쇄) 합성 학생 생성기 | |
 | `examples/real/` | 실제 그래프로 돌린 데모: 학생 A × 문제 3개 | |
-| `web/` | **React 웹 프로토타입 v0** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미, 테스트 24개). 4개 화면. 상세는 `web/README.md` | 완료 |
+| `web/` | **React 웹 프로토타입 v1** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미, 테스트 통과). **단일 메인 화면(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달(학생 현행수준·반 일괄 검사)**. ComfyUI 형태 노드 그래프 뷰는 제거됨 — 선수관계는 검사 결과 내 인라인 텍스트 트리로 표시. 상세는 `web/README.md` | 완료 |
 | `docs/SPEC_collision_checker.md` | 엔진 스펙 (데이터 모델·알고리즘·테스트 조건) | |
 | `docs/SPEC_web_prototype.md` | 웹 스펙 (화면·원칙·금지어) | |
 | `docs/README_checker.md` | Python 엔진 설치·실행 | |
@@ -236,7 +236,7 @@ npm run dev
 - 엣지를 추가할 때는 `sources`에 **원문 인용과 쪽수**를 넣는다. 기억으로 쓰지 말고 `sources/`의 발췌문에서 복사한다. 거기 없는 근거면 먼저 `sources/`에 원문을 추가한다.
 - Python 엔진과 TS 엔진은 **같은 의미**를 유지한다. 한쪽을 고치면 다른 쪽도 고치고 테스트 케이스를 양쪽에 추가한다. 설명 문장 템플릿도 동일하게.
 - UI 문구를 추가할 때 `web/scripts/screenshots.cjs`의 금지어 검사를 돌린다. "다음 단계" 같은 로드맵 표현도 걸리므로 "앞으로는" 등으로 쓴다.
-- 의존성: Python은 networkx / pyyaml / pydantic만. 웹은 react / @xyflow/react / @dagrejs/dagre / js-yaml / vite / typescript / vitest만. 늘릴 때는 이유를 PR에 쓴다.
+- 의존성: Python은 networkx / pyyaml / pydantic만. 웹은 react / react-dom / js-yaml / vite / typescript / vitest만. **`@xyflow/react`·`@dagrejs/dagre`는 v1에서 제거됨** (ComfyUI 형태 그래프 뷰를 없애고 교사용 폼·모달 UI로 바꿈). 늘릴 때는 이유를 PR에 쓴다.
 - 학생 실명·학교명은 어떤 파일·로그·프롬프트에도 넣지 않는다.
 - 이 README의 §2·§3은 **왜**를 기록한 것이다. 기능을 바꾸기 전에 그 변화가 §3의 어느 원칙과 어떻게 관계되는지 한 줄이라도 적는다.
 

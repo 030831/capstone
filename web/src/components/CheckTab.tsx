@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { GROUPS, groupOf } from '../data/groups';
+import { GROUPS, groupOf, nodeNumber } from '../data/groups';
 import { SAMPLE_PROBLEMS } from '../data/problems';
-import { check } from '../engine';
+import { check, hardAncestors } from '../engine';
 import { basisCode, graph, nodeSpec } from '../graph';
 import type { Action, AppState } from '../state';
+import { STATE_LABEL } from '../ui';
 import { VerdictBadge } from './Badges';
 
 const MEANING: Record<string, string> = {
@@ -12,11 +13,34 @@ const MEANING: Record<string, string> = {
   TOO_EASY: '요구 개념을 이미 숙달한 상태라 새 학습보다는 연습·복습에 가깝습니다.',
 };
 
-/** 탭 3: 문제 입력 + 요구 개념 선택 + 판정 결과. */
+/** 한 개념의 직접 hard 선수 상태를 짧은 문자열로 요약. */
+function predSummary(id: string, states: Record<string, string>): string {
+  const preds = [...graph.hardPred.get(id)!];
+  if (preds.length === 0) return '출발 개념';
+  const parts = preds.map((p) => {
+    const s = states[p] ?? 'not_started';
+    const mark = s === 'mastered' ? '✓' : s === 'emerging' ? '△' : '✗';
+    return `${nodeSpec(p).label} ${mark}`;
+  });
+  return parts.join(' · ');
+}
+
+/** 요구 개념 R 의 hard 조상 + R 자신을 노드 번호순으로 정렬해 돌려준다. */
+function ancestorLine(requires: readonly string[]): string[] {
+  const set = new Set<string>();
+  for (const r of requires) {
+    set.add(r);
+    for (const a of hardAncestors(graph, [r])) set.add(a);
+  }
+  return [...set].sort((a, b) => nodeNumber(a) - nodeNumber(b));
+}
+
+/** 메인 화면: 문제 입력 + 요구 개념 선택 + 판정 결과 + 인라인 선수 계보. */
 export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: Action) => void }) {
   const { draft, submitted } = state;
   const student = state.students.find((s) => s.id === state.currentId)!;
   const [query, setQuery] = useState('');
+  const [showLine, setShowLine] = useState(false);
 
   const result = useMemo(
     () => (submitted ? check(graph, student.states, submitted.requires) : null),
@@ -31,6 +55,10 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
   const setSurface = (k: keyof typeof draft.surface, v: string) =>
     dispatch({ type: 'setDraft', draft: { surface: { ...draft.surface, [k]: v } } });
   const stale = submitted !== null && (submitted.text !== draft.text || submitted.requires.join() !== draft.requires.join());
+
+  const line = useMemo(() => (result ? ancestorLine(result.requires) : []), [result]);
+  const reqSet = useMemo(() => new Set(result?.requires ?? []), [result]);
+  const gapSet = useMemo(() => new Set(result?.gapHard ?? []), [result]);
 
   return (
     <div className="page check-grid">
@@ -131,14 +159,57 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
             <p className="result-req"><span className="muted">필요한 개념:</span> {result.requires.map((id) => <span key={id} className="chip chip-req">{nodeSpec(id).label}</span>)}</p>
             <p className="result-expl">{result.explanation}</p>
 
+            {/* 인라인 선수 계보 — ComfyUI 형태 그래프를 대체하는 텍스트 트리 */}
+            <div className="prereq-line">
+              <button type="button" className="btn btn-quiet line-toggle" aria-expanded={showLine} onClick={() => setShowLine((v) => !v)}>
+                {showLine ? '▼ 학습 계보 숨기기' : '▶ 학습 계보 보기'}
+              </button>
+              {showLine && (
+                <ol className="chain-list" aria-label="이 문제의 학습 계보">
+                  <li className="chain-intro muted">
+                    아래는 이 문제가 요구하는 개념과 그 아래 놓인 필수 선수 개념을 순서대로 나열한 것입니다.
+                    <strong>표시된 색</strong> 칸은 학생이 아직 숙달하지 못한 개념(갭)입니다.
+                  </li>
+                  {line.map((id) => {
+                    const st = student.states[id] ?? 'not_started';
+                    const isReq = reqSet.has(id);
+                    const isGap = gapSet.has(id);
+                    const cls = `chain-item chain-st-${st}${isReq ? ' chain-req' : ''}${isGap ? ' chain-gap' : ''}`;
+                    return (
+                      <li key={id} className={cls}>
+                        <span className="chain-marker" aria-hidden="true">
+                          {isReq ? '◆' : st === 'mastered' ? '✓' : st === 'emerging' ? '△' : '✗'}
+                        </span>
+                        <span className="chain-label">{nodeSpec(id).label}</span>
+                        <span className="chain-state">{STATE_LABEL[st]}</span>
+                        {isReq && <span className="chain-tag tag-req">요구</span>}
+                        {isGap && !isReq && <span className="chain-tag tag-gap">갭</span>}
+                        <span className="code">{basisCode(id)}</span>
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
+            </div>
+
             {result.gapHard.length > 0 && (
               <div className="gap-block">
                 <h3>아직 숙달하지 못한 필수 선수 개념</h3>
-                <div className="chips">
-                  {result.gapHard.map((id) => (
-                    <span key={id} className="chip chip-hard">{nodeSpec(id).label}<span className="code">{basisCode(id)}</span></span>
-                  ))}
-                </div>
+                <ul className="gap-cards">
+                  {result.gapHard.map((id) => {
+                    const st = student.states[id] ?? 'not_started';
+                    return (
+                      <li key={id} className={`gap-card gap-st-${st}`}>
+                        <div className="gap-card-head">
+                          <span className="gap-card-label">{nodeSpec(id).label}</span>
+                          <span className="chain-state">{STATE_LABEL[st]}</span>
+                        </div>
+                        <div className="gap-card-pred muted">직전 선수: {predSummary(id, student.states)}</div>
+                        <div className="code">{basisCode(id)}</div>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             )}
             {result.gapSoft.length > 0 && (
@@ -157,22 +228,13 @@ export function CheckTab({ state, dispatch }: { state: AppState; dispatch: (a: A
                 <p className="muted">갭 가운데 학생이 이미 준비가 된 것입니다. 순서가 아니라 후보이며, 무엇을 고를지는 교사가 정합니다.</p>
                 <div className="chips">
                   {result.suggestedNext.map((id) => (
-                    <button key={id} type="button" className="chip chip-next chip-btn" onClick={() => dispatch({ type: 'focusNode', node: id })} title="그래프에서 보기">
-                      {nodeSpec(id).label}
-                    </button>
+                    <span key={id} className="chip chip-next">{nodeSpec(id).label}</span>
                   ))}
                 </div>
               </div>
             )}
             <div className="result-actions">
-              <button
-                type="button"
-                className="btn"
-                onClick={() => dispatch({ type: 'showInGraph', highlight: { requires: result.requires, gapHard: result.gapHard, gapSoft: result.gapSoft } })}
-              >
-                그래프에서 보기
-              </button>
-              <button type="button" className="btn btn-quiet" onClick={() => dispatch({ type: 'setTab', tab: 'batch' })}>
+              <button type="button" className="btn" onClick={() => dispatch({ type: 'openModal', modal: 'batch' })}>
                 반 전체에 적용해 보기
               </button>
             </div>
