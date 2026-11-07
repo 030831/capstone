@@ -1,8 +1,10 @@
 student_id: "S001"
+version: 2
 updated: "2026-11-06"
 states:
   N01_count_to_10: mastered
   N02_count_to_20: mastered
   N03_add_within_10: mastered
   N04_subtract_within_10: emerging
-  # 명시 안 된 노드는 not_started
+  N05_make_ten: emerging
+  N06_place_value_tens_ones: not_started

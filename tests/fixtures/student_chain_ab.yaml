@@ -1,4 +1,6 @@
 student_id: "S_AB"
+updated: "2026-11-06"
 states:
   A: mastered
   B: mastered
+  C: emerging

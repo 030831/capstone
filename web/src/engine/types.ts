@@ -1,7 +1,10 @@
 // 엔진 타입. checker/models.py 와 동일한 의미(필드명만 camelCase).
 
-export type State = 'mastered' | 'emerging' | 'not_started';
-export type Verdict = 'COLLISION' | 'ALIGNED' | 'TOO_EASY';
+/** 상태 4종. unknown = 기록 없음(명시하지 않은 노드의 해석값). */
+export type State = 'unknown' | 'not_started' | 'emerging' | 'mastered';
+
+/** 판정 4종. 순서: COLLISION > NEEDS_REVIEW > TOO_EASY > ALIGNED (스펙 3장, 2026-11-07). */
+export type Verdict = 'COLLISION' | 'NEEDS_REVIEW' | 'TOO_EASY' | 'ALIGNED';
 export type EdgeKind = 'hard' | 'soft';
 
 export interface Source {
@@ -33,16 +36,20 @@ export interface GraphSpec {
   edges: EdgeSpec[];
 }
 
-/** 명시하지 않은 노드는 not_started 로 취급한다. */
+/** 명시한 노드만 키로 갖는다. 없는 노드는 unknown(기록 없음)으로 해석한다. */
 export type States = Record<string, State>;
 
 export interface CheckResult {
   verdict: Verdict;
   requires: string[];
+  /** 명시적으로 미확보(시작 전·형성 중)인 hard/soft 선수만. 미확인은 별도 목록. */
   gapHard: string[];
   gapSoft: string[];
+  /** 기록이 없는(미확인) hard 선수 / 요구 개념. 구분해서 반환한다. */
+  unknownHard: string[];
+  unknownRequired: string[];
   suggestedNext: string[];
-  /** requires 중 mastered 가 아닌 노드(설명 문장용). Python 에서는 check() 안에서 계산해 explain 에 넘기던 값. */
+  /** requires 중 mastered 가 아닌 노드(설명 문장용). */
   unmasteredRequires: string[];
   explanation: string;
 }

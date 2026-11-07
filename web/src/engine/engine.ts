@@ -2,8 +2,10 @@
 import { explainLabels } from './explain';
 import { hasNode, label, type ConceptGraph } from './graph';
 import {
+  DataError,
   UnknownConceptError,
   type CheckResult,
+  type State,
   type States,
   type Verdict,
 } from './types';
@@ -67,6 +69,8 @@ function masteredSet(states: States): Set<string> {
   return new Set(Object.entries(states).filter(([, s]) => s === 'mastered').map(([n]) => n));
 }
 
+const stateOf = (states: States, id: string): State => states[id] ?? 'unknown';
+
 /**
  * outer fringe: mastered 가 아니면서 hard 선수가 모두 mastered 인 노드.
  * "지금 가능한 후보 집합"일 뿐이며 순서에 의미가 없다(ID 정렬은 표시 안정성을 위한 것).
@@ -79,26 +83,51 @@ export function outerFringe(g: ConceptGraph, states: States): string[] {
     .sort(byId);
 }
 
-/** 문제 하나(requires)가 학생(states)에게 준비된 문제인지 판정한다. */
+/** 문제 하나(requires)가 학생(states)에게 준비된 문제인지 판정한다.
+ *
+ * 판정 순서(고정, 스펙 3장 2026-11-07):
+ *  1. 필수 선수 중 명시적 not_started/emerging → COLLISION
+ *  2. 필수 선수 또는 요구 개념에 unknown(기록 없음) → NEEDS_REVIEW
+ *  3. 요구 개념 모두 mastered → TOO_EASY
+ *  4. 나머지 → ALIGNED
+ *
+ * unknown 은 gapHard/gapSoft(명시적 미확보)와 분리해 unknownHard/unknownRequired 로
+ * 반환한다. soft 선수의 unknown 만으로는 판정을 바꾸지 않는다.
+ */
 export function check(g: ConceptGraph, states: States, requiresIn: readonly string[]): CheckResult {
   ensureKnown(g, requiresIn, '문제의 requires');
   ensureKnown(g, Object.keys(states), '학생 states');
+  if (requiresIn.length === 0) {
+    throw new DataError('문제의 requires 가 비어 있습니다 (검사에 쓸 개념이 1개 이상 필요합니다)');
+  }
 
   const requires = [...new Set(requiresIn)]; // 순서 유지 중복 제거
   const mastered = masteredSet(states);
 
-  const gapHard = [...hardAncestors(g, requires)].filter((n) => !mastered.has(n)).sort(byId);
-  const gapSoft = [...softDirectPrereqs(g, requires)].filter((n) => !mastered.has(n)).sort(byId);
+  const hardPre = hardAncestors(g, requires); // 다른 R 의 조상인 R 노드 포함(기존 해석 유지)
+  const reqSet = new Set(requires);
+
+  // 명시적 미확보(시작 전·형성 중)만 gap 목록에 넣는다. unknown 은 별도.
+  const isExplicitGap = (n: string): boolean => {
+    const s = stateOf(states, n);
+    return s === 'not_started' || s === 'emerging';
+  };
+  const gapHard = [...hardPre].filter(isExplicitGap).sort(byId);
+  const gapSoft = [...softDirectPrereqs(g, requires)].filter(isExplicitGap).sort(byId);
+  // 미확인은 '선수'와 '요구 개념'을 구분. R 안의 노드는 unknownRequired 로만 센다.
+  const unknownHard = [...hardPre].filter((n) => !reqSet.has(n) && stateOf(states, n) === 'unknown').sort(byId);
+  const unknownRequired = requires.filter((n) => stateOf(states, n) === 'unknown');
 
   let verdict: Verdict;
   let suggestedNext: string[] = [];
   if (gapHard.length > 0) {
     verdict = 'COLLISION';
-    // gapHard ∩ outerFringe: 자신의 hard 선수가 모두 mastered 인 gap 노드 = 지금 바로 배울 수 있는 노드
+    // 자신의 hard 선수가 '실제로 모두 mastered'인 gap 노드만 제안한다(미확인 선수가 있으면 제외).
     const ready = gapHard.filter((n) => [...(g.hardPred.get(n) ?? [])].every((p) => mastered.has(p)));
-    const reqSet = new Set(requires);
     const dist = new Map(ready.map((n) => [n, hardDistanceTo(g, n, reqSet) ?? 0]));
     suggestedNext = [...ready].sort((a, b) => dist.get(a)! - dist.get(b)! || byId(a, b));
+  } else if (unknownHard.length > 0 || unknownRequired.length > 0) {
+    verdict = 'NEEDS_REVIEW';
   } else if (requires.every((n) => mastered.has(n))) {
     verdict = 'TOO_EASY';
   } else {
@@ -111,6 +140,8 @@ export function check(g: ConceptGraph, states: States, requiresIn: readonly stri
     requires,
     gapHard,
     gapSoft,
+    unknownHard,
+    unknownRequired,
     suggestedNext,
     unmasteredRequires,
     explanation: '',
@@ -121,12 +152,14 @@ export function check(g: ConceptGraph, states: States, requiresIn: readonly stri
 /** CheckResult 를 Python explain.py 템플릿과 같은 한국어 문장으로 설명한다. */
 export function explain(g: ConceptGraph, r: CheckResult): string {
   const lab = (ids: readonly string[]) => ids.map((n) => label(g, n));
-  return explainLabels(
-    r.verdict,
-    lab(r.requires),
-    lab(r.gapHard),
-    lab(r.gapSoft),
-    lab(r.suggestedNext),
-    lab(r.unmasteredRequires),
-  );
+  return explainLabels({
+    verdict: r.verdict,
+    requires: lab(r.requires),
+    gapHard: lab(r.gapHard),
+    gapSoft: lab(r.gapSoft),
+    unknownHard: lab(r.unknownHard),
+    unknownRequired: lab(r.unknownRequired),
+    suggestedNext: lab(r.suggestedNext),
+    unmasteredRequires: lab(r.unmasteredRequires),
+  });
 }

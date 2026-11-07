@@ -44,10 +44,12 @@ def _format_result(r: CheckResult) -> str:
     """사람이 읽는 형태의 판정 출력."""
     lines = [
         f"[{r.verdict.value}] 문제 {r.problem_id} / 학생 {r.student_id}",
-        f"  requires      : {', '.join(r.requires)}",
-        f"  gap_hard      : {', '.join(r.gap_hard) or '-'}",
-        f"  gap_soft      : {', '.join(r.gap_soft) or '-'}",
-        f"  suggested_next: {', '.join(r.suggested_next) or '-'}",
+        f"  requires        : {', '.join(r.requires)}",
+        f"  gap_hard        : {', '.join(r.gap_hard) or '-'}",
+        f"  gap_soft        : {', '.join(r.gap_soft) or '-'}",
+        f"  unknown_hard    : {', '.join(r.unknown_hard) or '-'}",
+        f"  unknown_required: {', '.join(r.unknown_required) or '-'}",
+        f"  suggested_next  : {', '.join(r.suggested_next) or '-'}",
         f"  설명: {r.explanation}",
     ]
     return "\n".join(lines)
@@ -91,7 +93,7 @@ def _cmd_fringe(args: argparse.Namespace) -> int:
     if not fringe:
         print("  (없음)")
     for n in fringe:
-        state = student.states.get(n, "not_started")
+        state = student.states.get(n, "unknown")
         print(f"  {n}  {graph.label(n)}  [{state}]")
     return 0
 
@@ -107,7 +109,7 @@ def _cmd_batch(args: argparse.Namespace) -> int:
             raise CheckerError(str(e)) from None
     problems = [load_problem(p) for p in _yaml_files(args.problems)]
     cols = ["student_id", "problem_id", "verdict", "requires", "gap_hard",
-            "gap_soft", "suggested_next", "explanation"]
+            "gap_soft", "unknown_hard", "unknown_required", "suggested_next", "explanation"]
     n = 0
     with open(args.out, "w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
@@ -118,6 +120,7 @@ def _cmd_batch(args: argparse.Namespace) -> int:
                 w.writerow([
                     r.student_id, r.problem_id, r.verdict.value,
                     ";".join(r.requires), ";".join(r.gap_hard), ";".join(r.gap_soft),
+                    ";".join(r.unknown_hard), ";".join(r.unknown_required),
                     ";".join(r.suggested_next), r.explanation,
                 ])
                 n += 1

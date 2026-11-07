@@ -1,6 +1,10 @@
 # 예시 학생 A (합성 데이터). IEP 현행수준 서술 예: "10까지 세고 한 자리 수 덧셈·뺄셈은 구체물로 해결함.
 # 10 만들기는 아직 불안정. 받아올림 덧셈은 시도하지 않음."
+# version 2 형식: 명시하지 않은 노드는 unknown(기록 없음)으로 해석된다.
+# 서술에 명시된 것만 기록한다 — 받아올림은 "시도하지 않음" = 명시적 미시작.
+# 십몇(=10과 몇, N17) 등 서술에 없는 개념은 기록 없음(unknown) 그대로 둔다.
 student_id: "S_A"
+version: 2
 updated: "2026-11-06"
 states:
   N01_one_to_one_matching: mastered
@@ -23,4 +27,5 @@ states:
   N20_sub_within_5: mastered
   N21_add_within_9_equation: mastered
   N22_sub_within_9_equation: mastered
+  N26_add_single_digit_carry: not_started
   N28_ten_as_unit: mastered
