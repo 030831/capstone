@@ -26,7 +26,7 @@
 
 ## 1. 한 문단 요약
 
-특수학급 학생은 정해진 커리큘럼이 없어 교사가 학생마다 개별화교육계획(IEP)에 맞춰 문제를 직접 만든다. 이때 가장 흔하고 눈에 안 띄는 실패는 "문제 자체는 멀쩡한데 **이 학생에게는 선수 개념이 빠져 있어** 풀 수 없는" 경우다 — 예컨대 받아올림 덧셈 문제를 냈는데 학생이 아직 '10의 보수'를 모르는 경우. 이 프로젝트는 초등 수학 '수와 연산' 범위의 개념 39개와 선수관계 72개를 **교육과정 원문 근거와 함께** 그래프로 만들고, 교사가 문제의 요구 개념과 학생의 현행수준을 입력하면 `COLLISION(선수 미도달) / ALIGNED(지금 적절) / TOO_EASY(이미 숙달)` 세 가지로 판정한다. 시스템은 "좋은 문제"를 정의하지 않는다. 좋은 문제의 **필요조건**(준비도)만 기계적으로 검사하고, 판단은 교사에게 남긴다. 현재 상태: 그래프 v0 + Python 판정 엔진(CLI) + React 웹 프로토타입(백엔드 없음)까지 완성. AI(LLM)는 아직 한 줄도 안 들어가 있다 — 의도적이다(§3, §10).
+특수학급 학생은 정해진 커리큘럼이 없어 교사가 학생마다 개별화교육계획(IEP)에 맞춰 문제를 직접 만든다. 이때 가장 흔하고 눈에 안 띄는 실패는 "문제 자체는 멀쩡한데 **이 학생에게는 선수 개념이 빠져 있어** 풀 수 없는" 경우다 — 예컨대 받아올림 덧셈 문제를 냈는데 학생이 아직 '10의 보수'를 모르는 경우. 이 프로젝트는 초등 수학 '수와 연산' 범위의 개념 39개와 선수관계 72개를 **교육과정 원문 근거와 함께** 그래프로 만들고, 교사가 문제의 요구 개념과 학생의 현행수준을 입력하면 `COLLISION(선수 미도달) / NEEDS_REVIEW(기록 없음) / ALIGNED(선수 확인·요구 개념 미숙달) / TOO_EASY(이미 숙달)` 네 가지로 판정한다. **기록에 없는 개념은 미확인(unknown)으로 다룬다** — 미시작(not_started)은 교사가 명시적으로 확인했을 때만 쓴다(2026-11-07 개정, 스펙 §2.2·§3). 시스템은 "좋은 문제"를 정의하지 않는다. 좋은 문제의 **필요조건**(준비도)만 기계적으로 검사하고, 판단은 교사에게 남긴다. 현재 상태: 그래프 v0 + Python 판정 엔진(CLI) + React 웹 프로토타입 v3(백엔드 없음)까지 완성. AI(LLM)는 아직 한 줄도 안 들어가 있다 — 의도적이다(§3, §10).
 
 ## 2. 왜 이 프로젝트인가 — 문제 정의와 논의 과정
 
@@ -96,48 +96,54 @@ IEP 현행수준 ──(교사 입력; 향후 LLM 초안 + 교사 확인)──�
 
 | 경로 | 내용 | 상태 |
 |---|---|---|
-| `graph/graph_v0.yaml` | **인지 의존성 그래프 v0.** 단일 진실 원천. 39 노드, 72 엣지(hard 61 / soft 11). 모든 노드·엣지에 `sources`(교육과정 코드·쪽수 / 학습궤적 레벨명) | 완료, DAG 검증 통과 |
+| `graph/graph_v0.yaml` | **인지 의존성 그래프 v0.** 단일 진실 원천. 39 노드, 72 엣지(**hard 60 / soft 12**, 2026-11-07 실측). 모든 노드·엣지에 `sources`(교육과정 코드·쪽수 / 학습궤적 레벨명) | 완료, DAG 검증 통과. 엣지 해석 검토 질문: `docs/review/graph_questions.md` |
 | `sources/` | 그래프 근거 1차 자료 3종. 국가교육과정정보센터(ncic.re.kr) PDF에서 직접 추출한 **원문**, 쪽수 포함. 2026-11-07 NCIC 재다운로드 MD5 대조·원문 대조로 **독립 검증 완료**(§6.6, `docs/review/source_verification_2026-11-07.md`) | 원문 확인 + 독립 검증 |
-| `checker/` | Python 판정 엔진 + CLI. `models.py`(pydantic 스키마), `loader.py`(YAML→그래프, 검증), `engine.py`(판정), `explain.py`(한국어 설명 템플릿), `cli.py` | 테스트 23개 통과 |
-| `tests/`, `scripts/gen_synthetic.py` | 단위 테스트 + KST 방식(하향 폐쇄) 합성 학생 생성기 | |
+| `checker/` | Python 판정 엔진 + CLI. `models.py`(pydantic 스키마·상태 4종·판정 4종), `loader.py`(YAML→그래프, 검증), `engine.py`(판정), `explain.py`(한국어 설명 템플릿), `cli.py` | 테스트 38개 통과 |
+| `tests/`, `scripts/gen_synthetic.py`, `scripts/gen_shared_cases.py` | 단위 테스트 + KST 방식(하향 폐쇄) 합성 학생 생성기(모든 노드 상태 명시) + **공유 판정 fixture 생성기**(Python↔TS 동치성, `tests/fixtures/shared_cases.json`) | |
 | `examples/real/` | 실제 그래프로 돌린 데모: 학생 A × 문제 3개 | |
-| `web/` | **React 웹 프로토타입 v2** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미, 테스트 통과). **단일 메인 화면(문제 검사 위저드) + 헤더 버튼 2개로 여는 모달(학생 현행수준·반 일괄 검사)**. v2: 표면 일상 언어 + 룰 기반 개념 힌트 제안(교사 확정) + IEP 현행수준 문장 붙여넣기 초안 + 기술 표기(판정 코드·근거 코드·계보)는 "자세히 보기" 접기로. ComfyUI 형태 노드 그래프 뷰는 v1에서 제거됨. 상세는 `web/README.md` | 완료 |
-| `docs/SPEC_collision_checker.md` | 엔진 스펙 (데이터 모델·알고리즘·테스트 조건) | |
-| `docs/SPEC_web_prototype.md` | 웹 스펙 (화면·원칙·금지어) | |
+| `web/` | **React 웹 프로토타입 v3** (Vite + React 18 + TypeScript, 백엔드 없음). 엔진을 TS로 포팅(`web/src/engine/`, Python과 같은 의미 — 공유 fixture 25건으로 동치 검증). **단일 메인 화면(문제 검사 위저드: 학생 선택→문제 작성→개념 확인→검사) + 헤더 버튼 2개로 여는 모달(학생 현행수준 — IEP 미리 보기·적용·되돌리기, 반 일괄 검사 — 검사한 문제만 사용)**. v3: 상태 4종(미확인)·판정 4종(NEEDS_REVIEW)·IEP 미리 보기·개념 확정 흐름·반 검사 가드·결과 문구 정리·저장 v2·모달 포커스 트랩·반응형(390/768/1280). 상세는 `web/README.md` | 완료 |
+| `docs/SPEC_collision_checker.md` | 엔진 스펙 (데이터 모델·알고리즘·테스트 조건 — 2026-11-07 개정: 상태 4종·판정 4종·마이그레이션) | |
+| `docs/SPEC_web_prototype.md` | 웹 스펙 (화면·원칙·금지어 — v3) | |
 | `docs/README_checker.md` | Python 엔진 설치·실행 | |
-| `docs/review/` | 이전 조사 자료 검토 보고서, 웹 수집 로그 (대화 로그·외부 글 원문은 `.gitignore`로 제외) | |
+| `docs/review/` | 이전 조사 자료 검토 보고서, 웹 수집 로그, 1차 자료 검증 보고서, 그래프 엣지 검토 질문(graph_questions.md) (대화 로그·외부 글 원문은 `.gitignore`로 제외) | |
 | `CLAUDE.md` | AI 어시스턴트용 작업 메모(사용자 지시·피드백 누적 기록). **이어서 작업하는 모델은 먼저 읽을 것** | |
 
 데이터 모델 (3개 파일 형식, YAML):
 - **그래프** `nodes[{id, label, description, level_hint, sources[]}]`, `edges[{from, to, kind: hard|soft, sources[]}]`
-- **학생** `states: {노드ID: mastered | emerging | not_started}` (명시 안 된 노드는 not_started)
-- **문제** `requires: [노드ID]` + `surface{number_range, context, representation, support}` (표면 속성은 v1 변이 검사용, 지금은 저장만)
+- **학생** `version: 2` + `states: {노드ID: unknown | not_started | emerging | mastered}` — **명시한 기록만 둔다. 명시하지 않은 노드는 unknown(기록 없음)**. 과거 형식(버전 없음)도 읽히며, 빠진 항목은 미시작이었는지 미확인이었는지 복원 불가하므로 **미확인으로 이전**한다. 명시적 not_started는 저장·로드에서 지우지 않는다.
+- **문제** `requires: [노드ID]`(이 문제에서 다루는 개념; 선수는 엔진이 계산) + `surface{number_range, context, representation, support}` (표면 속성은 v1 변이 검사용, 지금은 저장만)
 
-## 5. 핵심 알고리즘
+## 5. 핵심 알고리즘 (2026-11-07 개정)
 
 ```
-R  = problem.requires                       (문제가 요구하는 개념)
-M  = {n | state[n] == mastered}             (학생이 도달한 개념)
+R  = problem.requires                       (이 문제에서 다루는 개념)
+M  = {n | state[n] == mastered}             (숙달로 기록된 개념)
+U  = 기록에 없는 노드 = unknown             (미확≠미시작)
 
-P_hard(R) = R의 모든 hard 엣지 조상(이행적 폐포), R 자신은 제외
+P_hard(R) = R의 모든 hard 엣지 조상(이행적 폐포), R 자신은 제외(다른 R의 조상인 R 노드 포함은 유지)
 P_soft(R) = R의 soft 엣지 직접 선수 (1단계)
 
-gap_hard = P_hard(R) − M
-gap_soft = P_soft(R) − M
+gap_hard         = P_hard(R) 중 명시적 not_started/emerging   (명시적 미확보만)
+gap_soft         = P_soft(R) 중 명시적 not_started/emerging
+unknown_hard     = P_hard(R) 중 unknown                     (기록 없음 · 선수)
+unknown_required = R 중 unknown                              (기록 없음 · 이 문제의 개념)
 
-if gap_hard ≠ ∅ : COLLISION    ← 선수 미도달. 경고.
-elif R ⊆ M      : TOO_EASY     ← 이미 숙달. 연습용.
-else            : ALIGNED      ← 선수는 모두 도달, R 자체는 미도달/진행중 = 근접발달영역(ZPD)
+판정 순서(고정):
+1. gap_hard ≠ ∅                       : COLLISION      ← 선수에 명시적 미확보. 경고.
+2. unknown_hard ≠ ∅ 또는
+   unknown_required ≠ ∅               : NEEDS_REVIEW   ← 기록 없음. 확인 필요(단정하지 않는다).
+3. R ⊆ M                              : TOO_EASY       ← 이미 숙달로 기록.
+4. 나머지                              : ALIGNED        ← 선수는 확인, R 미숙달 = ZPD
 
-suggested_next = gap_hard ∩ outer_fringe(M)   (충돌일 때만)
-  outer_fringe(M) = mastered가 아니면서 hard 선수가 모두 mastered인 노드
-                  = KST의 outer fringe = "지금 바로 배울 수 있는 것"
+suggested_next = gap_hard 중 "자신의 hard 선수가 모두 실제로 mastered"인 노드 (충돌일 때만)
+  → 선수에 unknown 이 하나라도 있으면 제외(확인되지 않은 상태로는 후보라고 할 수 없다)
   정렬: (R까지 hard 최단거리, ID) — 표시할 때는 순서 의미 없음(원칙 7)
 ```
 
-- `emerging`(형성 중)은 mastered가 아니므로 gap에 포함된다.
-- 불변식(테스트 9번): 학생 상태가 하향 폐쇄(어떤 노드가 mastered면 그 hard 조상도 모두 mastered)일 때, 문제 노드가 M ∪ outer_fringe에 속하면 COLLISION은 0건이고, 그 밖의 노드는 항상 COLLISION이다. 합성 학생 100~200명 × 모든 단일 노드 문제로 검사한다.
-- 설명 문장은 템플릿이다(LLM 없음). 예: *"이 문제는 '받아올림 있는 (몇)+(몇)'을 요구하는데, 학생은 선수 개념 '10의 보수', '십몇 = 10과 몇'이 미도달입니다. '10의 보수'은(는) 지금 바로 다룰 수 있는 선수 개념입니다."* 처방 톤("~부터 다루는 것을 권장합니다")은 의도적으로 뺐다.
+- `emerging`(형성 중)과 명시적 `not_started`(미시작)는 gap에 포함된다. **`unknown`(미확인)은 gap과 분리**되며 soft 선수의 unknown 만으로 판정을 바꾸지 않는다.
+- COLLISION 인데 미확인도 있으면 둘 다 함께 돌려준다.
+- 불변식(테스트 9번): **완전 확인 학생**(모든 노드 명시, 하향 폐쇄)에 대해 문제 노드가 M ∪ outer_fringe에 속하면 COLLISION은 0건, 그 밖의 노드는 항상 COLLISION. **부분 확인 학생**(미확인 포함)에 대해서는 범위 밖 노드가 COLLISION 또는 NEEDS_REVIEW(절대 TOO_EASY/ALIGNED 아님). 합성 학생 100~200명 × 모든 단일 노드 문제로 검사한다.
+- 설명 문장은 템플릿이다(LLM 없음). 예: *"이 문제는 '받아올림 있는 (몇)+(몇)'을 요구하는데, 학생의 선수 개념 '10의 보수(합이 10이 되는 두 수)'가 시작 전이거나 형성 중입니다. 선수 개념 '십몇 = 10과 몇'의 기록이 아직 확인되지 않았습니다."* 처방 톤("~부터 다루는 것을 권장합니다")은 의도적으로 뺐다.
 
 ## 6. 개념 그래프 v0 — 설계 결정과 근거
 
@@ -163,6 +169,7 @@ suggested_next = gap_hard ∩ outer_fringe(M)   (충돌일 때만)
 - **hard**: 원문 해설이 선수관계를 명시한 경우. 예: `[9수학01-07]` 해설 "받아올림이 있는 (몇)+(몇)은 **10의 보수 개념을 바탕으로**" → `N16_ten_complements → N26_add_single_digit_carry` hard.
 - **soft**: 배치 순서나 궤적 인접성만 있는 경우. 예: 직관적 비교 → 수 크기 비교.
 - 이행적으로 중복인 hard 엣지 4개(예: N16→N26는 N16→N17→N26로도 도달)는 각각 독립된 원문 근거가 있어 **의도적으로 유지**. 판정에는 영향 없다.
+- **이 기준과 어긋나 보이는 엣지들**(배치 순서만으로 hard 로 둔 것, 궤적 인접성을 필수로 해석한 것, 통합 노드의 과잉 선수, 라벨·인용 범위 불일치)은 수정하지 않고 `docs/review/graph_questions.md` 에 질문으로 기록했다(2026-11-07). 교육학적 판단은 그래프 v0 팀 검토에서 한다.
 
 ### 6.5 세분화의 논리
 교육과정 성취기준 한 개가 노드 여러 개로 쪼개진 곳이 많다. 쪼갠 근거는 대부분 기본교육과정 해설의 "단계적 지도" 문장이다. 예: `[4수학01-08]` 해설 "우선 합이 5 이하가 되는 덧셈부터 시작하여 합이 9 이하인 덧셈까지 단계적인 내용을 다룬다" → N19(합 5 이하)와 N21(합 9 이하)로 분리. 현장 블로그의 '글자 읽기' 예시(국어 전체가 아니라 핵심 기술 하나가 IEP 목표)도 같은 수준을 가리킨다.

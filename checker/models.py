@@ -74,13 +74,27 @@ class GraphSpec(_Strict):
     edges: list[Edge] = Field(default_factory=list)
 
 
-StateName = Literal["mastered", "emerging", "not_started"]
+# 명시하지 않은 노드는 unknown(기록 없음)으로 해석한다.
+StateName = Literal["unknown", "not_started", "emerging", "mastered"]
 
 
 class StudentState(_Strict):
-    """student.yaml. 명시하지 않은 노드는 not_started 로 취급한다."""
+    """student.yaml.
+
+    상태 의미 (v2):
+
+    - ``unknown``: 아직 확인한 기록이 없음. **명시하지 않은 노드의 해석값.**
+    - ``not_started``: 교사가 아직 다루지 않았다고 확인함.
+    - ``emerging``: 수행이 형성 중이거나 불안정함.
+    - ``mastered``: 교사가 숙달로 확인함.
+
+    ``version`` 은 저장 형식 버전이다. 1 = 과거 형식(빠진 항목이 미시작인지
+    미확인인지 구분이 없어 복원 불가 — 빠진 항목은 미확인으로 이전),
+    2 = 현재 형식. 명시적 ``not_started`` 는 저장·로드에서 지우지 않는다.
+    """
 
     student_id: NonEmptyStr
+    version: Literal[1, 2] = 1
     updated: date | None = None
     states: dict[str, StateName] = Field(default_factory=dict)
 
@@ -104,15 +118,29 @@ class ProblemSpec(_Strict):
 
 
 class Verdict(str, Enum):
-    """판정 결과. 이름은 스펙 3장과 동일하다."""
+    """판정 결과. 판정 순서는 스펙 3장(2026-11-07 개정)을 따른다.
+
+    우선순위:
+
+    1. ``COLLISION`` — 필수 선수 중 명시적 not_started/emerging 이 있음.
+    2. ``NEEDS_REVIEW`` — 필수 선수 또는 요구 개념에 unknown(기록 없음)이 있음.
+    3. ``TOO_EASY`` — 위 조건이 없고 요구 개념이 모두 mastered.
+    4. ``ALIGNED`` — 나머지(필수 선수 확인, 요구 개념 미숙달).
+    """
 
     COLLISION = "COLLISION"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
     TOO_EASY = "TOO_EASY"
     ALIGNED = "ALIGNED"
 
 
 class CheckResult(BaseModel):
-    """스펙 3.2 출력. 필드 순서가 JSON 키 순서가 된다."""
+    """스펙 3.2 출력. 필드 순서가 JSON 키 순서가 된다.
+
+    - ``gap_hard``/``gap_soft``: 명시적으로 미확보(not_started/emerging)인 선수만.
+    - ``unknown_hard``/``unknown_required``: 기록이 없는(unknown) 선수/요구 개념.
+      unknown 은 gap 목록과 분리된다(미확인 ≠ 미시작).
+    """
 
     problem_id: str
     student_id: str
@@ -120,5 +148,7 @@ class CheckResult(BaseModel):
     requires: list[str]
     gap_hard: list[str]
     gap_soft: list[str]
+    unknown_hard: list[str]
+    unknown_required: list[str]
     suggested_next: list[str]
     explanation: str

@@ -9,6 +9,7 @@ import networkx as nx
 from checker.explain import explain
 from checker.models import (
     CheckResult,
+    DataError,
     GraphSpec,
     ProblemSpec,
     StudentState,
@@ -86,54 +87,100 @@ def _ensure_known(graph: ConceptGraph, ids: Iterable[str], what: str) -> None:
 
 
 def _mastered(student: StudentState) -> set[str]:
-    """학생이 mastered 인 노드 집합 M."""
+    """학생이 mastered 로 기록한 노드 집합 M."""
     return {n for n, s in student.states.items() if s == "mastered"}
 
 
+def _state_of(student: StudentState) -> dict[str, str]:
+    """모든 노드의 상태 조회용. 기록에 없는 노드는 ``unknown`` (미확인 = 기록 없음)."""
+    return student.states  # dict.get(id, "unknown") 로 사용한다
+
+
 def check(graph: ConceptGraph, student: StudentState, problem: ProblemSpec) -> CheckResult:
-    """문제 하나가 학생에게 준비된 문제인지 판정한다(스펙 3장).
+    """문제 하나가 학생에게 준비된 문제인지 판정한다(스펙 3장, 2026-11-07 개정).
+
+    판정 순서(고정):
+
+    1. 필수 선수 중 명시적 not_started/emerging → ``COLLISION``
+    2. 필수 선수 또는 요구 개념에 unknown(기록 없음) → ``NEEDS_REVIEW``
+    3. 요구 개념 모두 mastered → ``TOO_EASY``
+    4. 나머지 → ``ALIGNED``
+
+    unknown 은 gap_hard/gap_soft(명시적 미확보 목록)와 분리해
+    unknown_hard(선수)/unknown_required(요구 개념)로 반환한다.
+    soft 선수의 unknown 만으로는 판정을 바꾸지 않는다.
 
     Args:
         graph: 개념 그래프.
-        student: 학생 상태.
+        student: 학생 상태(명시 안 된 노드는 unknown).
         problem: 검사할 문제.
 
     Returns:
         스펙 3.2 형식의 CheckResult.
 
     Raises:
-        UnknownConceptError: problem.requires 또는 student.states 에 그래프에 없는 노드 ID 가 있을 때.
+        DataError: problem.requires 가 비어 있을 때(엔진 차원의 명시적 거부).
+        UnknownConceptError: problem.requires 또는 student.states 에 그래프에 없는
+            노드 ID가 있을 때.
     """
     _ensure_known(graph, problem.requires, f"문제 '{problem.problem_id}'의 requires")
     _ensure_known(graph, student.states, f"학생 '{student.student_id}'의 states")
+    if not problem.requires:
+        raise DataError(
+            f"문제 '{problem.problem_id}'의 requires 가 비어 있습니다 "
+            "(검사에 쓸 개념이 1개 이상 필요합니다)"
+        )
 
     requires = list(dict.fromkeys(problem.requires))  # 순서 유지 중복 제거
+    state = _state_of(student)
     mastered = _mastered(student)
 
-    gap_hard = sorted(graph.hard_ancestors(requires) - mastered)
-    gap_soft = sorted(graph.soft_predecessors(requires) - mastered)
+    hard_pre = graph.hard_ancestors(requires)  # 다른 R 의 조상인 R 노드 포함(기존 해석 유지)
+    req_set = set(requires)
 
-    suggested: list[str] = []
+    # 명시적 미확보(시작 전·형성 중)만 gap 목록에 넣는다. unknown 은 별도.
+    gap_hard = sorted(
+        n for n in hard_pre if state.get(n, "unknown") in ("not_started", "emerging")
+    )
+    gap_soft = sorted(
+        n
+        for n in graph.soft_predecessors(requires)
+        if state.get(n, "unknown") in ("not_started", "emerging")
+    )
+    # 미확인은 '선수'와 '요구 개념'을 구분한다. R 안의 노드는 unknown_required 로만 센다.
+    unknown_hard = sorted(
+        n for n in hard_pre - req_set if state.get(n, "unknown") == "unknown"
+    )
+    unknown_required = sorted(n for n in requires if state.get(n, "unknown") == "unknown")
+
     if gap_hard:
         verdict = Verdict.COLLISION
-        # 자신의 hard 선수가 모두 M 에 속하는 gap 노드 = 지금 바로 배울 수 있는 노드
-        ready = [n for n in gap_hard if graph.hard_predecessors(n) <= mastered]
-        suggested = sorted(
-            ready, key=lambda n: (graph.hard_distance_to(n, requires) or 0, n)
-        )
-    elif set(requires) <= mastered:
+    elif unknown_hard or unknown_required:
+        verdict = Verdict.NEEDS_REVIEW
+    elif req_set <= mastered:
         verdict = Verdict.TOO_EASY
     else:
         verdict = Verdict.ALIGNED
 
+    suggested: list[str] = []
+    if verdict is Verdict.COLLISION:
+        # 자신의 hard 선수가 '실제로 모두 mastered'인 gap 노드만 제안한다.
+        # 선수 중 unknown 이 있으면 제안하지 않는다(확인되지 않은 상태로는 후보라고 할 수 없다).
+        ready = [n for n in gap_hard if graph.hard_predecessors(n) <= mastered]
+        suggested = sorted(
+            ready, key=lambda n: (graph.hard_distance_to(n, requires) or 0, n)
+        )
+
     lab = graph.label
     explanation = explain(
         verdict,
-        [lab(n) for n in requires],
-        [lab(n) for n in gap_hard],
-        [lab(n) for n in gap_soft],
-        [lab(n) for n in suggested],
-        [lab(n) for n in requires if n not in mastered],
+        requires=[lab(n) for n in requires],
+        gap_hard=[lab(n) for n in gap_hard],
+        gap_soft=[lab(n) for n in gap_soft],
+        unknown_hard=[lab(n) for n in unknown_hard],
+        unknown_required=[lab(n) for n in unknown_required],
+        suggested_next=[lab(n) for n in suggested],
+        unmastered_requires=[lab(n) for n in requires if n not in mastered],
     )
     return CheckResult(
         problem_id=problem.problem_id,
@@ -142,6 +189,8 @@ def check(graph: ConceptGraph, student: StudentState, problem: ProblemSpec) -> C
         requires=requires,
         gap_hard=gap_hard,
         gap_soft=gap_soft,
+        unknown_hard=unknown_hard,
+        unknown_required=unknown_required,
         suggested_next=suggested,
         explanation=explanation,
     )
@@ -149,6 +198,9 @@ def check(graph: ConceptGraph, student: StudentState, problem: ProblemSpec) -> C
 
 def outer_fringe(graph: ConceptGraph, student: StudentState) -> list[str]:
     """학생의 outer fringe: mastered 가 아니면서 hard 선수가 모두 mastered 인 노드.
+
+    주의: 이 정의는 그래프 구조상 '지금 배울 수 있는 후보'이며, 노드 자신의
+    상태(unknown 포함)는 따로 확인해야 한다.
 
     Args:
         graph: 개념 그래프.

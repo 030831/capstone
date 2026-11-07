@@ -1,4 +1,9 @@
-"""템플릿 기반 한국어 설명 생성. LLM 호출 없음."""
+"""템플릿 기반 한국어 설명 생성. LLM 호출 없음.
+
+2026-11-07 개정: 4상태(unknown/not_started/emerging/mastered)와
+NEEDS_REVIEW 판정을 반영. unknown(기록 없음)과 미확보(시작 전·형성 중)를
+문장에서도 구분한다. 처방 톤("~부터 다루는 것을 권장합니다")은 쓰지 않는다.
+"""
 
 from __future__ import annotations
 
@@ -41,11 +46,24 @@ def quote_labels(labels: Sequence[str]) -> str:
     return ", ".join(f"'{x}'" for x in labels)
 
 
+def _unknown_sentence(unknown_hard: Sequence[str], unknown_required: Sequence[str]) -> str:
+    """미확인(기록 없음) 항목 안내 문장. 선수/요구 개념을 구분한다."""
+    parts: list[str] = []
+    if unknown_hard:
+        parts.append(f"선수 개념 {quote_labels(unknown_hard)}")
+    if unknown_required:
+        parts.append(f"이 문제의 개념 {quote_labels(unknown_required)}")
+    return f"{' 와(과) '.join(parts)}의 기록이 아직 확인되지 않았습니다."
+
+
 def explain(
     verdict: Verdict,
+    *,
     requires: Sequence[str],
     gap_hard: Sequence[str],
     gap_soft: Sequence[str],
+    unknown_hard: Sequence[str],
+    unknown_required: Sequence[str],
     suggested_next: Sequence[str],
     unmastered_requires: Sequence[str],
 ) -> str:
@@ -54,34 +72,58 @@ def explain(
     Args:
         verdict: 판정.
         requires: 문제가 요구하는 개념 라벨.
-        gap_hard: 미도달 hard 선수 라벨.
-        gap_soft: 미도달 soft 선수 라벨.
-        suggested_next: 제안할 다음 개념 라벨.
-        unmastered_requires: requires 중 학생이 아직 mastered 가 아닌 개념 라벨.
+        gap_hard: 명시적으로 미확보(시작 전·형성 중)인 hard 선수 라벨.
+        gap_soft: 명시적으로 미확보인 soft 선수 라벨.
+        unknown_hard: 기록이 없는(미확인) hard 선수 라벨.
+        unknown_required: 기록이 없는 요구 개념 라벨.
+        suggested_next: 지금 다룰 수 있는 후보 선수 개념 라벨.
+        unmastered_requires: requires 중 아직 숙달로 기록되지 않은 개념 라벨.
 
     Returns:
         설명 문장.
     """
-    req = quote_labels(requires)
+    req = josa(quote_labels(requires), "을/를")
+    unknown_part = _unknown_sentence(unknown_hard, unknown_required)
+
     if verdict is Verdict.COLLISION:
-        return (
-            f"이 문제는 {josa(req, '을/를')} 요구하는데, "
-            f"학생은 선수 개념 {josa(quote_labels(gap_hard), '이/가')} 미도달입니다. "
-            f"{quote_labels(suggested_next)}은(는) 지금 바로 다룰 수 있는 선수 개념입니다."
+        text = (
+            f"이 문제는 {req} 요구하는데, 학생의 선수 개념 "
+            f"{josa(quote_labels(gap_hard), '이/가')} 시작 전이거나 형성 중입니다."
         )
+        if unknown_hard or unknown_required:
+            text += " " + unknown_part
+        if suggested_next:
+            text += (
+                f" {quote_labels(suggested_next)}은(는) 선수 개념이 모두 "
+                "숙달로 확인된 개념입니다."
+            )
+        if gap_soft:
+            text += (
+                f" 참고로 권장 선수 개념 {josa(quote_labels(gap_soft), '이/가')} "
+                "아직 시작 전이거나 형성 중입니다."
+            )
+        return text
+
+    if verdict is Verdict.NEEDS_REVIEW:
+        text = f"이 문제는 {req} 요구하는데, {unknown_part} 기록을 확인한 뒤 다시 검사할 수 있습니다."
+        if gap_soft:
+            text += (
+                f" 참고로 권장 선수 개념 {josa(quote_labels(gap_soft), '이/가')} "
+                "아직 시작 전이거나 형성 중입니다."
+            )
+        return text
+
     if verdict is Verdict.TOO_EASY:
-        return (
-            f"이 문제가 요구하는 {josa(req, '은/는')} 학생이 이미 숙달한 개념이어서 "
-            "새로운 학습 기회가 되기 어렵습니다."
-        )
+        return f"이 문제가 요구하는 {josa(req, '은/는')} 학생 기록에서 모두 숙달로 확인됩니다."
+
+    # ALIGNED
     text = (
-        f"이 문제는 {josa(req, '을/를')} 요구하며, 학생은 필요한 선수 개념을 모두 갖추었고 "
-        f"{josa(quote_labels(unmastered_requires), '은/는')} 아직 숙달 전이므로 "
-        "지금 도전하기에 적절합니다."
+        f"이 문제는 {req} 요구하며, 필수 선수 개념은 모두 숙달로 기록되어 있고 "
+        f"{josa(quote_labels(unmastered_requires), '은/는')} 아직 숙달로 기록되지 않았습니다."
     )
     if gap_soft:
         text += (
-            f" 다만 권장 선수 개념 {josa(quote_labels(gap_soft), '이/가')} "
-            "미도달이므로 함께 살펴보면 좋습니다."
+            f" 참고로 권장 선수 개념 {josa(quote_labels(gap_soft), '이/가')} "
+            "아직 시작 전이거나 형성 중입니다."
         )
     return text

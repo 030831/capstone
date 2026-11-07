@@ -36,6 +36,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    // 컴포넌트 흐름 테스트(.test.tsx)는 파일 머리 @vitest-environment jsdom 주석으로 환경 지정.
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
 });

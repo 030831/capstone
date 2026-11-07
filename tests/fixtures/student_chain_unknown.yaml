@@ -1,0 +1,4 @@
+# B 를 기록하지 않은 학생: B 는 unknown(기록 없음)으로 해석된다.
+student_id: "S_A_only"
+states:
+  A: mastered
