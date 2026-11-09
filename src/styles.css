@@ -442,6 +442,19 @@ svg {
   transform: translateY(-3px);
   box-shadow: 0 15px 32px #3f4a3210;
 }
+/* Whole card is the click target: the single action button stretches over it. */
+.prototype-card.is-linked {
+  position: relative;
+}
+.prototype-card.is-linked .card-start::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.prototype-card.is-pending:hover {
+  transform: none;
+  box-shadow: none;
+}
 .card-top {
   display: flex;
   align-items: center;

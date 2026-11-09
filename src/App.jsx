@@ -280,7 +280,7 @@ function Home({ go }) {
           {cards.map((p) => (
             <article
               key={p.id}
-              className={`prototype-card ${p.color} ${p.route ? '' : 'is-pending'}`}
+              className={`prototype-card ${p.color} ${p.route ? 'is-linked' : 'is-pending'}`}
             >
               <div className="card-top">
                 <span className="card-letter">{p.letter}</span>
@@ -290,12 +290,14 @@ function Home({ go }) {
               <Preview type={p.id} />
               <div className="card-copy">
                 <span className="card-subject">{p.subject}</span>
-                <h3>{p.name}</h3>
+                <h3 id={`card-title-${p.id}`}>{p.name}</h3>
                 <p>{p.desc}</p>
                 <button
+                  id={`card-action-${p.id}`}
                   className="card-start"
                   onClick={() => p.route && go(p.route)}
                   disabled={!p.route}
+                  aria-labelledby={`card-title-${p.id} card-action-${p.id}`}
                 >
                   {p.action}
                   <ArrowUpRight size={19} />
