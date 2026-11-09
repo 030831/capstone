@@ -1,17 +1,23 @@
-name: Deploy Neulbom to GitHub Pages
+name: Deploy to GitHub Pages (gh-pages branch)
+
+# 저장소 Settings → Pages 의 Source 가 "Deploy from a branch: gh-pages / (root)" 로 설정되어 있다.
+# 그래서 Actions 전용 배포(actions/deploy-pages) 대신, 빌드 결과(dist)를 gh-pages 브랜치에 push 한다.
+# main 에 push 될 때마다 테스트 → 빌드 → gh-pages 갱신. 수동 실행도 가능(workflow_dispatch).
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
+
 concurrency:
   group: pages
   cancel-in-progress: false
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,17 +28,10 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Publish dist to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          commit_message: 'deploy: ${{ github.sha }}'

@@ -2,95 +2,92 @@ import React, { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
   ArrowRight,
-  ArrowLeft,
   Sprout,
   SlidersHorizontal,
   X,
   Check,
-  BookOpen,
   Layers3,
-  Store,
-  RotateCcw,
-  ChartNoAxesColumnIncreasing,
-  Volume2,
-  Pause,
-  Play,
-  CheckCheck,
-  CircleHelp,
-  Download,
-  Trash2,
-  ChevronRight,
-  CircleCheck,
-  NotebookPen,
-  Leaf,
+  Shapes,
   Compass,
   ShieldCheck,
+  Leaf,
+  NotebookPen,
+  Scale,
+  Image,
+  PenLine,
 } from 'lucide-react';
-import Focus from './prototypes/Focus';
-import Bridge from './prototypes/Bridge';
-import Life from './prototypes/Life';
-import { usePersistentState, writeStored } from './lib/storage';
-import { summarize } from './lib/metrics';
+import DesignApp from './design/DesignApp';
+import { usePersistentState } from './lib/storage';
+import './design/design.css';
 
-const prototypes = [
+const README_URL = 'https://github.com/030831/capstone#readme';
+
+const FLOW = [
   {
-    id: 'focus',
+    title: '목표·목적 정하기',
+    desc: '행동 · 조건 · 기준 · 내용 범위와 활동 목적(연습/평가)을 적습니다.',
+  },
+  { title: '구성 예시 고르기', desc: '목표에 맞는 예시와 선택 이유를 보고 공통 설정을 고릅니다.' },
+  { title: '제시·응답·지원 조절', desc: '공통 설정을 다듬고, 필요한 학생에게만 변형을 만듭니다.' },
+  {
+    title: '검토 안내 확인',
+    desc: '목표나 수행 조건에 영향을 줄 수 있는 변경을 이유와 함께 봅니다.',
+  },
+  { title: '미리보기·출력', desc: '같은 데이터에서 버전별 활동지를 그리고 비교 · 인쇄합니다.' },
+];
+
+const cards = [
+  {
+    id: 'design',
     letter: 'A',
-    name: '한 걸음 교실',
-    tag: '시작과 다시 돌아오기',
-    desc: '오늘 할 만큼 고르고, 한 걸음씩. 잠깐 쉬어도 하던 곳으로 편하게 돌아와요.',
-    color: 'lavender',
-    icon: BookOpen,
-    subject: '국어 · 활동 순서',
-    focus: '학습을 이어가는 힘',
+    name: '두 집합의 수량 비교',
+    tag: '설계 체험',
+    desc: '더 많은 쪽 고르기, 몇 개 더 많은지 구하기. 목표를 정하고 학생별 활동지까지 만들어 봅니다.',
+    color: 'sage',
+    icon: Shapes,
+    subject: '수학 · 수와 연산',
+    action: '자료 설계 시작하기',
+    route: 'design',
   },
   {
-    id: 'bridge',
+    id: 'addition',
     letter: 'B',
-    name: '도움 사다리',
-    tag: '필요한 도움을 내가 선택',
-    desc: '같은 문제도 나에게 맞는 방법으로. 도움받아 연습하고, 새로운 문제를 직접 풀어요.',
-    color: 'sage',
+    name: '10 이내 덧셈',
+    tag: '설계 체험',
+    desc: '같은 구조로 덧셈 활동자료를 설계하는 화면을 준비하고 있습니다.',
+    color: 'lavender',
     icon: Layers3,
     subject: '수학 · 덧셈',
-    focus: '도움에서 독립적인 풀이로',
+    action: '준비 중',
+    route: null,
   },
   {
-    id: 'life',
+    id: 'about',
     letter: 'C',
-    name: '생활 실험실',
-    tag: '배운 것을 생활 속으로',
-    desc: '문구점에서 준비물을 골라 볼까요? 읽고, 계산하고, 다른 상황에도 적용해 봐요.',
+    name: '프로젝트 방향과 할 일',
+    tag: '프로젝트',
+    desc: '왜 이 도구를 만드는지, 도구와 교사의 역할, 아직 확인하지 못한 가설과 다음 할 일.',
     color: 'peach',
-    icon: Store,
-    subject: '생활 · 국어 · 수학',
-    focus: '문제 밖에서도 써 보는 배움',
+    icon: Compass,
+    subject: '졸업작품 · 캡스톤디자인',
+    action: '프로젝트 보기',
+    route: 'about',
   },
 ];
+
 function getRoute() {
   const r = window.location.hash.replace(/^#\/?/, '');
-  return ['focus', 'bridge', 'life', 'records', 'about'].includes(r) ? r : 'home';
+  return ['design', 'about'].includes(r) ? r : 'home';
 }
 function App() {
   const [route, setRoute] = useState(getRoute);
   const [settings, setSettings] = usePersistentState('settings', { largeText: false, quiet: true });
-  const [records, setRecords] = usePersistentState('records', []);
-  const safeRecords = Array.isArray(records)
-    ? records.filter(
-        (r) =>
-          r &&
-          typeof r === 'object' &&
-          Array.isArray(r.questions) &&
-          r.questions.every((q) => q && typeof q === 'object'),
-      )
-    : [];
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {
     const change = () => {
       setRoute(getRoute());
       window.scrollTo(0, 0);
-      window.speechSynthesis?.cancel();
     };
     window.addEventListener('hashchange', change);
     return () => window.removeEventListener('hashchange', change);
@@ -106,29 +103,13 @@ function App() {
     } catch {
       setStorageWarning(true);
     }
-  }, []);
-  const go = (r) => {
-    window.location.hash = r === 'home' ? '/' : `/${r}`;
-    setSettingsOpen(false);
-  };
-  useEffect(() => {
     const failed = () => setStorageWarning(true);
     window.addEventListener('neulbom-storage-error', failed);
     return () => window.removeEventListener('neulbom-storage-error', failed);
   }, []);
-  const addRecord = (record) => {
-    const next = [record, ...safeRecords.filter((r) => r.id !== record.id)].slice(0, 100);
-    if (!writeStored('records', next)) {
-      setStorageWarning(true);
-      throw new Error('학습 기록을 이 기기에 저장하지 못했습니다.');
-    }
-    setRecords(next);
-  };
-  const current = prototypes.find((p) => p.id === route);
-  const componentProps = {
-    onRecord: addRecord,
-    onHome: () => go('home'),
-    settings: settings || { largeText: false, quiet: true },
+  const go = (r) => {
+    window.location.hash = r === 'home' ? '/' : `/${r}`;
+    setSettingsOpen(false);
   };
   return (
     <div className={`app route-${route}`}>
@@ -150,24 +131,24 @@ function App() {
               <Sprout size={25} />
             </span>
             <span>
-              늘봄<small>나에게 맞는 배움</small>
+              늘봄<small>같은 목표, 서로 다른 자료</small>
             </span>
           </button>
           <nav className="main-nav" aria-label="주 메뉴">
-            <a href="#/" className={route === 'home' || current ? 'active' : ''}>
-              배움 시작
-            </a>
-            <a href="#/records" className={route === 'records' ? 'active' : ''}>
-              학습 기록
+            <a href="#/design" className={route === 'design' ? 'active' : ''}>
+              자료 설계
             </a>
             <a href="#/about" className={route === 'about' ? 'active' : ''}>
-              세 가지 방향
+              프로젝트
+            </a>
+            <a href="#/" className={route === 'home' ? 'active' : ''}>
+              홈
             </a>
           </nav>
           <div className="header-actions">
             <span className="demo-badge">
               <span />
-              체험판
+              프로토타입 · 가상 사례
             </span>
             <button
               className="settings-button"
@@ -182,42 +163,25 @@ function App() {
       </header>
       {storageWarning && (
         <p className="storage-warning" role="status">
-          이 브라우저에서는 기록을 저장할 수 없어요. 창을 닫으면 체험 기록이 사라질 수 있습니다.
+          이 브라우저에서는 설계 내용을 저장할 수 없어요. 창을 닫으면 작업한 내용이 사라질 수
+          있습니다.
         </p>
       )}
-      {current && (
-        <div className="session-strip">
-          <button onClick={() => go('home')}>
-            <ArrowLeft size={16} />
-            다른 배움 보기
-          </button>
-          <span>
-            <i className={current.color}>{current.letter}</i>
-            {current.name}
-          </span>
-          <button onClick={() => go('records')}>
-            보호자 기록
-            <ChevronRight size={15} />
-          </button>
-        </div>
-      )}
       <main id="main" tabIndex={-1}>
-        {route === 'home' && <Home go={go} records={safeRecords} />}
-        {route === 'focus' && <Focus {...componentProps} />}
-        {route === 'bridge' && <Bridge {...componentProps} />}
-        {route === 'life' && <Life {...componentProps} />}
-        {route === 'records' && (
-          <Records records={safeRecords} clear={() => setRecords([])} go={go} />
-        )}
+        {route === 'home' && <Home go={go} />}
+        {route === 'design' && <DesignApp />}
         {route === 'about' && <About go={go} />}
       </main>
       <footer className="site-footer">
         <span>
           <Sprout size={16} />
-          늘봄 <span className="footer-dot">·</span> 저마다의 속도로, 스스로의 힘으로.
+          늘봄 <span className="footer-dot">·</span> 같은 목표를 향해, 학생마다 다른 자료를.
         </span>
         <span>
-          준비된 문제로 체험 중 <span className="footer-dot">·</span> AI API 미연결
+          프로토타입 <span className="footer-dot">·</span> 가상 사례{' '}
+          <span className="footer-dot">·</span> 이 브라우저에만 저장{' '}
+          <span className="footer-dot">·</span> 학생 실명 없음 <span className="footer-dot">·</span>{' '}
+          AI 미사용
         </span>
       </footer>
       {settingsOpen && (
@@ -230,29 +194,29 @@ function App() {
     </div>
   );
 }
-function Home({ go, records }) {
-  const summary = summarize(records);
+function Home({ go }) {
   return (
     <div className="home-page page-width">
       <section className="home-hero">
         <div className="hero-copy">
           <div className="eyebrow">
-            <span className="tiny-line" /> LEARNING, AT YOUR PACE
+            <span className="tiny-line" /> SAME GOAL, DIFFERENT SUPPORT
           </div>
           <h1>
-            혼자 해내는 순간이
+            같은 목표를 향해,
             <br />
-            <span>조금씩 늘어나도록.</span>
+            <span>학생마다 다른 자료를.</span>
           </h1>
           <p>
-            어떤 도움이 나에게 맞을까요?
-            <br />세 가지 배움 속에서 나만의 방법을 찾아보세요.
+            학습목표와 활동 목적을 정하면, 제시·응답·지원 방식을 조절해 학생별 활동자료를 만듭니다.
+            <br />
+            검토할 지점은 도구가 알려 주고, 판단은 교사가 합니다.
           </p>
           <div className="hero-note">
             <span className="note-icon">
               <Leaf size={17} />
             </span>
-            잘하는 것부터, 오늘 할 수 있는 만큼.
+            특수학급 교사를 위한 활동자료 설계 도구 · 졸업작품 프로토타입
           </div>
         </div>
         <div className="hero-art" aria-hidden="true">
@@ -264,7 +228,7 @@ function Home({ go, records }) {
                 <Sprout size={23} />
               </span>
               <span>
-                오늘의 작은 배움<small>한 번에 한 걸음</small>
+                자료 설계 흐름<small>다섯 단계, 판단은 교사가</small>
               </span>
               <span className="paper-sun">✳</span>
             </div>
@@ -272,22 +236,26 @@ function Home({ go, records }) {
               <span>
                 <Check size={15} />
               </span>
-              내가 할 만큼 고르기
+              {FLOW[0].title}
             </div>
             <div className="paper-line current">
-              <span>2</span>필요한 도움 찾기
+              <span>2</span>
+              {FLOW[1].title}
               <div className="line-underline" />
             </div>
-            <div className="paper-line">
-              <span>3</span>내 힘으로 다시 해보기
-            </div>
+            {FLOW.slice(2).map((f, i) => (
+              <div className="paper-line" key={f.title}>
+                <span>{i + 3}</span>
+                {f.title}
+              </div>
+            ))}
             <div className="paper-bottom">
-              <span>조금 쉬었다 와도 괜찮아요</span>
-              <Pause size={16} />
+              <span>검토 안내는 판정이 아니에요</span>
+              <NotebookPen size={16} />
             </div>
           </div>
           <div className="floating-note">
-            <span>나의 배움, 나의 속도</span>
+            <span>공통 · 학생 ㄱ · ㄴ · ㄷ</span>
             <div>
               <span />
               <span />
@@ -303,14 +271,17 @@ function Home({ go, records }) {
       <section className="prototype-section" aria-labelledby="choose-title">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">FIND YOUR WAY</span>
-            <h2 id="choose-title">오늘은 어떻게 배워볼까요?</h2>
+            <span className="eyebrow">TRY THE AUTHORING FLOW</span>
+            <h2 id="choose-title">어떤 자료를 설계해 볼까요?</h2>
           </div>
-          <p>같은 목표, 서로 다른 도움.</p>
+          <p>같은 목표, 서로 다른 자료.</p>
         </div>
         <div className="prototype-grid">
-          {prototypes.map((p) => (
-            <article key={p.id} className={`prototype-card ${p.color}`}>
+          {cards.map((p) => (
+            <article
+              key={p.id}
+              className={`prototype-card ${p.color} ${p.route ? '' : 'is-pending'}`}
+            >
               <div className="card-top">
                 <span className="card-letter">{p.letter}</span>
                 <span className="card-tag">{p.tag}</span>
@@ -321,12 +292,12 @@ function Home({ go, records }) {
                 <span className="card-subject">{p.subject}</span>
                 <h3>{p.name}</h3>
                 <p>{p.desc}</p>
-                <button className="card-start" onClick={() => go(p.id)}>
-                  {p.id === 'focus'
-                    ? '한 걸음 시작하기'
-                    : p.id === 'bridge'
-                      ? '나에게 맞는 도움 찾기'
-                      : '문구점에 가 보기'}
+                <button
+                  className="card-start"
+                  onClick={() => p.route && go(p.route)}
+                  disabled={!p.route}
+                >
+                  {p.action}
                   <ArrowUpRight size={19} />
                 </button>
               </div>
@@ -336,60 +307,57 @@ function Home({ go, records }) {
       </section>
       <section className="parent-invitation">
         <div className="parent-illustration">
-          <ChartNoAxesColumnIncreasing size={27} />
+          <Scale size={27} />
         </div>
         <div>
-          <span className="eyebrow">FOR PARENTS</span>
-          <h3>몇 개를 맞혔는지, 그다음 이야기도.</h3>
+          <span className="eyebrow">FOR TEACHERS</span>
+          <h3>도구는 검토할 지점을, 결정은 교사가.</h3>
           <p>
-            {summary.sessions ? `이 기기에서 마친 ${summary.sessions}번의 배움이 있어요. ` : ''}혼자
-            해낸 것과 도움받아 해낸 것을 함께 확인해요.
+            지원을 넣거나 수 범위를 바꾸면 목표나 활동 목적과 어긋날 수 있습니다. 도구는 그 관계를
+            이유와 함께 알려 주고, 의도한 변경이라면 기록으로 남깁니다.
           </p>
         </div>
-        <button className="btn btn-secondary" onClick={() => go('records')}>
-          학습 기록 보기
+        <button className="btn btn-secondary" onClick={() => go('design')}>
+          자료 설계 시작
           <ArrowRight size={17} />
         </button>
       </section>
       <div className="home-bottom-note">
         <ShieldCheck size={17} />
         <span>
-          특수학급의 다양한 학습·지원 필요를 고려한 시제품입니다. 학습효과나 진단을 제공하지
-          않습니다.
+          가상 사례로 구성한 졸업작품 프로토타입입니다. 학생 실명 · 진단 · 점수를 다루지 않으며,
+          AI를 사용하지 않습니다.
         </span>
       </div>
     </div>
   );
 }
 function Preview({ type }) {
-  if (type === 'focus')
+  if (type === 'design')
     return (
-      <div className="card-preview preview-focus" aria-hidden="true">
-        <div className="mini-schedule">
-          <span>나의 작은 계획</span>
+      <div className="card-preview preview-compare" aria-hidden="true">
+        <div className="mini-compare">
           <div>
-            <i>
-              <Check size={12} />
-            </i>
-            <b>안내문 읽기</b>
-          </div>
-          <div className="now">
-            <i>2</i>
-            <b>준비물 찾기</b>
-            <span>지금</span>
+            <b>가</b>
+            {Array.from({ length: 5 }, (_, i) => (
+              <i key={i} />
+            ))}
           </div>
           <div>
-            <i>3</i>
-            <b>직접 확인하기</b>
+            <b>나</b>
+            {Array.from({ length: 5 }, (_, i) => (
+              <i key={i} className={i < 3 ? 'gold' : 'empty'} />
+            ))}
           </div>
         </div>
-        <div className="mini-bookmark">
-          <Pause size={15} />
-          쉬었다 이어가기
+        <div className="mini-versions">
+          <span>공통</span>
+          <span>학생 ㄱ</span>
+          <span>학생 ㄴ</span>
         </div>
       </div>
     );
-  if (type === 'bridge')
+  if (type === 'addition')
     return (
       <div className="card-preview preview-bridge" aria-hidden="true">
         <div className="mini-equation">
@@ -402,393 +370,211 @@ function Preview({ type }) {
         </div>
         <div className="mini-help">
           <span>
-            <Volume2 size={13} />
-            읽어주기
+            <Image size={13} />
+            그림 제시
           </span>
           <span>
-            <Layers3 size={13} />
-            나누어 보기
+            <PenLine size={13} />
+            부분 완성
           </span>
         </div>
       </div>
     );
   return (
-    <div className="card-preview preview-life" aria-hidden="true">
-      <div className="mini-shop-awning">
-        {Array.from({ length: 7 }, (_, i) => (
-          <i key={i} />
+    <div className="card-preview preview-axes" aria-hidden="true">
+      <div className="mini-axes">
+        <span>자료의 다섯 축</span>
+        {['목표', '활동 목적', '제시 방식', '응답 방식', '지원 조건'].map((t, i) => (
+          <div key={t}>
+            <i>{i + 1}</i>
+            {t}
+          </div>
         ))}
-      </div>
-      <div className="mini-shop-items">
-        <div>
-          <span className="draw-pencil" />
-          <b>연필</b>
-        </div>
-        <div>
-          <span className="draw-notebook" />
-          <b>공책</b>
-        </div>
-        <div>
-          <span className="draw-eraser" />
-          <b>지우개</b>
-        </div>
-      </div>
-      <div className="mini-receipt">
-        <Check size={13} />
-        준비물을 골라 보세요
       </div>
     </div>
   );
 }
-function Records({ records, clear, go }) {
-  const [filter, setFilter] = useState('all');
-  const [selected, setSelected] = useState(null);
-  const [confirm, setConfirm] = useState(false);
-  const filtered = records.filter((r) => filter === 'all' || r.prototype === filter);
-  const s = summarize(filtered);
-  function download() {
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), records }, null, 2)], {
-        type: 'application/json',
-      }),
-    );
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = '늘봄-체험기록.json';
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-  return (
-    <div className="records-page page-width">
-      <div className="page-heading">
-        <span className="eyebrow">THE STORY BEHIND LEARNING</span>
-        <h1>배움의 과정도 함께 봐요.</h1>
-        <p>정답 너머, 어떤 도움이 필요했는지 확인하는 보호자용 기록입니다.</p>
-      </div>
-      <div className="local-notice">
-        <CircleHelp size={18} />
-        <span>
-          이 기기·브라우저에 저장된 체험 기록이에요. 실제 부모 계정 연결이나 다른 기기와의 동기화는
-          제공하지 않습니다.
-        </span>
-      </div>
-      <div className="record-filters" role="group" aria-label="학습 종류 필터">
-        <button
-          aria-pressed={filter === 'all'}
-          onClick={() => {
-            setFilter('all');
-            setSelected(null);
-          }}
-        >
-          모든 배움
-        </button>
-        {prototypes.map((p) => (
-          <button
-            key={p.id}
-            aria-pressed={filter === p.id}
-            onClick={() => {
-              setFilter(p.id);
-              setSelected(null);
-            }}
-          >
-            {p.name}
-          </button>
-        ))}
-      </div>
-      {!filtered.length ? (
-        <div className="empty-state">
-          <span>
-            <NotebookPen size={38} />
-          </span>
-          <h2>아직 이곳에 담긴 배움이 없어요.</h2>
-          <p>
-            활동을 끝내면 첫 시도와 도움 사용 기록이 쌓여요.
-            <br />
-            가장 편한 배움부터 시작해 보세요.
-          </p>
-          <button className="btn btn-primary" onClick={() => go('home')}>
-            배움 선택하기
-            <ArrowRight size={17} />
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="stat-grid">
-            <Stat
-              label="남긴 학습"
-              value={s.sessions}
-              suffix="회"
-              detail="일부만 진행한 기록도 포함"
-              icon={BookOpen}
-            />
-            <Stat
-              label="첫 시도 정답"
-              value={`${s.firstCorrect}/${s.answered}`}
-              suffix="문항"
-              detail="응답한 문항만 계산"
-              icon={CheckCheck}
-            />
-            <Stat
-              label="풀이 도움 사용"
-              value={s.withHint}
-              suffix="문항"
-              detail="읽어주기와 보기 설정 제외"
-              icon={Layers3}
-            />
-            <Stat
-              label="첫 시도 정답률"
-              value={s.accuracy ?? '—'}
-              suffix={s.accuracy === null ? '' : '%'}
-              detail="이 기록의 결과 · 능력 진단 아님"
-              icon={ChartNoAxesColumnIncreasing}
-            />
-          </div>
-          <div className="record-layout">
-            <section className="record-history">
-              <div className="section-heading">
-                <h2>배움별 기록</h2>
-                <span>{filtered.length}개의 이야기</span>
-              </div>
-              {filtered.map((r) => {
-                const p = prototypes.find((p) => p.id === r.prototype) || prototypes[0];
-                const a = summarize([r]);
-                return (
-                  <button
-                    className={`history-row ${selected === r.id ? 'selected' : ''}`}
-                    key={r.id}
-                    onClick={() => setSelected(selected === r.id ? null : r.id)}
-                    aria-expanded={selected === r.id}
-                  >
-                    <span className={`history-icon ${p.color}`}>
-                      <p.icon size={22} />
-                    </span>
-                    <span className="history-copy">
-                      <small>
-                        {p.name} ·{' '}
-                        {new Date(r.completedAt).toLocaleDateString('ko-KR', {
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </small>
-                      <strong>{r.title}</strong>
-                      <span>
-                        첫 시도 {a.firstCorrect}/{a.answered} · 풀이 도움 {a.withHint}문항
-                      </span>
-                    </span>
-                    <ChevronRight size={20} />
-                  </button>
-                );
-              })}
-            </section>
-            <aside className="record-insight">
-              <span className="insight-icon">
-                <Leaf size={23} />
-              </span>
-              <h3>기록은 질문의 시작이에요.</h3>
-              <p>
-                힌트를 사용한 것은 실패가 아니에요. 어떤 도움이 있었는지, 새로운 문제에서는 어떻게
-                했는지 함께 살펴보세요.
-              </p>
-              <div className="insight-rule" />
-              <h4>이렇게 이야기해 보세요</h4>
-              <p>
-                “오늘 어떤 방법이 도움이 됐어?”
-                <br />
-                “다음에는 어떤 걸 직접 해볼까?”
-              </p>
-              <small>
-                문항 수가 적거나 활동이 다르면 결과를 직접 비교하기 어려워요. 요약은 기록에 따른
-                고정 문구입니다.
-              </small>
-            </aside>
-          </div>
-          {selected && filtered.find((r) => r.id === selected) && (
-            <RecordDetails record={filtered.find((r) => r.id === selected)} />
-          )}
-        </>
-      )}
-      {records.length > 0 && (
-        <div className="data-actions">
-          <button className="btn btn-secondary" onClick={download}>
-            <Download size={16} />
-            기록 내려받기
-          </button>
-          <button className="btn btn-ghost" onClick={() => setConfirm(true)}>
-            <Trash2 size={16} />
-            완료 기록 비우기
-          </button>
-          <span>진행 중인 학습은 각 체험에서 다시 시작할 수 있어요.</span>
-        </div>
-      )}
-      {confirm && (
-        <Modal title="완료한 체험 기록을 지울까요?" close={() => setConfirm(false)}>
-          <p>
-            이 브라우저에 저장된 완료 기록 {records.length}개가 삭제됩니다. 진행 중인 학습은
-            남습니다.
-          </p>
-          <div className="modal-actions">
-            <button className="btn btn-secondary" onClick={() => setConfirm(false)}>
-              돌아가기
-            </button>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                clear();
-                setSelected(null);
-                setConfirm(false);
-              }}
-            >
-              기록 지우기
-            </button>
-          </div>
-        </Modal>
-      )}
-    </div>
-  );
-}
-function Stat({ label, value, suffix, detail, icon: Icon }) {
-  return (
-    <article className="stat-card">
-      <div>
-        <span>{label}</span>
-        <Icon size={19} />
-      </div>
-      <strong>
-        {value}
-        <small>{suffix}</small>
-      </strong>
-      <p>{detail}</p>
-    </article>
-  );
-}
-function RecordDetails({ record }) {
-  return (
-    <section className="record-details">
-      <h2>{record.title} · 자세히 보기</h2>
-      {record.reflection && (
-        <p className="student-reflection">학습 돌아보기: {record.reflection}</p>
-      )}
-      {record.resumed > 0 && <p>쉬었다 이어간 횟수: {record.resumed}회</p>}
-      <div className="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>학습 내용</th>
-              <th>첫 시도</th>
-              <th>마지막 결과</th>
-              <th>풀이 도움</th>
-              <th>읽기·조작 지원</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(record.questions || []).map((q, i) => (
-              <tr key={q.id || i}>
-                <td>{q.prompt}</td>
-                <td>
-                  {q.firstCorrect === true
-                    ? '정답'
-                    : q.firstCorrect === false
-                      ? '다시 생각함'
-                      : '미응답'}
-                </td>
-                <td>{q.correct ? '해결' : '미해결'}</td>
-                <td>
-                  {q.hints || 0}회
-                  {q.supportKinds?.length > 0 && (
-                    <small className="support-kind">{q.supportKinds.join(' · ')}</small>
-                  )}
-                </td>
-                <td>{q.accessSupports?.length ? q.accessSupports.join(', ') : '사용 기록 없음'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p className="muted">
-        이 표는 체험 중 눌렀던 행동을 보여줍니다. 집중력, 장애 정도 또는 교과 전체의 숙달을 의미하지
-        않습니다.
-      </p>
-    </section>
-  );
-}
+const AXES_TABLE = [
+  [
+    '목표',
+    '행동 · 조건 · 기준 · 내용 범위로 나누어 저장',
+    '수 범위 1–5에서 혼자서 더 많은 쪽을 고른다 (5문항 중 4문항)',
+  ],
+  ['활동 목적', '연습 또는 평가(현재 수행 확인)', '평가'],
+  [
+    '제시 방식',
+    '과제를 어떻게 보여 주는지',
+    '그림만 / 그림과 숫자 / 숫자만, 지시문 길이, 한 줄 정렬',
+  ],
+  ['응답 방식', '학생이 어떻게 답하는지', '가리키기·선택 / 비교 기호 쓰기 / 수 쓰기'],
+  [
+    '지원 조건',
+    '자료 안에 어떤 도움이 들어 있는지',
+    '없음 / 시각 단서 / 부분 완성 / 예시 문항 먼저 보여주기',
+  ],
+];
+const HYPOTHESES = [
+  '교사는 같은 목표를 두고 학생별 자료를 따로 만드는 데 시간을 많이 쓴다.',
+  '자료를 고치다 보면 목표나 수행 조건이 의도와 다르게 바뀌는 일이 생긴다.',
+  '목표와 목적을 먼저 구조화해 두면, 변경의 영향을 설명하는 안내가 교사에게 도움이 된다.',
+  '검토 안내가 너무 많지 않으면 교사가 귀찮게 여기지 않고 확인한다.',
+  '검토된 구성 예시가 처음 설계의 부담을 줄인다.',
+];
 function About({ go }) {
   return (
     <div className="about-page page-width">
       <div className="page-heading">
-        <span className="eyebrow">THREE IDEAS, ONE PURPOSE</span>
+        <span className="eyebrow">PROJECT DIRECTION</span>
         <h1>
-          문제보다 먼저,
+          자료를 대신 만드는 도구가 아니라,
           <br />
-          배우는 과정을 살펴봤어요.
+          교사의 설계를 돕는 도구.
         </h1>
         <p>
-          AI 퀴즈를 더하는 것만으로 충분하지 않아서.
-          <br />
-          학생이 멈추는 순간과 다시 해내는 순간을 세 가지 방향으로 탐색합니다.
+          교사가 학습목표와 활동 목적을 정하고, 제시·응답·지원 방식을 조합해 학생별 활동자료를
+          설계합니다. 도구는 구성 예시와 선택 이유를 제공하고, 편집 중 목표나 수행 조건에 영향을 줄
+          수 있는 변경을 설명합니다. 최종 판단은 교사가 합니다.
         </p>
       </div>
       <div className="about-principle">
         <Compass size={32} />
         <div>
-          <h2>특수학급이라는 이름이, 하나의 수준을 뜻하지는 않으니까.</h2>
+          <h2>문제 인식 — 아직 확인 중인 가설입니다.</h2>
           <p>
-            교과 수준과 필요한 도움을 구분합니다. 읽어주기는 유지하면서 풀이 도움을 줄일 수도 있고,
-            쉬었다가 같은 목표로 돌아올 수도 있어요. 학생의 선택을 학습 과정에 남깁니다.
+            특수학급에서는 같은 학습목표를 두고도 학생마다 제시 방식, 응답 방식, 필요한 도움이
+            다릅니다. 교사가 자료를 학생별로 고치는 과정에서 목표의 조건이나 범위가 의도와 다르게
+            바뀔 수 있다고 보았습니다. 이 문제 인식은 아직 교사 인터뷰로 확인하지 않은 가설입니다.
           </p>
         </div>
       </div>
-      <div className="about-cards">
-        {prototypes.map((p, i) => (
-          <article key={p.id}>
-            <span className={`about-number ${p.color}`}>{p.letter}</span>
-            <h2>{p.focus}</h2>
-            <p>
-              {
-                [
-                  '시작할 행동을 작게 만들고, 중단 뒤에도 목표와 다음 행동을 다시 찾는 경험을 살펴봅니다.',
-                  '도움을 받아 푼 결과와 새로운 문제를 직접 푼 결과를 나누어 봅니다. 도움 사용을 실패로 취급하지 않습니다.',
-                  '교과에서 배운 읽기와 계산을 장보기 상황에 적용합니다. 물건과 숫자가 달라져도 사용할 수 있는지 탐색합니다.',
-                ][i]
-              }
-            </p>
-            <button onClick={() => go(p.id)}>
-              {p.name} 체험
-              <ArrowRight size={17} />
-            </button>
-          </article>
-        ))}
-      </div>
-      <section className="research-note">
-        <h2>조사에서 시제품으로</h2>
+      <section className="about-section">
+        <h2>확정된 방향</h2>
         <p>
-          국내 특수교육 자료, 학습 서비스와 공개 문항 엔진을 참고했습니다. 아래 경험의 구성 요소는
-          기존 서비스에도 있습니다. 세 안의 우월성이나 학습효과는 아직 검증되지 않았습니다.
+          학생용 학습 앱 대신, 교사용 활동자료 설계 도구를 만듭니다. 모든 활동자료는 한 덩어리
+          문서가 아니라 목표 · 활동 목적 · 제시 · 응답 · 지원의 다섯 축으로 저장되고, 학생별 변형은
+          공통 설정에서 무엇을 왜 바꿨는지를 함께 남깁니다. 규칙은 정답을 내리지 않고, 선언한 목표와
+          변경 사이의 관계를 이유와 함께 검토 안내로 보여 줍니다. 이번 시제품은 「두 집합의 수량
+          비교」 한 유형을 처음부터 끝까지 구현합니다.
         </p>
+      </section>
+      <section className="about-section">
+        <h2>사용 흐름</h2>
+        <ol className="about-flow">
+          {FLOW.map((f, i) => (
+            <li key={f.title}>
+              <span
+                className={`about-number ${['sage', 'lavender', 'peach', 'sage', 'lavender'][i]}`}
+              >
+                {i + 1}
+              </span>
+              <strong>{f.title}</strong>
+              {f.desc}
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section className="about-section">
+        <h2>자료의 다섯 축</h2>
+        <div className="table-scroll">
+          <table className="about-axes">
+            <thead>
+              <tr>
+                <th scope="col">축</th>
+                <th scope="col">저장하는 것</th>
+                <th scope="col">수량 비교 활동의 예</th>
+              </tr>
+            </thead>
+            <tbody>
+              {AXES_TABLE.map(([a, b, c]) => (
+                <tr key={a}>
+                  <th scope="row">{a}</th>
+                  <td>{b}</td>
+                  <td>{c}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section className="about-section">
+        <h2>도구의 역할과 교사의 역할</h2>
+        <div className="about-cards about-two">
+          <article>
+            <span className="about-number sage">도구</span>
+            <h2>구조를 잡고, 관계를 설명합니다.</h2>
+            <p>
+              목표와 자료를 다섯 축으로 구조화하고, 목표에 맞는 구성 예시와 선택 이유를 보여 줍니다.
+              변경이 목표나 수행 조건에 영향을 줄 수 있으면 확인 필요 · 참고로 나누어 알려 줍니다.
+              좋은 문제인지 판단하지 않습니다.
+            </p>
+          </article>
+          <article>
+            <span className="about-number peach">교사</span>
+            <h2>목표를 정하고, 최종 판단을 합니다.</h2>
+            <p>
+              학생을 알고 있는 사람은 교사입니다. 목표와 목적을 정하고, 예시를 고르고, 학생별로
+              조절합니다. 검토 안내를 받아들일지, 의도한 변경으로 기록할지 교사가 정합니다.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section className="about-section">
+        <h2>졸업작품의 기여</h2>
+        <div className="about-cards">
+          {[
+            [
+              'sage',
+              '설계',
+              '활동자료를 목표 · 목적 · 제시 · 응답 · 지원의 다섯 축으로 나누는 데이터 모델과, 목표와 변경의 관계로 정의한 검토 규칙표.',
+            ],
+            [
+              'lavender',
+              '구현',
+              '하나의 활동 유형을 목표 설정부터 학생별 변형, 검토 안내, 활동지 출력까지 이어지는 웹 시제품으로 구현.',
+            ],
+            [
+              'peach',
+              '평가',
+              '특수교사와 함께 사용 사례를 검토하고, 검토 안내가 실제 판단에 도움이 되는지와 안내 피로를 확인.',
+            ],
+          ].map(([color, title, text]) => (
+            <article key={title}>
+              <span className={`about-number ${color}`}>{title.slice(0, 1)}</span>
+              <h2>{title}</h2>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="research-note">
+        <h2>아직 검증되지 않은 가설</h2>
+        <ul className="about-list">
+          {HYPOTHESES.map((h) => (
+            <li key={h}>{h}</li>
+          ))}
+        </ul>
         <div className="source-links">
-          <a
-            href="https://www.nise.go.kr/boardCnts/list.do?boardID=355&m=010504"
-            target="_blank"
-            rel="noreferrer"
-          >
-            국립특수교육원 조사자료
-            <ArrowUpRight size={16} />
-          </a>
-          <a href="https://github.com/CAHLR/OATutor" target="_blank" rel="noreferrer">
-            OATutor · 공개 학습 엔진
-            <ArrowUpRight size={16} />
-          </a>
-          <a href="https://www.w3.org/TR/coga-usable/" target="_blank" rel="noreferrer">
-            W3C · 인지 접근성
+          <a href={README_URL} target="_blank" rel="noreferrer">
+            GitHub README · 프로젝트 문서
             <ArrowUpRight size={16} />
           </a>
         </div>
         <div className="prototype-limit">
-          <strong>현재 체험할 수 있는 범위</strong>
+          <strong>다음 할 일</strong>
+          <ul className="about-list">
+            <li>특수교사 인터뷰로 문제 인식과 사용 흐름 확인</li>
+            <li>「두 집합의 수량 비교」 사용 사례 1쪽 작성 (가상 학생 기준)</li>
+            <li>검토 규칙표를 교사 의견으로 보완하고, 두 번째 활동 유형(10 이내 덧셈) 설계</li>
+          </ul>
           <p>
-            미리 준비한 자체 문항, 단계별 도움, 기기 내 기록, 보호자용 결과 확인이 작동합니다.
-            실시간 AI 생성·학생 인증·기기 간 기록 공유는 연결하지 않았습니다.
+            지금 작동하는 범위: 한 가지 활동 유형, 미리 준비한 구성 예시, 규칙 기반 검토 안내, 이
+            브라우저에만 저장되는 설계 내용과 인쇄. AI · 학생 계정 · 기기 간 공유는 없습니다.
           </p>
         </div>
+        <button className="btn btn-primary" onClick={() => go('design')}>
+          자료 설계 체험하기
+          <ArrowRight size={17} />
+        </button>
       </section>
     </div>
   );
@@ -796,11 +582,11 @@ function About({ go }) {
 function Settings({ settings, setSettings, close }) {
   return (
     <Modal title="나에게 편한 보기" close={close}>
-      <p>공부하는 내용은 그대로, 보는 방법을 바꿔요.</p>
+      <p>자료 내용은 그대로, 화면을 보는 방법만 바꿔요.</p>
       <label className="setting-row">
         <span>
           <strong>글씨 크게 보기</strong>
-          <small>문제와 안내를 조금 더 크게 표시해요.</small>
+          <small>화면의 글과 안내를 조금 더 크게 표시해요.</small>
         </span>
         <input
           type="checkbox"
