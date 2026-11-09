@@ -1,3 +1,0 @@
-problem_id: "P_make10"
-text: "구슬 10개를 두 통에 나누어 담아요. 한 통에 7개면 다른 통에는 몇 개?"
-requires: [N16_ten_complements]

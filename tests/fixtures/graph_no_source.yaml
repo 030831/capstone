@@ -1,8 +1,0 @@
-# 노드 B 에 sources 가 없음 (거부되어야 함)
-version: "0.1"
-domain: "테스트 source 누락"
-nodes:
-  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
-  - {id: B, label: "개념 B"}
-edges:
-  - {from: A, to: B, kind: hard, sources: [{type: toy, ref: "테스트용"}]}

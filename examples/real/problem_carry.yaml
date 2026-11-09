@@ -1,4 +1,0 @@
-problem_id: "P_carry"
-text: "사탕이 8개 있었는데 5개를 더 받았어요. 모두 몇 개일까요?"
-requires: [N26_add_single_digit_carry]
-surface: {number_range: "20이내", context: "사탕", representation: "글+그림", support: "없음"}

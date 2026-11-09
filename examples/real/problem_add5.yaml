@@ -1,3 +1,0 @@
-problem_id: "P_add5"
-text: "사과 2개와 3개를 합하면 몇 개?"
-requires: [N19_add_within_5]

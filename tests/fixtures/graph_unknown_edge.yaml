@@ -1,7 +1,0 @@
-# 엣지가 존재하지 않는 노드를 참조 (거부되어야 함)
-version: "0.1"
-domain: "테스트 미존재 노드"
-nodes:
-  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
-edges:
-  - {from: A, to: Z, kind: hard, sources: [{type: toy, ref: "테스트용"}]}

@@ -1,8 +1,0 @@
-# kind 값 오류와 필드명 오타 (거부되어야 함)
-version: "0.1"
-domain: "테스트 스키마 오류"
-nodes:
-  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
-  - {id: B, lable: "오타 필드", label: "개념 B", sources: [{type: toy, ref: "테스트용"}]}
-edges:
-  - {from: A, to: B, kind: medium, sources: [{type: toy, ref: "테스트용"}]}

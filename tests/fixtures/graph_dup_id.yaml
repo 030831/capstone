@@ -1,8 +1,0 @@
-# ID 중복 (거부되어야 함)
-version: "0.1"
-domain: "테스트 ID 중복"
-nodes:
-  - {id: A, label: "개념 A", sources: [{type: toy, ref: "테스트용"}]}
-  - {id: B, label: "개념 B", sources: [{type: toy, ref: "테스트용"}]}
-  - {id: A, label: "또 다른 A", sources: [{type: toy, ref: "테스트용"}]}
-edges: []
