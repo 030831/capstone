@@ -1,0 +1,290 @@
+/* 수량 비교 기록 화면. 늘봄 디자인 셸과 자료 설계(.design-proto, .dp-*) 클래스를 그대로 쓰고,
+   그 밖에 필요한 것만 .cmp 아래에 둔다. */
+.cmp .dp-work-header {
+  align-items: flex-end;
+}
+.cmp-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--dp-pale);
+}
+.cmp-tabs a {
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4e5e48;
+}
+.cmp-tabs a[aria-current='page'] {
+  background: var(--dp-paper);
+  color: var(--dp-green);
+  box-shadow: 0 1px 2px #4b654722;
+}
+.cmp-field {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.cmp-field legend {
+  padding: 0;
+}
+.cmp-goal {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fdf8f1;
+  border: 1px solid #ead9c3;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.cmp-goal strong {
+  display: block;
+  font-size: 11px;
+  color: #8a563c;
+}
+.cmp-alert {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a563c;
+}
+.cmp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.cmp-player {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.cmp-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cmp-meta .dp-chip {
+  font-size: 12px;
+  padding: 4px 11px;
+}
+.cmp-prompt {
+  font-size: 24px;
+}
+.cmp-choice-grid,
+.cmp-choice-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.cmp-choice-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 36px 14px 14px;
+  border: 2px solid var(--dp-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.cmp-choice-button {
+  min-height: 60px;
+  border: 2px solid var(--dp-line);
+  border-radius: 14px;
+  background: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--dp-ink);
+}
+.cmp-choice-card:not(:disabled):hover,
+.cmp-choice-button:not(:disabled):hover {
+  border-color: #99b088;
+  background: #f7faf0;
+}
+.cmp-choice-card:disabled,
+.cmp-choice-button:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.cmp-choice-card.right,
+.cmp-choice-button.right {
+  border-color: #7d9e66;
+  background: #eff5e5;
+}
+.cmp-choice-card.wrong,
+.cmp-choice-button.wrong {
+  border-color: #c57b4a;
+  background: #fdf8f1;
+}
+.cmp-choice-label {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.cmp-scatter {
+  width: min(100%, 250px);
+  height: auto;
+}
+.cmp-numeral {
+  font-size: clamp(56px, 12vw, 92px);
+  font-weight: 800;
+  line-height: 1;
+}
+.cmp-aligned {
+  width: 100%;
+  max-height: 230px;
+  padding: 12px;
+  border: 2px solid var(--dp-line);
+  border-radius: 16px;
+  background: #fff;
+}
+.cmp-row-label {
+  font-size: 22px;
+  font-weight: 800;
+  fill: var(--dp-ink);
+}
+.cmp-feedback {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 26px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.cmp-feedback.good {
+  color: #3f6232;
+}
+.cmp-feedback.retry {
+  color: #8a563c;
+}
+.cmp-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0 0 22px;
+}
+.cmp-stats > div {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--dp-pale);
+}
+.cmp-stats dt {
+  font-size: 11px;
+  color: var(--dp-muted);
+}
+.cmp-stats dd {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+.cmp-stats.small {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+.cmp-stats.small dd {
+  font-size: 17px;
+}
+.cmp-stats dd small {
+  display: inline;
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.cmp-teacher {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cmp-student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+.cmp-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: none;
+}
+.cmp .dp-note-row > button {
+  flex-shrink: 0;
+}
+.cmp .dp-note p b {
+  font-size: 14px;
+}
+.cmp-check-ok,
+.cmp-check-bad {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 8px;
+  font-weight: 700;
+}
+.cmp-check-ok svg,
+.cmp-check-bad svg {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.cmp-check-ok {
+  color: #3f6232;
+}
+.cmp-check-bad {
+  color: #8a3b12;
+}
+.cmp-table {
+  margin-top: 4px;
+}
+.cmp-cell-actions {
+  white-space: nowrap;
+}
+.cmp-link {
+  padding: 4px 0;
+  margin-right: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dp-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cmp-link:disabled {
+  color: #6b7280;
+  text-decoration: none;
+  opacity: 1;
+}
+.cmp-counts li {
+  font-size: 12px;
+}
+.cmp-recent-title {
+  margin-top: 24px;
+}
+.cmp-tools {
+  margin: 18px 0 4px;
+}
+@media (max-width: 720px) {
+  .cmp-head-row {
+    flex-direction: column;
+  }
+  .cmp-choice-card {
+    min-height: 170px;
+  }
+  .cmp .dp-note-row {
+    flex-wrap: wrap;
+  }
+}
+/* 이 화면의 작은 글씨는 배경과의 명도 대비(4.5:1)를 맞추려고 조금 더 진하게 쓴다. */
+.cmp .dp-mini-label,
+.cmp .dp-pill small,
+.cmp .dp-chips b,
+.cmp-stats dt,
+.cmp-stats dd small {
+  color: #55664c;
+}

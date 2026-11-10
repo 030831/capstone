@@ -17,6 +17,7 @@ import {
   PenLine,
 } from 'lucide-react';
 import DesignApp from './design/DesignApp';
+import CompareApp from './compare/CompareApp';
 import { usePersistentState } from './lib/storage';
 import './design/design.css';
 
@@ -76,8 +77,8 @@ const cards = [
 ];
 
 function getRoute() {
-  const r = window.location.hash.replace(/^#\/?/, '');
-  return ['design', 'about'].includes(r) ? r : 'home';
+  const r = window.location.hash.replace(/^#\/?/, '').replace(/\/$/, '');
+  return ['design', 'compare', 'compare/teacher', 'about'].includes(r) ? r : 'home';
 }
 function App() {
   const [route, setRoute] = useState(getRoute);
@@ -138,6 +139,9 @@ function App() {
             <a href="#/design" className={route === 'design' ? 'active' : ''}>
               자료 설계
             </a>
+            <a href="#/compare" className={route.startsWith('compare') ? 'active' : ''}>
+              수량 비교 기록
+            </a>
             <a href="#/about" className={route === 'about' ? 'active' : ''}>
               프로젝트
             </a>
@@ -170,6 +174,9 @@ function App() {
       <main id="main" tabIndex={-1}>
         {route === 'home' && <Home go={go} />}
         {route === 'design' && <DesignApp />}
+        {route.startsWith('compare') && (
+          <CompareApp tab={route === 'compare/teacher' ? 'teacher' : 'student'} />
+        )}
         {route === 'about' && <About go={go} />}
       </main>
       <footer className="site-footer">

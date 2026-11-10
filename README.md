@@ -262,6 +262,7 @@
 | `#/design` | **자료 설계 수직 슬라이스** — 두 집합의 수량 비교. 목표·목적 → 예시 → 조절(공통 + 가상 학생 3명 변형) → 검토 안내 → 미리보기·비교 표·인쇄 | 동작 (1차 범위) |
 | `#/about` | 프로젝트 방향, 다섯 축, 역할, 기여, 가설 목록, 할 일 | 정적 |
 | (카드) 10 이내 덧셈 | 두 번째 활동 유형 | 준비 중 |
+| `#/compare`, `#/compare/teacher` | **수량 비교 기록** (브랜치 `feat/compare-records`에만 있음) — 학생 화면에서 가상 학생이 수량 비교 문항을 풀고, 교사 화면에서 첫 시도 정답률·지원별 정답률·문항 승인·저장된 데이터를 본다 | 동작 (실험) |
 
 - 상태는 브라우저 localStorage에만 저장된다. 로그인·서버 없음.
 - 모든 학생은 가상 학생(학생 ㄱ/ㄴ/ㄷ). 모든 데이터는 가상 사례.
@@ -314,6 +315,8 @@ git worktree remove /tmp/gh-pages
 | `main` | 현재 방향 (늘봄 셸 + 교사용 설계 도구) | 개발 |
 | `gh-pages` | `main` 빌드 결과 | 배포. 직접 수정하지 않는다 |
 | `neulbom-prototype`, 태그 `v0-neulbom-student` | 늘봄 **학생용** 프로토타입: 한 걸음 교실·도움 사다리·생활 실험실·보호자 기록 | 보존. 그대로 실행 가능 |
+| `feat/compare-records` | `main` + 수량 비교 기록 화면(`src/compare/`). 학습기록을 정확하게 남기는 방법(중복 저장 방지, 풀이 당시 문항 보관, 승인 문항만 배정, 기한 만료)을 브라우저 저장으로 실험 | 실험. 빌드는 사이트 `/compare/`에 배포 |
+| `prototype/compare-records` | 위 화면을 예전 학생용 셸(`neulbom-prototype`) 위에 처음 만든 버전 | 보존 |
 | `archive/alignment-checker-2026-11`, 태그 `v0-alignment-checker` | 이전 방향: 인지 의존성 그래프 × IEP 충돌 검사기(Python `checker/` + TS `web/src/engine/`), 학습지 제작 도구(`web/src/creator/`), 스펙·검증 문서 | 보존. 그대로 실행 가능 |
 
 이전 작업물을 꺼내 보려면:
@@ -323,6 +326,10 @@ git fetch --all --tags
 git worktree add ../neulbom-student neulbom-prototype          # 학생용 프로토타입
 git worktree add ../alignment-checker archive/alignment-checker-2026-11   # 검사기 + 학습지 제작 도구 (web/ 에서 npm ci && npm run dev)
 ```
+
+### `feat/compare-records` 브랜치에 대하여
+
+이 브랜치는 `main`의 방향(교사용 활동자료 설계)은 그대로 두고, 학생이 문항을 풀 때 생기는 기록을 어떻게 남길지 **따로 실험**한다. 그래서 15절 제품 원칙 4(진도율·점수 같은 진척 지표 금지)와 7절 범위(계정·서버·DB 하지 않음)와 다른 부분이 있다. 첫 시도 정답률·지원별 정답률은 학생을 평가하는 점수가 아니라 기록 규칙을 확인하기 위한 값이며, 모든 데이터는 가상 사례이고 브라우저에만 저장한다. `main`에 합칠지는 팀이 정한다.
 
 ## 14. 이전 작업물과 재사용
 
