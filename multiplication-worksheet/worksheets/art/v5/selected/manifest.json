@@ -1,0 +1,355 @@
+{
+ "note": "주 세션(Fable)이 대조 시트를 직접 보고 고른 그림. 개수는 눈으로 센 값.",
+ "items": {
+  "bag_tangerine_2": {
+   "file": "selected/bag_tangerine_2.png",
+   "candidate": "A2-2",
+   "kind": "unit",
+   "count": 2,
+   "desc": "귤 2개가 든 비닐봉지",
+   "width": 617,
+   "height": 796,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "bag_tangerine_3": {
+   "file": "selected/bag_tangerine_3.png",
+   "candidate": "B1-1",
+   "kind": "unit",
+   "count": 3,
+   "desc": "귤 3개가 든 비닐봉지",
+   "width": 616,
+   "height": 795,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "bag_tangerine_4": {
+   "file": "selected/bag_tangerine_4.png",
+   "candidate": "B2-1",
+   "kind": "unit",
+   "count": 4,
+   "desc": "귤 4개가 든 비닐봉지",
+   "width": 617,
+   "height": 796,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "bag_tangerine_5": {
+   "file": "selected/bag_tangerine_5.png",
+   "candidate": "B3-2",
+   "kind": "unit",
+   "count": 5,
+   "desc": "귤 5개가 든 비닐봉지",
+   "width": 617,
+   "height": 795,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "tangerine": {
+   "file": "selected/tangerine.png",
+   "candidate": "A1-1",
+   "kind": "single",
+   "count": 1,
+   "desc": "귤 한 개",
+   "width": 542,
+   "height": 579,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "mascot_wave": {
+   "file": "selected/mascot_wave.png",
+   "candidate": "D1-1",
+   "kind": "mascot",
+   "count": null,
+   "desc": "늘봄 캐릭터, 손 흔들기",
+   "width": 430,
+   "height": 508,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "mascot_point": {
+   "file": "selected/mascot_point.png",
+   "candidate": "D2-1",
+   "kind": "mascot",
+   "count": null,
+   "desc": "늘봄 캐릭터, 옆 가리키기",
+   "width": 492,
+   "height": 555,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "mascot_think": {
+   "file": "selected/mascot_think.png",
+   "candidate": "D3-1",
+   "kind": "mascot",
+   "count": null,
+   "desc": "늘봄 캐릭터, 생각하기",
+   "width": 375,
+   "height": 568,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "table_wood": {
+   "file": "selected/table_wood.png",
+   "candidate": "C3-4",
+   "kind": "surface",
+   "count": null,
+   "desc": "나무 탁자 윗면",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "scene_fruit": {
+   "file": "selected/scene_fruit.png",
+   "candidate": "C1-2",
+   "kind": "scene",
+   "count": null,
+   "desc": "과일 가게 안, 앞쪽에 빈 계산대",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "scene_fruit_alt": {
+   "file": "selected/scene_fruit_alt.png",
+   "candidate": "C1-3",
+   "kind": "scene",
+   "count": null,
+   "desc": "과일 가게 안(다른 후보)",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "pencil": {
+   "file": "selected/pencil.png",
+   "candidate": "N0-1",
+   "kind": "single",
+   "count": 1,
+   "desc": "노란 연필 한 자루",
+   "width": 110,
+   "height": 806,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "scene_stationery": {
+   "file": "selected/scene_stationery.png",
+   "candidate": "S1-3",
+   "kind": "scene",
+   "count": null,
+   "desc": "문구점 안, 앞쪽에 빈 계산대",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "scene_bakery": {
+   "file": "selected/scene_bakery.png",
+   "candidate": "S2-3",
+   "kind": "scene",
+   "count": null,
+   "desc": "빵집 안, 앞쪽에 빈 계산대",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "scene_store": {
+   "file": "selected/scene_store.png",
+   "candidate": "S3b-4",
+   "kind": "scene",
+   "count": null,
+   "desc": "편의점 안, 앞쪽에 빈 계산대",
+   "width": 1344,
+   "height": 576,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "pencil_bundle_3": {
+   "file": "selected/pencil_bundle_3.png",
+   "candidate": "N1-4",
+   "kind": "unit",
+   "count": 3,
+   "desc": "연필 3자루 묶음",
+   "width": 203,
+   "height": 856,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "pencil_bundle_4": {
+   "file": "selected/pencil_bundle_4.png",
+   "candidate": "N2-1",
+   "kind": "unit",
+   "count": 4,
+   "desc": "연필 4자루 묶음",
+   "width": 284,
+   "height": 865,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "pencil_bundle_5": {
+   "file": "selected/pencil_bundle_5.png",
+   "candidate": "N3-1",
+   "kind": "unit",
+   "count": 5,
+   "desc": "연필 5자루 묶음",
+   "width": 274,
+   "height": 800,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "donut": {
+   "file": "selected/donut.png",
+   "candidate": "P1-1",
+   "kind": "single",
+   "count": 1,
+   "desc": "도넛 한 개(위에서 본 모습)",
+   "width": 662,
+   "height": 640,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "box_square": {
+   "file": "selected/box_square.png",
+   "candidate": "P2-1",
+   "kind": "box",
+   "count": null,
+   "desc": "빈 도넛 상자, 정사각형",
+   "width": 705,
+   "height": 788,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "box_wide": {
+   "file": "selected/box_wide.png",
+   "candidate": "P3e-3",
+   "kind": "box",
+   "count": null,
+   "desc": "빈 도넛 상자, 가로로 긴 것",
+   "width": 759,
+   "height": 602,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "box_long": {
+   "file": "selected/box_long.png",
+   "candidate": "P4-3",
+   "kind": "box",
+   "count": null,
+   "desc": "빈 도넛 상자, 길쭉한 것(2:1)",
+   "width": 944,
+   "height": 426,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "box_long3": {
+   "file": "selected/box_long3.png",
+   "candidate": "P4e-2",
+   "kind": "box",
+   "count": null,
+   "desc": "빈 도넛 상자, 길쭉한 것(3:1)",
+   "width": 907,
+   "height": 309,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "juice": {
+   "file": "selected/juice.png",
+   "candidate": "R1-4",
+   "kind": "single",
+   "count": 1,
+   "desc": "음료수 팩 한 개",
+   "width": 444,
+   "height": 746,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "juice_pack_4": {
+   "file": "selected/juice_pack_4.png",
+   "candidate": "R2-1",
+   "kind": "unit",
+   "count": 4,
+   "desc": "음료수 팩 4개 묶음",
+   "width": 752,
+   "height": 578,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "juice_pack_3": {
+   "file": "selected/juice_pack_3.png",
+   "candidate": "R3-3",
+   "kind": "unit",
+   "count": 3,
+   "desc": "음료수 팩 3개 묶음",
+   "width": 717,
+   "height": 563,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "kimbap": {
+   "file": "selected/kimbap.png",
+   "candidate": "R4-3",
+   "kind": "single",
+   "count": 1,
+   "desc": "삼각김밥 한 개",
+   "width": 606,
+   "height": 574,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "cupnoodle": {
+   "file": "selected/cupnoodle.png",
+   "candidate": "R5-3",
+   "kind": "single",
+   "count": 1,
+   "desc": "컵라면 한 개",
+   "width": 668,
+   "height": 767,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "ball": {
+   "file": "selected/ball.png",
+   "candidate": "R7-2",
+   "kind": "single",
+   "count": 1,
+   "desc": "공 한 개",
+   "width": 413,
+   "height": 404,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "shelf": {
+   "file": "selected/shelf.png",
+   "candidate": "R8-2",
+   "kind": "shelf",
+   "count": null,
+   "desc": "나무 선반 판",
+   "width": 1395,
+   "height": 83,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "egg_carton_6": {
+   "file": "selected/egg_carton_6.png",
+   "candidate": "M1-1",
+   "kind": "unit",
+   "count": 6,
+   "desc": "달걀 6개가 든 달걀판",
+   "width": 872,
+   "height": 663,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "chair": {
+   "file": "selected/chair.png",
+   "candidate": "M2-2",
+   "kind": "single",
+   "count": 1,
+   "desc": "나무 의자 한 개",
+   "width": 507,
+   "height": 726,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "mascot_cheer": {
+   "file": "selected/mascot_cheer.png",
+   "candidate": "D4-3",
+   "kind": "mascot",
+   "count": null,
+   "desc": "늘봄 캐릭터, 두 팔 들기",
+   "width": 455,
+   "height": 559,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "mascot_ask": {
+   "file": "selected/mascot_ask.png",
+   "candidate": "D5-1",
+   "kind": "mascot",
+   "count": null,
+   "desc": "늘봄 캐릭터, 갸웃하기",
+   "width": 420,
+   "height": 582,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  },
+  "cupnoodle_pack_3": {
+   "file": "selected/cupnoodle_pack_3.png",
+   "candidate": "R6b-2",
+   "kind": "unit",
+   "count": 3,
+   "desc": "컵라면 3개 묶음",
+   "width": 779,
+   "height": 382,
+   "source": "Qwen-Image 2.1 (ComfyUI, 이 PC에서 생성)"
+  }
+ }
+}

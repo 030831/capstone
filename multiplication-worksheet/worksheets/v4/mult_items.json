@@ -1,0 +1,6710 @@
+[
+ {
+  "set": "가",
+  "no": "가1",
+  "idx": 0,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 2,
+  "groups": 2,
+  "ans": 4,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "b",
+    "opts": [
+     2,
+     3,
+     4,
+     6
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "귤이 한 봉지에 2개씩 들어 있습니다. 2봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가2",
+  "idx": 1,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 2,
+  "groups": 3,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     6,
+     7,
+     8,
+     10
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 2개씩 들어 있습니다. 3봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가3",
+  "idx": 2,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 2,
+  "groups": 4,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     4,
+     6,
+     7,
+     8
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 2개씩 들어 있습니다. 4봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가4",
+  "idx": 3,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 2,
+  "groups": 6,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     10,
+     12,
+     13,
+     14
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": false,
+  "role": "약한 두통",
+  "chg": "봉지 수 (하나씩 세면 12번)",
+  "after": "skip",
+  "text": "귤이 한 봉지에 2개씩 들어 있습니다. 6봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가5",
+  "idx": 4,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 2,
+  "groups": 6,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     12,
+     14
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "세는 방식",
+  "after": null,
+  "text": "귤이 한 봉지에 2개씩 들어 있습니다. 6봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가6",
+  "idx": 5,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 6,
+  "ans": 30,
+  "blanks": [
+   {
+    "ans": 30,
+    "slot": "b",
+    "opts": [
+     30,
+     31,
+     35,
+     40
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "한 봉지의 수",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 6봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가7",
+  "idx": 6,
+  "variant": false,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     9,
+     15,
+     19,
+     20
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 4봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가1",
+  "idx": 0,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 3,
+  "groups": 2,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": false,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "귤이 한 봉지에 3개씩 들어 있습니다. 2봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가2",
+  "idx": 1,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 3,
+  "groups": 3,
+  "ans": 9,
+  "blanks": [
+   {
+    "ans": 9,
+    "slot": "b",
+    "opts": [
+     6,
+     9,
+     10,
+     12
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 3개씩 들어 있습니다. 3봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가3",
+  "idx": 2,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     9,
+     12,
+     15
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 3개씩 들어 있습니다. 4봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가4",
+  "idx": 3,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 3,
+  "groups": 5,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     15,
+     16,
+     18,
+     21
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "약한 두통",
+  "chg": "봉지 수 (하나씩 세면 15번)",
+  "after": "skip",
+  "text": "귤이 한 봉지에 3개씩 들어 있습니다. 5봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "귤을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가5",
+  "idx": 4,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 3,
+  "groups": 5,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     14,
+     15
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "세는 방식",
+  "after": null,
+  "text": "귤이 한 봉지에 3개씩 들어 있습니다. 5봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가6",
+  "idx": 5,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 4,
+  "groups": 5,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     16,
+     20,
+     21,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "한 봉지의 수",
+  "after": null,
+  "text": "귤이 한 봉지에 4개씩 들어 있습니다. 5봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "가",
+  "no": "가7",
+  "idx": 6,
+  "variant": true,
+  "dan": null,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     12,
+     16
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "봉지 수",
+  "after": null,
+  "text": "귤이 한 봉지에 4개씩 들어 있습니다. 3봉지가 있습니다.",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나1",
+  "idx": 0,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 2,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     3,
+     6,
+     7,
+     9
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "연필이 3자루씩 2묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나2",
+  "idx": 1,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 3,
+  "ans": 9,
+  "blanks": [
+   {
+    "ans": 9,
+    "slot": "b",
+    "opts": [
+     6,
+     8,
+     9,
+     12
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 3자루씩 3묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나3",
+  "idx": 2,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     12,
+     13,
+     15,
+     18
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 3자루씩 4묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나4",
+  "idx": 3,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 7,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     18,
+     20,
+     21
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "묶음 수 (식이 길다)",
+  "after": "mul",
+  "text": "연필이 3자루씩 7묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나5",
+  "idx": 4,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 7,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     18,
+     21,
+     22,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "식의 모양",
+  "after": null,
+  "text": "연필이 3자루씩 7묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나6",
+  "idx": 5,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 5,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     15,
+     18
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 3자루씩 5묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나7",
+  "idx": 6,
+  "variant": false,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 5,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     24,
+     28
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "한 묶음의 수",
+  "after": null,
+  "text": "연필이 4자루씩 5묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나1",
+  "idx": 0,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 2,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     8,
+     9,
+     12,
+     16
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "연필이 4자루씩 2묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나2",
+  "idx": 1,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     11,
+     12
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 4자루씩 3묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나3",
+  "idx": 2,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 4,
+  "ans": 16,
+  "blanks": [
+   {
+    "ans": 16,
+    "slot": "b",
+    "opts": [
+     12,
+     16,
+     17,
+     20
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 4자루씩 4묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나4",
+  "idx": 3,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "add",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 6,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     10,
+     20,
+     24,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "묶음 수 (식이 길다)",
+  "after": "mul",
+  "text": "연필이 4자루씩 6묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나5",
+  "idx": 4,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 6,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     28,
+     32
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "식의 모양",
+  "after": null,
+  "text": "연필이 4자루씩 6묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나6",
+  "idx": 5,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     11,
+     12
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "연필이 4자루씩 3묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "나",
+  "no": "나7",
+  "idx": 6,
+  "variant": true,
+  "dan": null,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     10,
+     15,
+     16,
+     20
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "한 묶음의 수",
+  "after": null,
+  "text": "연필이 5자루씩 3묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 2,
+  "ans": 4,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "b",
+    "opts": [
+     2,
+     3,
+     4,
+     6
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 3,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     6,
+     7,
+     8,
+     10
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 4,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     4,
+     6,
+     7,
+     8
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 7,
+  "ans": 14,
+  "blanks": [
+   {
+    "ans": 14,
+    "slot": "b",
+    "opts": [
+     12,
+     14,
+     15,
+     16
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 8,
+  "ans": 16,
+  "blanks": [
+   {
+    "ans": 16,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     16,
+     18
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 9,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     18,
+     19,
+     20,
+     22
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 6,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     11,
+     12
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 2,
+  "ans": 10,
+  "blanks": [
+   {
+    "ans": 10,
+    "slot": "b",
+    "opts": [
+     5,
+     10,
+     11,
+     15
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 7,
+  "ans": 35,
+  "blanks": [
+   {
+    "ans": 35,
+    "slot": "b",
+    "opts": [
+     12,
+     30,
+     34,
+     35
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 8,
+  "ans": 40,
+  "blanks": [
+   {
+    "ans": 40,
+    "slot": "b",
+    "opts": [
+     35,
+     40,
+     41,
+     45
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 9,
+  "ans": 45,
+  "blanks": [
+   {
+    "ans": 45,
+    "slot": "b",
+    "opts": [
+     14,
+     40,
+     45,
+     50
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 6,
+  "ans": 30,
+  "blanks": [
+   {
+    "ans": 30,
+    "slot": "b",
+    "opts": [
+     30,
+     31,
+     35,
+     40
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 2,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     6,
+     7,
+     9,
+     12
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 3,
+  "ans": 9,
+  "blanks": [
+   {
+    "ans": 9,
+    "slot": "b",
+    "opts": [
+     3,
+     6,
+     8,
+     9
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     9,
+     12,
+     13,
+     15
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 7,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     18,
+     21,
+     24
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 9,
+  "ans": 27,
+  "blanks": [
+   {
+    "ans": 27,
+    "slot": "b",
+    "opts": [
+     12,
+     24,
+     26,
+     27
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 6,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     15,
+     18,
+     19,
+     21
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 2,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     4,
+     6,
+     7,
+     8
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     13,
+     16
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 4,
+  "ans": 16,
+  "blanks": [
+   {
+    "ans": 16,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     16,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 7,
+  "ans": 28,
+  "blanks": [
+   {
+    "ans": 28,
+    "slot": "b",
+    "opts": [
+     28,
+     29,
+     32,
+     36
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 8,
+  "ans": 32,
+  "blanks": [
+   {
+    "ans": 32,
+    "slot": "b",
+    "opts": [
+     12,
+     28,
+     31,
+     32
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 9,
+  "ans": 36,
+  "blanks": [
+   {
+    "ans": 36,
+    "slot": "b",
+    "opts": [
+     32,
+     36,
+     37,
+     40
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 6,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     10,
+     20,
+     24,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 2,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     6,
+     8,
+     12,
+     18
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     18,
+     19,
+     24,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 4,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     10,
+     18,
+     23,
+     24
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 7,
+  "ans": 42,
+  "blanks": [
+   {
+    "ans": 42,
+    "slot": "b",
+    "opts": [
+     36,
+     42,
+     43,
+     48
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 8,
+  "ans": 48,
+  "blanks": [
+   {
+    "ans": 48,
+    "slot": "b",
+    "opts": [
+     14,
+     42,
+     48,
+     54
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 9,
+  "ans": 54,
+  "blanks": [
+   {
+    "ans": 54,
+    "slot": "b",
+    "opts": [
+     54,
+     55,
+     60,
+     66
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 6,
+  "ans": 36,
+  "blanks": [
+   {
+    "ans": 36,
+    "slot": "b",
+    "opts": [
+     12,
+     30,
+     35,
+     36
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 2,
+  "ans": 14,
+  "blanks": [
+   {
+    "ans": 14,
+    "slot": "b",
+    "opts": [
+     14,
+     15,
+     21,
+     28
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     20,
+     21
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 4,
+  "ans": 28,
+  "blanks": [
+   {
+    "ans": 28,
+    "slot": "b",
+    "opts": [
+     21,
+     28,
+     29,
+     35
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 7,
+  "ans": 49,
+  "blanks": [
+   {
+    "ans": 49,
+    "slot": "b",
+    "opts": [
+     14,
+     42,
+     49,
+     56
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 8,
+  "ans": 56,
+  "blanks": [
+   {
+    "ans": 56,
+    "slot": "b",
+    "opts": [
+     56,
+     57,
+     63,
+     70
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 9,
+  "ans": 63,
+  "blanks": [
+   {
+    "ans": 63,
+    "slot": "b",
+    "opts": [
+     16,
+     56,
+     62,
+     63
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 6,
+  "ans": 42,
+  "blanks": [
+   {
+    "ans": 42,
+    "slot": "b",
+    "opts": [
+     35,
+     42,
+     43,
+     49
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 2,
+  "ans": 16,
+  "blanks": [
+   {
+    "ans": 16,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     16
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 3,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     16,
+     24,
+     25,
+     32
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 4,
+  "ans": 32,
+  "blanks": [
+   {
+    "ans": 32,
+    "slot": "b",
+    "opts": [
+     12,
+     24,
+     32,
+     40
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 7,
+  "ans": 56,
+  "blanks": [
+   {
+    "ans": 56,
+    "slot": "b",
+    "opts": [
+     56,
+     57,
+     64,
+     72
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 8,
+  "ans": 64,
+  "blanks": [
+   {
+    "ans": 64,
+    "slot": "b",
+    "opts": [
+     16,
+     56,
+     63,
+     64
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 9,
+  "ans": 72,
+  "blanks": [
+   {
+    "ans": 72,
+    "slot": "b",
+    "opts": [
+     64,
+     72,
+     73,
+     80
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 6,
+  "ans": 48,
+  "blanks": [
+   {
+    "ans": 48,
+    "slot": "b",
+    "opts": [
+     14,
+     40,
+     48,
+     56
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 2,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     9,
+     18,
+     19,
+     27
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 3,
+  "ans": 27,
+  "blanks": [
+   {
+    "ans": 27,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     27,
+     36
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 4,
+  "ans": 36,
+  "blanks": [
+   {
+    "ans": 36,
+    "slot": "b",
+    "opts": [
+     36,
+     37,
+     45,
+     54
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 7,
+  "ans": 63,
+  "blanks": [
+   {
+    "ans": 63,
+    "slot": "b",
+    "opts": [
+     16,
+     54,
+     62,
+     63
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 8,
+  "ans": 72,
+  "blanks": [
+   {
+    "ans": 72,
+    "slot": "b",
+    "opts": [
+     63,
+     72,
+     73,
+     81
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 9,
+  "ans": 81,
+  "blanks": [
+   {
+    "ans": 81,
+    "slot": "b",
+    "opts": [
+     18,
+     72,
+     81,
+     90
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 6,
+  "ans": 54,
+  "blanks": [
+   {
+    "ans": 54,
+    "slot": "b",
+    "opts": [
+     54,
+     55,
+     63,
+     72
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다1",
+  "idx": 0,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 2,
+  "ans": 2,
+  "blanks": [
+   {
+    "ans": 2,
+    "slot": "b",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 2개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다2",
+  "idx": 1,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 3,
+  "ans": 3,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "b",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 3개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다3",
+  "idx": 2,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 4,
+  "ans": 4,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "b",
+    "opts": [
+     4,
+     5,
+     6,
+     14
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 4개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다4",
+  "idx": 3,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 7,
+  "ans": 7,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "b",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "약한 두통",
+  "chg": "곱하는 수 (상자 7개를 세어야 한다)",
+  "after": "add",
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 7개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다5",
+  "idx": 4,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 8,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "꼬기",
+  "chg": "곱하는 수 (바로 앞의 답이 표에 있다)",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 8개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다6",
+  "idx": 5,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 9,
+  "ans": 9,
+  "blanks": [
+   {
+    "ans": 9,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 9개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "다",
+  "no": "다7",
+  "idx": 6,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 6,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     6,
+     7,
+     8,
+     16
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "마무리",
+  "chg": "곱하는 수 (표의 빈칸을 채운다)",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 6개입니다.",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라1",
+  "idx": 0,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "pack",
+  "obj": "can",
+  "perGroup": 4,
+  "groups": 2,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 2,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     8,
+     9,
+     12,
+     16
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "음료수가 4개씩 2묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 묶음인지 찾아봅시다.",
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라2",
+  "idx": 1,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "pack",
+  "obj": "can",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     8,
+     11,
+     12
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "음료수가 4개씩 3묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 묶음인지 찾아봅시다.",
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라3",
+  "idx": 2,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "can",
+  "perGroup": 4,
+  "groups": 3,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     2,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     13,
+     16
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "묶음이 줄로 바뀜",
+  "after": null,
+  "text": "음료수가 4개씩 3줄 놓여 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "음료수를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라4",
+  "idx": 3,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "can",
+  "perGroup": 4,
+  "groups": 6,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 6,
+    "slot": "g",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     10,
+     20,
+     24,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "약한 두통",
+  "chg": "줄 수 (하나씩 세면 24번)",
+  "after": null,
+  "text": "음료수가 4개씩 6줄 놓여 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "음료수를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라5",
+  "idx": 4,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "can",
+  "perGroup": 4,
+  "groups": 6,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 6,
+    "slot": "g",
+    "opts": [
+     4,
+     6,
+     7,
+     8
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     28,
+     32
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "꼬기",
+  "chg": "쓰지 않는 수가 하나 있다",
+  "after": "unused",
+  "text": "음료수가 4개씩 6줄 놓여 있습니다. 손님은 2명입니다.",
+  "distractor": "2명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "음료수를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라6",
+  "idx": 5,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "can",
+  "perGroup": 5,
+  "groups": 6,
+  "ans": 30,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     2,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 6,
+    "slot": "g",
+    "opts": [
+     2,
+     5,
+     6,
+     7
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 30,
+    "slot": "b",
+    "opts": [
+     11,
+     25,
+     29,
+     30
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": false,
+  "role": "마무리",
+  "chg": "한 줄의 수",
+  "after": null,
+  "text": "음료수가 5개씩 6줄 놓여 있습니다. 손님은 2명입니다.",
+  "distractor": "2명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "음료수를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라7",
+  "idx": 6,
+  "variant": false,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "student",
+  "perGroup": 5,
+  "groups": 6,
+  "ans": 30,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     2,
+     4,
+     5,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 6,
+    "slot": "g",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 30,
+    "slot": "b",
+    "opts": [
+     25,
+     30,
+     31,
+     35
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": false,
+  "role": "마무리",
+  "chg": "물건",
+  "after": null,
+  "text": "학생이 5명씩 6줄 서 있습니다. 선생님은 2명입니다.",
+  "distractor": "2명",
+  "help": [
+   "글에서 몇 명씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "학생을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라1",
+  "idx": 0,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "pack",
+  "obj": "cupnoodle",
+  "perGroup": 3,
+  "groups": 2,
+  "ans": 6,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 2,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     5
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 6,
+    "slot": "b",
+    "opts": [
+     3,
+     6,
+     7,
+     9
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "도입",
+  "chg": "—",
+  "after": null,
+  "text": "컵라면이 3개씩 2묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 묶음인지 찾아봅시다.",
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라2",
+  "idx": 1,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "pack",
+  "obj": "cupnoodle",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "m",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     9,
+     12,
+     15
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "전개",
+  "chg": "묶음 수",
+  "after": null,
+  "text": "컵라면이 3개씩 4묶음 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 묶음인지 찾아봅시다.",
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라3",
+  "idx": 2,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "cupnoodle",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     12,
+     13,
+     15,
+     18
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "전개",
+  "chg": "묶음이 줄로 바뀜",
+  "after": null,
+  "text": "컵라면이 3개씩 4줄 놓여 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "컵라면을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라4",
+  "idx": 3,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "cupnoodle",
+  "perGroup": 3,
+  "groups": 7,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "m",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 7,
+    "slot": "g",
+    "opts": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     18,
+     20,
+     21
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": false,
+  "role": "약한 두통",
+  "chg": "줄 수 (하나씩 세면 21번)",
+  "after": null,
+  "text": "컵라면이 3개씩 7줄 놓여 있습니다.",
+  "distractor": null,
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "컵라면을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라5",
+  "idx": 4,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "cupnoodle",
+  "perGroup": 3,
+  "groups": 7,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 3,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     7
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 7,
+    "slot": "g",
+    "opts": [
+     7,
+     8,
+     9,
+     10
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     18,
+     21,
+     22,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": false,
+  "role": "꼬기",
+  "chg": "쓰지 않는 수가 하나 있다",
+  "after": "unused",
+  "text": "컵라면이 3개씩 7줄 놓여 있습니다. 직원은 2명입니다.",
+  "distractor": "2명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "컵라면을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라6",
+  "idx": 5,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "cupnoodle",
+  "perGroup": 4,
+  "groups": 7,
+  "ans": 28,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 7,
+    "slot": "g",
+    "opts": [
+     2,
+     4,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 28,
+    "slot": "b",
+    "opts": [
+     11,
+     24,
+     28,
+     32
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "마무리",
+  "chg": "한 줄의 수",
+  "after": null,
+  "text": "컵라면이 4개씩 7줄 놓여 있습니다. 직원은 2명입니다.",
+  "distractor": "2명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "컵라면을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "라",
+  "no": "라7",
+  "idx": 6,
+  "variant": true,
+  "dan": null,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "ball",
+  "perGroup": 4,
+  "groups": 7,
+  "ans": 28,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "m",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 7,
+    "slot": "g",
+    "opts": [
+     4,
+     7,
+     8,
+     9
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 28,
+    "slot": "b",
+    "opts": [
+     28,
+     29,
+     32,
+     36
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "마무리",
+  "chg": "물건",
+  "after": null,
+  "text": "공이 4개씩 7줄 놓여 있습니다. 상자는 2개입니다.",
+  "distractor": "2개",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "공을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 2,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 2,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 2,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 2,
+  "groups": 4,
+  "ans": 8,
+  "blanks": [
+   {
+    "ans": 8,
+    "slot": "b",
+    "opts": [
+     4,
+     6,
+     7,
+     8
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 2개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 2,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 2,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 2,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 5,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 5,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 5,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     9,
+     15,
+     19,
+     20
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 5개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 5,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 5,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 5,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 3,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 3,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 3,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 3,
+  "groups": 4,
+  "ans": 12,
+  "blanks": [
+   {
+    "ans": 12,
+    "slot": "b",
+    "opts": [
+     7,
+     9,
+     11,
+     12
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 3개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 3,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 3,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 3,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 4,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 4,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 4,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 4,
+  "groups": 4,
+  "ans": 16,
+  "blanks": [
+   {
+    "ans": 16,
+    "slot": "b",
+    "opts": [
+     8,
+     12,
+     15,
+     16
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 4개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 4,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 4,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 4,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 6,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 6,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 6,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 6,
+  "groups": 4,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     10,
+     18,
+     23,
+     24
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 6개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 6,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 6,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 6,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 7,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 7,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 7,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 7,
+  "groups": 4,
+  "ans": 28,
+  "blanks": [
+   {
+    "ans": 28,
+    "slot": "b",
+    "opts": [
+     11,
+     21,
+     27,
+     28
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 7개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 7,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 7,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 7,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 8,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 8,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 8,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 8,
+  "groups": 4,
+  "ans": 32,
+  "blanks": [
+   {
+    "ans": 32,
+    "slot": "b",
+    "opts": [
+     12,
+     24,
+     31,
+     32
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 8개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 8,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 8,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 8,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 9,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 9,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 9,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 9,
+  "groups": 4,
+  "ans": 36,
+  "blanks": [
+   {
+    "ans": 36,
+    "slot": "b",
+    "opts": [
+     13,
+     27,
+     35,
+     36
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 9개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 9,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 9,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 9,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마1",
+  "idx": 0,
+  "variant": false,
+  "dan": 1,
+  "kind": "count",
+  "form": null,
+  "pic": "bag",
+  "obj": "tangerine",
+  "perGroup": 5,
+  "groups": 3,
+  "ans": 15,
+  "blanks": [
+   {
+    "ans": 15,
+    "slot": "b",
+    "opts": [
+     8,
+     10,
+     15,
+     20
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "가 묶음의 구조",
+  "after": null,
+  "text": "귤이 한 봉지에 5개씩 들어 있습니다. 3봉지가 있습니다. 귤은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "봉지를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마2",
+  "idx": 1,
+  "variant": false,
+  "dan": 1,
+  "kind": "build",
+  "form": "mul",
+  "pic": "bundle",
+  "obj": "pencil",
+  "perGroup": 3,
+  "groups": 8,
+  "ans": 24,
+  "blanks": [
+   {
+    "ans": 24,
+    "slot": "b",
+    "opts": [
+     24,
+     25,
+     27,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "나 묶음의 구조",
+  "after": null,
+  "text": "연필이 3자루씩 8묶음 있습니다. 연필은 모두 몇 자루입니까?",
+  "distractor": null,
+  "help": [
+   "묶음을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마3",
+  "idx": 2,
+  "variant": false,
+  "dan": 1,
+  "kind": "table",
+  "form": null,
+  "pic": "box",
+  "obj": "donut",
+  "perGroup": 1,
+  "groups": 4,
+  "ans": 4,
+  "blanks": [
+   {
+    "ans": 4,
+    "slot": "b",
+    "opts": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "pos": 3
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "다 묶음의 구조",
+  "after": null,
+  "text": "도넛이 한 상자에 1개씩 들어 있습니다. 상자는 4개입니다. 도넛은 모두 몇 개입니까?",
+  "distractor": null,
+  "help": [
+   "상자를 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마4",
+  "idx": 3,
+  "variant": false,
+  "dan": 1,
+  "kind": "mul",
+  "form": null,
+  "pic": "tray",
+  "obj": "egg",
+  "perGroup": 6,
+  "groups": 3,
+  "ans": 18,
+  "blanks": [
+   {
+    "ans": 6,
+    "slot": "m",
+    "opts": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "pos": 0
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 18,
+    "slot": "b",
+    "opts": [
+     12,
+     18,
+     19,
+     24
+    ],
+    "pos": 1
+   }
+  ],
+  "handle": true,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "달걀을 6개씩 3판 샀습니다. 값은 9천 원입니다. 달걀은 모두 몇 개입니까?",
+  "distractor": "9천 원",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 판인지 찾아봅시다.",
+   "판을 차례로 눌러 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마5",
+  "idx": 4,
+  "variant": false,
+  "dan": 1,
+  "kind": "mul",
+  "form": null,
+  "pic": "week",
+  "obj": "day",
+  "perGroup": 7,
+  "groups": 3,
+  "ans": 21,
+  "blanks": [
+   {
+    "ans": 7,
+    "slot": "m",
+    "opts": [
+     3,
+     5,
+     6,
+     7
+    ],
+    "pos": 3
+   },
+   {
+    "ans": 3,
+    "slot": "g",
+    "opts": [
+     2,
+     3,
+     4,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 21,
+    "slot": "b",
+    "opts": [
+     10,
+     14,
+     21,
+     28
+    ],
+    "pos": 2
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "일주일은 7일입니다. 3주는 며칠입니까?",
+  "distractor": null,
+  "help": [
+   "글에서 며칠씩인지 찾아봅시다.",
+   "글에서 몇 주인지 찾아봅시다.",
+   "날을 하나씩 눌러 세어 봅시다."
+  ]
+ },
+ {
+  "set": "마",
+  "no": "마6",
+  "idx": 5,
+  "variant": false,
+  "dan": 1,
+  "kind": "mul",
+  "form": null,
+  "pic": "row",
+  "obj": "chair",
+  "perGroup": 5,
+  "groups": 4,
+  "ans": 20,
+  "blanks": [
+   {
+    "ans": 5,
+    "slot": "m",
+    "opts": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "pos": 1
+   },
+   {
+    "ans": 4,
+    "slot": "g",
+    "opts": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "pos": 2
+   },
+   {
+    "ans": 20,
+    "slot": "b",
+    "opts": [
+     20,
+     21,
+     25,
+     30
+    ],
+    "pos": 0
+   }
+  ],
+  "handle": false,
+  "role": "섞기",
+  "chg": "라 묶음의 구조",
+  "after": null,
+  "text": "의자가 5개씩 4줄 놓여 있습니다. 선생님은 1명입니다. 의자는 모두 몇 개입니까?",
+  "distractor": "1명",
+  "help": [
+   "글에서 몇 개씩인지 찾아봅시다.",
+   "글에서 몇 줄인지 찾아봅시다.",
+   "의자를 하나씩 눌러 세어 봅시다."
+  ]
+ }
+]

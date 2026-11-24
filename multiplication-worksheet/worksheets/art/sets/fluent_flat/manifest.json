@@ -1,0 +1,179 @@
+{
+ "name": "fluent_flat",
+ "label": "Fluent Emoji Flat (Microsoft)",
+ "order": 1,
+ "default": false,
+ "source": "Microsoft Fluent Emoji, Flat 화풍 (https://github.com/microsoft/fluentui-emoji)",
+ "license": "MIT License",
+ "credit": "그림: Fluent Emoji © Microsoft, MIT License",
+ "objects": {
+  "tangerine": {
+   "file": "tangerine.svg",
+   "format": "svg",
+   "width": 24.12,
+   "height": 29.12,
+   "unicode": "1F34A",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Tangerine/Flat/tangerine_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "pencil": {
+   "file": "pencil.svg",
+   "format": "svg",
+   "width": 11.311,
+   "height": 33.28,
+   "unicode": "270F",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Pencil/Flat/pencil_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음, -45° 돌려 똑바로 세움)"
+  },
+  "donut": {
+   "file": "donut.svg",
+   "format": "svg",
+   "width": 25.151,
+   "height": 29.12,
+   "unicode": "1F369",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Doughnut/Flat/doughnut_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "can": {
+   "file": "can.svg",
+   "format": "svg",
+   "width": 19.12,
+   "height": 29.12,
+   "unicode": "1F9C3",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Beverage box/Flat/beverage_box_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "student": {
+   "file": "student.svg",
+   "format": "svg",
+   "width": 10.277,
+   "height": 29.152,
+   "unicode": "1F9CD",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Person standing/Default/Flat/person_standing_flat_default.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "cupnoodle": {
+   "file": "cupnoodle.svg",
+   "format": "svg",
+   "width": 27.089,
+   "height": 29.12,
+   "unicode": "1F35C",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Steaming bowl/Flat/steaming_bowl_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "ball": {
+   "file": "ball.svg",
+   "format": "svg",
+   "width": 29.152,
+   "height": 29.121,
+   "unicode": "26BD",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Soccer ball/Flat/soccer_ball_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "egg": {
+   "file": "egg.svg",
+   "format": "svg",
+   "width": 21.745,
+   "height": 29.12,
+   "unicode": "1F95A",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Egg/Flat/egg_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "chair": {
+   "file": "chair.svg",
+   "format": "svg",
+   "width": 19.576,
+   "height": 27.983,
+   "unicode": "1FA91",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Chair/Flat/chair_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "onigiri": {
+   "file": "onigiri.svg",
+   "format": "svg",
+   "width": 28.131,
+   "height": 28.6,
+   "unicode": "1F359",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Rice ball/Flat/rice_ball_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "store": {
+   "file": "store.svg",
+   "format": "svg",
+   "width": 29.152,
+   "height": 26.152,
+   "unicode": "1F3EA",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Convenience store/Flat/convenience_store_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "basket": {
+   "file": "basket.svg",
+   "format": "svg",
+   "width": 29.12,
+   "height": 29.12,
+   "unicode": "1F9FA",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Basket/Flat/basket_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  },
+  "bread": {
+   "file": "bread.svg",
+   "format": "svg",
+   "width": 29.12,
+   "height": 28.214,
+   "unicode": "1F35E",
+   "source": "https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Bread/Flat/bread_flat.svg (경계 상자에 맞춰 viewBox를 다시 잡음)"
+  }
+ },
+ "scenes": "qwen",
+ "sceneMode": "strip",
+ "sceneStore": "store",
+ "containers": {
+  "bag": "#83cbff",
+  "tie": "#1c5cd7",
+  "box": "#f3ad61",
+  "boxInner": "#ffdea7",
+  "band": "#1c5cd7",
+  "board": "#d3d3d3",
+  "handle": "#9b9b9b",
+  "shelf": "#a56953",
+  "floor": "#9b9b9b",
+  "tray": "#d3d3d3",
+  "trayCell": "#bebebe",
+  "day": "#d3d3d3",
+  "wall": "#ffdea7",
+  "desk": "#a56953",
+  "bagOpacity": 0.45
+ },
+ "palette": [
+  "#00d26a",
+  "#ff822d",
+  "#ffce7c",
+  "#402a32",
+  "#f92f60",
+  "#d3d3d3",
+  "#f3ad61",
+  "#6d4534",
+  "#00a6ed",
+  "#ff6dc6",
+  "#86d72f",
+  "#c3ef3c",
+  "#d3f093",
+  "#008463",
+  "#f8312f",
+  "#990838",
+  "#d67d00",
+  "#ffc83d",
+  "#533566",
+  "#9b9b9b",
+  "#ff6723",
+  "#fcb100",
+  "#f1a11e",
+  "#fdbb11",
+  "#d37034",
+  "#7d4533",
+  "#ed9200",
+  "#990839",
+  "#e39d89",
+  "#fcd53f",
+  "#ca0b4a",
+  "#f4f4f4",
+  "#bebebe",
+  "#3f5fff",
+  "#1c5cd7",
+  "#a56953",
+  "#433b6b",
+  "#635994",
+  "#83cbff",
+  "#d3883e",
+  "#e19747",
+  "#ffdea7"
+ ]
+}

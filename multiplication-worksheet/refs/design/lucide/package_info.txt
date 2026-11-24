@@ -1,0 +1,1 @@
+lucide-static 0.468.0 (lucide-react ^0.468.0 in neulbom package.json)
