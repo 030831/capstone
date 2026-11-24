@@ -141,6 +141,7 @@ function App() {
             <a href="#/about" className={route === 'about' ? 'active' : ''}>
               프로젝트
             </a>
+            <a href="./multiplication-worksheet/">곱셈 활동지</a>
             <a href="#/" className={route === 'home' ? 'active' : ''}>
               홈
             </a>
