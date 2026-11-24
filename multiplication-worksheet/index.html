@@ -15,7 +15,9 @@ button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px soli
 .main-nav a{display:flex;align-items:center;color:#5e6861;text-decoration:none;position:relative;min-height:44px}
 .main-nav a.active{color:#294d40}
 .main-nav a.active:after{content:'';position:absolute;bottom:-16px;left:0;right:0;height:3px;background:#426d54;border-radius:4px 4px 0 0}
-@media (max-width:760px){.main-nav{gap:16px;font-size:12px}.main-nav a:last-child{display:none}.demo-badge{display:none}}
+@media (max-width:760px){.header-inner{flex-wrap:wrap;row-gap:0;padding:10px 16px 0}.main-nav{order:3;width:100%;gap:18px;font-size:13px;overflow-x:auto}.main-nav a.active:after{bottom:0}.main-nav a:last-child{display:none}.demo-badge{display:none}.brand small{display:none}}
+main,.site-header{max-width:100vw}
+.why p{min-width:0;overflow-wrap:anywhere}
 .brand svg{width:40px;height:40px;border-radius:13px}
 .brand small{display:block;font-size:11px;font-weight:400;letter-spacing:0;color:#5c6858;margin-top:-4px}
 .demo-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:#5b675b}
@@ -151,11 +153,59 @@ main{max-width:1100px;margin:auto;padding:0 16px 60px}
 .teacher th,.teacher td{border-bottom:1px solid #e5eadc;padding:7px 8px;text-align:left}
 .teacher p{font-size:13px;color:#5e6955;margin:10px 0 0;line-height:1.8}
 .site-footer{border-top:1px solid var(--border);padding:22px 16px;text-align:center;font-size:12px;color:#6b7567}
-@media (max-width:640px){.page-heading h1{font-size:27px}.btn-primary{margin-left:0}}
+/* 단계 목록 · 단계 · 한 문제 화면 */
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;color:#5e6955;margin:0 0 14px}
+.crumbs a{color:#3f5a47;text-decoration:none;font-weight:700;min-height:32px;display:inline-flex;align-items:center}
+.crumbs a:hover{text-decoration:underline}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.steprow{display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:center;background:#fffefa;border:1px solid #dfe5d5;border-radius:16px;padding:14px 18px 14px 14px;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.steprow:hover{transform:translateY(-2px);box-shadow:0 10px 24px #3f4a3212}
+.steprow .lt{width:64px;height:64px;border-radius:18px;background:var(--deep);color:#fff;display:grid;place-items:center;font-size:32px;font-weight:800}
+.steprow h2{margin:0;font-size:21px;letter-spacing:-.4px;line-height:1.35}
+.steprow p{margin:3px 0 0;font-size:16px;color:#5e6955;line-height:1.55}
+.steprow .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:14px;color:#5e6955;white-space:nowrap}
+.steprow .meta b{background:var(--tint);color:var(--deep);border-radius:20px;padding:4px 12px;font-size:14px}
+.panel{background:#fffefa;border:1px solid #dfe5d5;border-radius:18px;overflow:hidden}
+.panel-body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:16px}
+.opts2{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn-sec{background:#fffef9;border:1px solid #d6ddce;color:#4e624c;text-decoration:none}
+a.btn{text-decoration:none}
+.qlist{list-style:none;margin:0;padding:0;border:1px solid #e5eadc;border-radius:14px;overflow:hidden}
+.qlist li+li{border-top:1px solid #e5eadc}
+.qlist a{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:12px 16px;color:inherit;text-decoration:none;min-height:64px;background:#fff}
+.qlist a:hover{background:var(--soft)}
+.qlist .n{width:36px;height:36px;border-radius:50%;background:var(--deep);color:#fff;font-weight:800;display:grid;place-items:center;font-size:17px}
+.qlist .n.k{border-radius:10px;font-size:12px;width:44px;height:40px;line-height:1.15;text-align:center}
+.qlist .ln{font-size:19px;font-weight:700;line-height:1.4}
+.qlist .ln small{display:block;font-size:15px;font-weight:400;color:#5e6955;margin-top:2px}
+.qlist .role{font-size:13px;color:var(--deep);background:var(--tint);border-radius:8px;padding:1px 8px;margin-right:8px;font-weight:700;white-space:nowrap;vertical-align:2px}
+.qlist .ok{display:inline-flex;align-items:center;gap:4px;color:#315d4f;font-weight:700;font-size:15px;white-space:nowrap}
+.qlist .ok svg{width:18px;height:18px;stroke-width:3}
+.qlist li.sep a{background:var(--soft)}
+.solo{max-width:760px;margin:0 auto}
+.solo-top{padding-top:22px}
+.strip{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;list-style:none;padding:0}
+.strip a{min-width:44px;height:44px;border-radius:12px;border:1.5px solid #c9d2c2;background:#fff;color:#4e5e48;display:grid;place-items:center;font-weight:800;font-size:17px;text-decoration:none;padding:0 10px;position:relative}
+.strip a.k{font-size:14px}
+.strip a.done{border-color:#315d4f;color:#315d4f;background:#edf4ea}
+.strip a.done::after{content:"";position:absolute;right:-3px;top:-3px;width:12px;height:12px;border-radius:50%;background:#315d4f;box-shadow:0 0 0 2px #fff}
+.strip a[aria-current]{border:3px solid var(--deep);background:var(--deep);color:#fff}
+.why{display:flex;gap:10px;align-items:center;background:var(--soft);border:1.5px solid var(--ac);border-radius:14px;padding:10px 14px;margin:0 0 12px}
+.why .tag{flex:none;margin:0}
+.why p{margin:0;font-size:20px;font-weight:700;line-height:1.45}
+.paper{background:#fff;border:1px solid #dfe4d8;border-radius:16px;box-shadow:0 8px 22px #3f4a3212;padding:16px;overflow:hidden}
+.scaler>.inner{width:712px;transform-origin:0 0}
+.navrow{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+.navrow .btn{min-height:52px;min-width:120px;font-size:16px}
+.solo .note{margin:0}
+@media (max-width:640px){.page-heading h1{font-size:27px}.btn-primary{margin-left:0}
+ .steprow{grid-template-columns:52px 1fr;gap:12px}.steprow .lt{width:52px;height:52px;font-size:26px}.steprow .meta{grid-column:2;flex-direction:row;align-items:center}
+ .qlist a{grid-template-columns:40px 1fr}.qlist .st{grid-column:2}.panel-body{padding:14px}}
+
 @media print{
   @page{size:A4;margin:0}
   body{background:#fff}
-  .site-header,.page-heading,.toolbar,.teacher,.site-footer,.noprint{display:none!important}
+  .site-header,.page-heading,.toolbar,.teacher,.site-footer,.noprint,.crumbs{display:none!important}
   main{padding:0;max-width:none}
   .sheet-wrap{background:none;padding:0;border-radius:0}
   .outer{max-width:none;margin:0;height:auto!important;break-after:page}
@@ -179,15 +229,15 @@ main{max-width:1100px;margin:auto;padding:0 16px 60px}
   <section class="page-heading">
     <div class="eyebrow">수학 · 수와 연산 · 곱셈</div>
     <h1>곱셈 활동지</h1>
-    <p>화면에서 보기를 골라 풀 수 있고, 그대로 인쇄해 종이로도 씁니다. 묶음을 고르면 그 묶음의 활동지가 나옵니다.</p>
+    <p id="lede">단계별로 풀어 봅니다. 앞 단계에서 쓰던 방법이 막히는 곳에서 새 방법을 배우고, 다음 문제에서 그 방법을 씁니다.</p>
   </section>
-  <div class="toolbar">
-    <div class="switch" id="sw" role="group" aria-label="묶음 고르기"></div>
-    <label class="tool" id="danbox">곱셈구구 <select id="dan" aria-label="곱셈구구의 단"></select></label>
+  <div class="toolbar" id="ptools">
+    <a class="tool" id="back" href="#/">‹ 단계로 돌아가기</a>
+        <label class="tool" id="danbox">곱셈구구 <select id="dan" aria-label="곱셈구구의 단"></select></label>
     <label class="tool" id="varbox"><input type="checkbox" id="var"> 다른 수로 한 번 더</label>
     <button class="btn btn-primary" id="print" type="button"></button>
   </div>
-  <div class="sheet-wrap" id="wrap"></div>
+  <div id="wrap"></div>
   <details class="teacher"><summary>교사용: 기록과 출처</summary>
     <div id="rec"></div>
     <p>내용의 순서와 용어: 2022 개정 특수교육 기본 교육과정 중학교 수학 ② 5단원 "곱셈"(국립특수교육원)을 참고했습니다. 성취기준 [9수학01-08]~[9수학01-10].<br>
@@ -386,7 +436,69 @@ function openBox(set,its){
   return '<div class="open"'+(set.openH?' style="height:'+set.openH+'px"':'')+'>'+(sc?'<img class="bg" src="'+sc.u+'" alt="">':'')+'<div class="onc">'+on+'</div><div class="bubble"><span class="tag">생각 열기</span>'+set.open+'</div></div>';
 }
 const look='<div class="look"><b>돌아보기</b><span><i></i>혼자서 했습니다</span><span><i></i>도움을 받아 했습니다</span><span style="margin-left:auto">확인 <i style="width:54px"></i></span></div>';
-function build(){
+/* ---------- 문제마다 이 문제에서 하는 일 (화면에 보이는 한 줄) ---------- */
+const LINE={
+ '가':['귤을 하나씩 세어 봅니다','봉지가 하나 늘었습니다','봉지가 또 하나 늘었습니다','봉지가 많아졌습니다. 하나씩 세면 오래 걸립니다','봉지마다 같은 수씩 뛰어 세어 봅니다','한 봉지에 든 귤이 많아졌습니다','혼자서 묶어 세어 봅니다'],
+ '나':['같은 수를 더하는 식으로 나타냅니다','묶음이 늘면 덧셈식이 길어집니다','덧셈식이 더 길어집니다','묶음이 많아졌습니다. 덧셈식이 아주 깁니다','같은 식을 곱셈식으로 짧게 씁니다','묶음 수가 바뀐 곱셈식입니다','한 묶음의 수가 바뀐 곱셈식입니다'],
+ '다':['상자 2개의 도넛 수를 구합니다','상자가 하나 늘면 몇 개가 많아질까요','상자가 또 하나 늘었습니다','상자가 많아졌습니다. 다 세면 오래 걸립니다','앞의 답에 한 상자만큼 더합니다','앞의 답에 한 상자만큼 더합니다','표의 빈칸을 채웁니다'],
+ '라':['몇 개씩 몇 묶음인지 곱셈식으로 씁니다','묶음 수가 바뀝니다','묶음 대신 줄로 놓였습니다','줄이 많아졌습니다','문제에 필요 없는 수가 섞여 있습니다','한 줄의 수가 바뀝니다','다른 물건으로 해 봅니다'],
+ '마':['묶어 세기','곱셈식','곱셈구구','생활 속 곱셈','생활 속 곱셈: 달력','생활 속 곱셈: 필요 없는 수']};
+const DESC={'가':'귤 봉지를 하나씩 세다가, 봉지가 많아지면 묶어 세는 방법을 배웁니다.','나':'같은 수를 거듭 더하는 덧셈식이 길어지면 곱셈식으로 짧게 씁니다.',
+ '다':'상자가 하나씩 늘어날 때 도넛이 몇 개씩 많아지는지 보고 곱셈구구를 만듭니다.','라':'편의점 물건에서 몇 개씩 몇 묶음인지 찾아 곱셈식을 세웁니다.','마':'앞의 네 단계를 한 문제씩 섞어 풉니다.'};
+const ROLE={'도입':'시작','전개':'이어서','약한 두통':'막히는 곳','꼬기':'새 방법','마무리':'혼자 해 보기','섞기':'섞어 풀기'};
+const V={view:'home',pos:0};
+function seqOf(set,its){const q=its.map((it,i)=>({t:'q',i:i}));if(set.id!=='마'){const at=set.id==='라'?4:3;q.splice(at+1,0,{t:'note',at:at});}q.push({t:'sum'});return q;}
+const themeCls=set=>'t-'+set.theme;
+function crumbs(set,last){return '<nav class="crumbs" aria-label="위치"><a href="#/">단계 목록</a>'+(set?' › <a href="#/s/'+S.set+'">'+set.id+'. '+set.place+'</a>':'')+(last?' › <span>'+last+'</span>':'')+'</nav>';}
+function band(set,mas){
+  const dan=(set.id==='다'||set.id==='마')?' · '+S.dan+'단':'';const m=A(mas)||A('mascot_wave');
+  return '<div class="band"><div class="step">'+set.id+'</div><div><span class="kick">수학 5단원 곱셈 · '+set.place+dan+(S.variant&&set.id!=='마'&&set.id!=='다'?' · 한 번 더':'')+'</span><h2>'+set.title+'</h2></div>'+(m?'<img class="mas" src="'+m.u+'" alt="">':'')+'</div>';
+}
+function optsRow(set){
+  if(set.id==='다'||set.id==='마')return '<label class="tool">곱셈구구 <select data-dan aria-label="곱셈구구의 단">'+DANS.map(d=>'<option value="'+d+'"'+(d===S.dan?' selected':'')+'>'+d+'단</option>').join('')+'</select></label>';
+  return '<label class="tool"><input type="checkbox" data-var'+(S.variant?' checked':'')+'> 다른 수로 한 번 더</label>';
+}
+
+/* 단계 목록 */
+function viewHome(){
+  $('wrap').innerHTML='<ol class="steps">'+SETS.map((set,i)=>{
+    const its=itemsOf(set),done=its.filter(it=>st(it).done).length;
+    return '<li><a class="steprow '+themeCls(set)+'" href="#/s/'+i+'"><span class="lt">'+set.id+'</span><span><h2>'+set.id+'단계 · '+set.title+'</h2><p>'+DESC[set.id]+'</p></span>'+
+      '<span class="meta"><b>'+set.place+'</b><span>문제 '+its.length+'개'+(done===its.length?' · 다 풀었음':'')+'</span></span></a></li>';
+  }).join('')+'</ol>';
+}
+/* 한 단계: 생각 열기 + 문제 목록 */
+function viewStep(){
+  const set=SETS[S.set],its=itemsOf(set),seq=seqOf(set,its);
+  const rows=seq.map((x,k)=>{
+    if(x.t==='q'){const it=its[x.i],s=st(it);return '<li><a href="#/s/'+S.set+'/'+k+'"><span class="n">'+(x.i+1)+'</span><span class="ln"><span class="role">'+(ROLE[it.role]||it.role)+'</span>'+LINE[set.id][x.i]+'<small>'+it.text+'</small></span><span class="st">'+(s.done?'<span class="ok">'+ic('check')+'풀었음</span>':'')+'</span></a></li>';}
+    if(x.t==='note')return '<li class="sep"><a href="#/s/'+S.set+'/'+k+'"><span class="n k">알아<br>보기</span><span class="ln">'+(x.at+1)+'번을 풀고 새 방법을 알아봅니다</span><span class="st"></span></a></li>';
+    return '<li class="sep"><a href="#/s/'+S.set+'/'+k+'"><span class="n k">정리</span><span class="ln">이 단계에서 배운 방법을 정리합니다</span><span class="st"></span></a></li>';
+  }).join('');
+  $('wrap').innerHTML=crumbs(set)+'<section class="panel '+themeCls(set)+'">'+band(set,'mascot_wave')+'<div class="panel-body">'+
+    (set.scene?openBox(set,its):'')+
+    '<div class="opts2"><a class="btn btn-primary" style="margin-left:0" href="#/s/'+S.set+'/0">1번부터 풀기 ›</a>'+optsRow(set)+'<a class="btn btn-sec" href="#/s/'+S.set+'/print">'+ic('printer')+' 인쇄용 활동지</a></div>'+
+    '<ol class="qlist">'+rows+'</ol></div></section>';
+}
+/* 한 문제(또는 알아보기·정리) */
+function viewSolo(){
+  const set=SETS[S.set],its=itemsOf(set),seq=seqOf(set,its),k=Math.max(0,Math.min(V.pos,seq.length-1)),x=seq[k];
+  const strip='<ol class="strip" aria-label="이 단계의 순서">'+seq.map((y,j)=>{
+    const lab=y.t==='q'?String(y.i+1):(y.t==='note'?'알아보기':'정리'),done=y.t==='q'&&st(its[y.i]).done;
+    return '<li><a href="#/s/'+S.set+'/'+j+'" class="'+(y.t==='q'?'':'k')+(done?' done':'')+'"'+(j===k?' aria-current="step"':'')+' aria-label="'+(y.t==='q'?lab+'번 문제':lab)+(done?', 풀었음':'')+'">'+lab+'</a></li>';}).join('')+'</ol>';
+  let why='',body='',label='';
+  if(x.t==='q'){const it=its[x.i];label=(x.i+1)+'번';why='<div class="why"><span class="tag">'+(ROLE[it.role]||it.role)+'</span><p>'+LINE[set.id][x.i]+'</p></div>';
+    body=(set.id==='다'?tableHTML(its,false).replace('class="tbl"','class="tbl" style="margin-bottom:12px"'):'')+card(it,x.i+1,true);}
+  else if(x.t==='note'){label='알아보기';body=note(set,its[x.at],st(its[x.at]).done);}
+  else{label='정리';body=summary(set,its,its.every(i=>st(i).done))+'<div style="margin-top:12px">'+look+'</div>';}
+  const cur=x.t==='q'&&st(its[x.i]).done;
+  const prev=k>0?'<a class="btn btn-sec" href="#/s/'+S.set+'/'+(k-1)+'">‹ 이전</a>':'<a class="btn btn-sec" href="#/s/'+S.set+'">‹ 목록</a>';
+  const nl=k<seq.length-1?(seq[k+1].t==='q'?'다음 문제':(seq[k+1].t==='note'?'알아보기':'정리')):'';
+  const next=k<seq.length-1?'<a class="btn '+(cur||x.t!=='q'?'btn-primary':'btn-sec')+'" style="margin-left:auto" href="#/s/'+S.set+'/'+(k+1)+'">'+nl+' ›</a>':'<a class="btn btn-primary" style="margin-left:auto" href="#/">단계 목록으로 ›</a>';
+  $('wrap').innerHTML='<div class="solo-top"></div>'+crumbs(set,label)+'<div class="solo '+themeCls(set)+'">'+strip+why+'<div class="paper"><div class="scaler"><div class="inner">'+body+'</div></div></div><div class="navrow">'+prev+next+'</div></div>';
+}
+/* 인쇄용 활동지 (예전의 한 장짜리 구성) */
+function viewPrint(){
   const set=SETS[S.set],its=itemsOf(set),ins='<p class="instr">'+set.instr+'</p>';
   const allDone=its.every(i=>st(i).done);let pages=[];
   if(set.id==='마'){
@@ -401,11 +513,27 @@ function build(){
            ins+p2,
            ins+'<div class="grid">'+card(its[5],6,its[5].pic!=='row')+card(its[6],7,its[6].pic!=='row')+'</div>'+summary(set,its,allDone)+look];
   }
-  $('wrap').innerHTML=pages.map((p,i)=>sheet(set,i+1,pages.length,p,i===0)).join('');
+  $('wrap').innerHTML=crumbs(set,'인쇄용 활동지')+'<div class="sheet-wrap">'+pages.map((p,i)=>sheet(set,i+1,pages.length,p,i===0)).join('')+'</div>';
+}
+function build(){
+  const pv=V.view==='print';
+  $('ptools').style.display=pv?'':'none';
+  $('lede').style.display=V.view==='home'?'':'none';
+  document.querySelector('.page-heading').style.display=V.view==='solo'?'none':'';
+  if(pv){const id=SETS[S.set].id;$('back').href='#/s/'+S.set;$('danbox').style.display=(id==='다'||id==='마')?'':'none';$('varbox').style.display=(id==='마'||id==='다')?'none':'';$('dan').value=S.dan;$('var').checked=S.variant;}
+  ({home:viewHome,step:viewStep,solo:viewSolo,print:viewPrint})[V.view]();
   fit();record();
 }
+function route(){
+  const m=(location.hash||'#/').match(/^#\/(?:s\/(\d)(?:\/(print|\d+))?)?/)||[];
+  if(m[1]==null){V.view='home';}
+  else{S.set=Math.min(+m[1],SETS.length-1);if(m[2]==='print')V.view='print';else if(m[2]!=null){V.view='solo';V.pos=+m[2];}else V.view='step';}
+  build();if(!route.first)scrollTo(0,0);route.first=false;
+}
+route.first=true;
 function fit(){
   document.querySelectorAll('.outer').forEach(o=>{const s=Math.min(1,o.clientWidth/760),sh=o.firstElementChild;sh.style.transform=s<1?'scale('+s+')':'';o.style.height=Math.round(1075*s)+'px';});
+  document.querySelectorAll('.scaler').forEach(o=>{const inn=o.firstElementChild,s=Math.min(1,o.clientWidth/712);inn.style.transform=s<1?'scale('+s+')':'';o.style.height=Math.round(inn.offsetHeight*s)+'px';});
 }
 
 /* ---------- 조작 ---------- */
@@ -428,21 +556,18 @@ function record(){
   $('rec').innerHTML='<table><thead><tr><th>문항</th><th>상태</th><th>틀린 횟수</th><th>그림을 누른 횟수</th><th>도움말</th></tr></thead><tbody>'+
     its.map((i,k)=>{const s=st(i);return '<tr><td>'+set.id+' '+(k+1)+'</td><td>'+(s.done?'맞힘':'푸는 중')+'</td><td>'+s.wrong+'</td><td>'+s.taps+'</td><td>'+(s.helped?'봄':'—')+'</td></tr>';}).join('')+'</tbody></table>';
 }
-function toolbar(){
-  $('sw').innerHTML=SETS.map((s,i)=>'<button type="button" data-s="'+i+'" aria-pressed="'+(i===S.set)+'">'+s.id+'. '+s.place+'</button>').join('');
-  const id=SETS[S.set].id;$('danbox').style.display=(id==='다'||id==='마')?'':'none';$('varbox').style.display=(id==='마'||id==='다')?'none':'';
-}
 $('dan').innerHTML=DANS.map(d=>'<option value="'+d+'">'+d+'단</option>').join('');$('dan').value=S.dan;
 $('print').innerHTML=ic('printer')+' 이 활동지 인쇄';
-$('sw').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b){S.set=+b.dataset.s;toolbar();build();}});
 $('dan').addEventListener('change',e=>{S.dan=+e.target.value;build();});
 $('var').addEventListener('change',e=>{S.variant=e.target.checked;build();});
 $('print').addEventListener('click',()=>window.print());
 addEventListener('resize',fit);
-window.__ws5={S:S,ST:ST,SETS:SETS,build:build,toolbar:toolbar,itemsOf:itemsOf,st:st,key:key,
-  go:function(set,dan,variant){S.set=set;if(dan)S.dan=dan;S.variant=!!variant;toolbar();build();},
+$('wrap').addEventListener('change',e=>{if(e.target.matches('[data-dan]')){S.dan=+e.target.value;build();}if(e.target.matches('[data-var]')){S.variant=e.target.checked;build();}});
+addEventListener('hashchange',route);
+window.__ws5={S:S,ST:ST,SETS:SETS,V:V,build:build,route:route,itemsOf:itemsOf,st:st,key:key,
+  go:function(set,dan,variant,view,pos){S.set=set;if(dan)S.dan=dan;S.variant=!!variant;V.view=view||'print';V.pos=pos||0;build();},
   solve:function(){itemsOf(SETS[S.set]).forEach(i=>{const s=st(i);i.blanks.forEach((b,k)=>s.val[k]=b.ans);s.done=true;s.msg='ok';});build();}};
-toolbar();build();
+route();
 })();
 </script>
 </body></html>
