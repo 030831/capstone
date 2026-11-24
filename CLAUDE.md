@@ -49,6 +49,7 @@
 | `neulbom-prototype` / 태그 `v0-neulbom-student` | 늘봄 학생용 프로토타입(한 걸음 교실·도움 사다리·생활 실험실·보호자 기록) | 보존, 재사용 가능 |
 | `archive/alignment-checker-2026-11` / 태그 `v0-alignment-checker` | 인지 의존성 그래프 × IEP 충돌 검사기(Python+TS 엔진), 학습지 제작 도구(TS), 스펙 문서 | 보존, 재사용 가능 |
 | `docs/archive/alignment-checker/` (main 안) | 위 작업의 스펙 3종과 개념 그래프 `graph_v0.yaml` 사본 | 참고용 |
+| `multiplication-worksheet/` (main 안) | 곱셈 활동지 시안(정적 페이지, 삽화는 생성 모델로 만듦). 배포본은 `public/multiplication-worksheet/index.html` → https://030831.github.io/capstone/multiplication-worksheet/ | 시안, 앱과 독립 |
 | `sources/`, `docs/review/` (main 안) | 교육과정 성취기준 발췌와 출처 검증 기록 | 계속 사용 |
 
 ## 지적/피드백 로그

@@ -8,6 +8,10 @@
 
 ## 바로 보기
 
+사이트: https://030831.github.io/capstone/multiplication-worksheet/
+
+배포는 `public/multiplication-worksheet/index.html`(이 폴더의 `index.html`과 같은 파일)을 Vite가 그대로 복사해서 된다. 활동지를 다시 빌드하면 두 파일을 함께 바꾼다.
+
 `index.html`을 브라우저로 연다. 다른 파일 없이 열린다(그림이 파일 안에 들어 있다).
 
 ## 구성
